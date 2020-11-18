@@ -6,32 +6,32 @@
 See code_design for more details.
 
 ```
-one instance is present on every node. The Compute node is
-responsible for keeping track of the fires on the node
-This means starting fires, and making sure no fire burns the same
-node.
+# one instance is present on every node. The Compute node is
+# responsible for keeping track of the fires on the node
+# This means starting fires, and making sure no fire burns the same
+# node.
 class Compute_node:
 
-The fire represents the sampled graph.
-There is a vertex threshold that each fire instance needs to reach, 
-and once the vertex threshold is reached, the sampled graph is 
-returned to the head node for stitching.
-Burned vertexes in a fire also have what will be known as a burn 
-step. This is a representation of what time step a vertex joined the 
-fire.
-If the fire spreads to other nodes, the other nodes start another 
-fire at the border vertex with the appropriate burn step passed in 
-the message.
-When the fire needs to be collected, each fire collects itself from 
-the nodes it spread to and trims itself by choosing the first X 
-vertexes with the lowest burn step.
+# The fire represents the sampled graph.
+# There is a vertex threshold that each fire instance needs to reach, 
+# and once the vertex threshold is reached, the sampled graph is 
+# returned to the head node for stitching.
+# Burned vertexes in a fire also have what will be known as a burn 
+# step. This is a representation of what time step a vertex joined the 
+# fire.
+# If the fire spreads to other nodes, the other nodes start another 
+# fire at the border vertex with the appropriate burn step passed in 
+# the message.
+# When the fire needs to be collected, each fire collects itself from 
+# the nodes it spread to and trims itself by choosing the first X 
+# vertexes with the lowest burn step.
 class Fire:
 
-Graph representation. Used by compute nodes and by Fires to maintain 
-the sampled graph
+# Graph representation. Used by compute nodes and by Fires to maintain 
+# the sampled graph
 class Graph:
 
-vertex class used by the fire. Includes a burn_step
+# vertex class used by the fire. Includes a burn_step
 class b_vertex:
 ```
 
