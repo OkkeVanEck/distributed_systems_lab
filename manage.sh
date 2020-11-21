@@ -39,7 +39,11 @@ case "$1" in
     ;;
 # Create new job.
 "create_job")
-    # TODO: Copy template and fill in variables.
+    # TODO: Copy job template and fill in variables.
+    ;;
+# Run an existing job.
+"run_job")
+    # TODO: Write code for running jobs.
     ;;
 # Catch all for parse errors..
 *)
