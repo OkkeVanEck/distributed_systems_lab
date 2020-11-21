@@ -37,6 +37,10 @@ case "$1" in
         fi
     done
     ;;
+# Clear all files and folders from the /data folder.
+"clear_data")
+    rm -rf data/*/
+    ;;
 # Create new job.
 "create_job")
     # TODO: Copy job template and fill in variables.
