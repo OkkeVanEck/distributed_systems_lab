@@ -11,7 +11,7 @@ each other. The main structure of the project is divided into:
 | data | Data contains all input files required by the simulations. |
 | figures | Figures contain all generated figures that need to be stored.
 | jobs | Jobs contains all the SLURM jobs that execute simulations on the DAS-5. |
-| test_pmi4py | example of mpi broadcast and of sbatch script to run mpi4py |
+| test_pmi4py | example of mpi broadcast and sbatch script to run mpi4py |
 
 ## mpi4py usage
 Before usage **always** load the intel mpi and python3.6.0 module
