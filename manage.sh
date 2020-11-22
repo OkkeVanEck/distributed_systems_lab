@@ -22,7 +22,7 @@ case "$1" in
 # Extract data files from datasets in /data/zips into /data.
 "extract_data")
     # Check if zips folder exists.
-    if [ -d "/data/zips" ]; then
+    if [ -d "data/zips" ]; then
         echo "No /data/zips folder."
         exit 1
     fi
@@ -43,13 +43,40 @@ case "$1" in
     ;;
 # Create new job.
 "create_job")
-    # TODO: Copy job template and fill in variables.
+    # Check if job name is given.
+    if [ -z "$2" ]; then
+        echo "No name of job specified."
+        exit 1
+    fi
+
+    # Check if given job name already exists.
+    if [ -d "jobs/${2}" ]; then
+        echo "Job name is already taken."
+        exit 1
+    fi
+
+    echo "Creating job ${2}.."
+    mkdir "jobs/${2}"
+    cp jobs/job_template.sh "jobs/${2}/${2}.sh"
     ;;
 # Run an existing job.
 "run_job")
-    # TODO: Write code for running jobs.
+    # Check if job name is given.
+    if [ -z "$2" ]; then
+        echo "No name of job specified."
+        exit 1
+    fi
+
+    # Check if given job name exists.
+    if [ -d "jobs/${2}" ]; then
+        echo "Starting job ${2}.."
+        sbatch "jobs/${2}/${2}.sh"
+    else
+        echo "Job name does not exist."
+        exit 1
+    fi
     ;;
-# Catch all for parse errors..
+# Catch all for parse errors.
 *)
     echo "No command detected from first argument.."
     ;;

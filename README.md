@@ -11,40 +11,75 @@ each other. The main structure of the project is divided into:
 | data | Data contains all input files required by the simulations. |
 | figures | Figures contain all generated figures that need to be stored.
 | jobs | Jobs contains all the SLURM jobs that execute simulations on the DAS-5. |
-| test_pmi4py | example of mpi broadcast and sbatch script to run mpi4py |
 
-## mpi4py usage
-Before usage **always** load the intel mpi and python3.6.0 module
-```shell
+
+## Installation guide
+First, load the Python 3.6.0 and Intel MPI modules:
+```bash
 module load python/3.6.0
 module load intel-mpi/64/5.1.2/150
 ```
-### installing mpi4py
-mpi4py can be installed using pip to your user, but only after the modules are loaded
-```shell
+
+Then install **mpi4py** in userspace with pip: 
+```bash
 pip install --user mpi4py
 ```
-### running program
-create a sbatch script that looks like the following
+
+
+## Creating jobs
+A job can easily be created via the `manage.sh` script. This is done with the
+`create_job` command, which needs the job name as the second argument:
+```bash
+./manage.sh create_job <job_name>
+```
+
+The script checks if the specified job name is available and gives an error if
+this is not the case. Otherwise, a new job folder is created containing a 
+default SLURM script. The default script contains:
 ```bash
 #!/bin/bash
-#SBATCH -n 16
-#SBATCH -N 4
-#SBATCH -t 30
+#SBATCH -n <number of tasks>
+#SBATCH -N <number of nodes>
+#SBATCH -t <time in minutes>
 #SBATCH --mem-per-cpu=4000
-srun -n $SLURM_NTASKS --mpi=pmi2 python testmpi.py
+SIMDIR="code/simulations/"
 
+# Load modules.
+module load python/3.6.0
+module load intel-mpi/64/5.1.2/150
+
+# Run simulation.
+srun -n $SLURM_NTASKS --mpi=pmi2 python "${SIMDIR}<simulation_name>"
 ```
--n is for the number of task that you want spawned
--N are the number of machines you want to uses for the tasks
-In the script the srun line can also be replace by one based of mpirun
+
+As you can see, the default script contains placeholder lines for
+specifying some SLURM variables. These are:
+ - `-n` for the number of tasks that will be spawned
+ - `-N` for the number of machines you want to use for the tasks
+ - `-t` for the time after which the job is shutdown by DAS-5.
+ 
+These need to be filled in after the job is created. The Python and MPI modules
+are loaded as well, which are needed for working with **mpi4py**. All code
+needed for running the simulation can be added underneath the default lines.
+
+In order to run a program on multiple nodes, we use the `srun` command. A
+example line is already added in the default script. Only the filename of the
+simulation has to be filled in at the `<simulation_name>` placeholder. 
+
+
+## Running jobs
+A job can be run via the `manage.sh` script. This is done with the
+`run_job` command, which needs the job name as the second argument:
 ```bash
-mpirun -n $SLURM_NTASKS python testmpi.py
+./manage.sh run_job <job_name>
+```
+The script checks if the specified job name is available and gives an error if
+this is not the case. Otherwise, the specified job is executed and placed in the
+job queue on the DAS-5.
+
+Your current queued jobs can be listed with:
+```bash
+squeue -u <username>
 ```
 
-The sbatch script can then be run with:
-```shell
-sbatch {name_script}
-```
-## Running simulations
-TODO
+The whole queue is presented if the `-u <username>` flag is not provided.
