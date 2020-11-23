@@ -208,7 +208,7 @@ if __name__ == "__main__":
         # initialize a head node/head node class
     else:
         compute_node = Compute_node()
-        compute_node.init_partition()
+        compute_node.init_partition(file)
         # these might all need to be on separate threads
         compute_node.partitioned_graph.init_fire()
         compute_node.listen_for_burn_requests()
