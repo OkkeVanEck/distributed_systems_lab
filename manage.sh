@@ -22,7 +22,7 @@ case "$1" in
 # Extract data files from datasets in /data/zips into /data.
 "extract_data")
     # Check if zips folder exists.
-    if [ -d "data/zips" ]; then
+    if [ -d "/data/zips" ]; then
         echo "No /data/zips folder."
         exit 1
     fi
