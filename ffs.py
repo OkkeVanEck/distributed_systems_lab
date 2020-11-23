@@ -15,7 +15,8 @@ if not __LOCAL__:
     size = comm.Get_size()
     rank = comm.Get_rank()
 
-fwd_burning_prob: float = 0.2
+# recommendation from leskovec06, so average burns 2.33 neighbors 
+fwd_burning_prob: float = 0.7
 file = "path/to/graph_file"
 
 
@@ -59,8 +60,9 @@ class Fire:
 
     # execute math to determine what neighbors to burn
     def determine_burn_list(self, neighbors: list):
-        # from paper quoted by Yancheng uses negative binomial function
-        n_neighbors_to_burn = min(np.random.negative_binomial(1, 1 - fwd_burning_prob), len(neighbors))
+        # interpretation from ahmed11, n_neighbors_to_burn is a geometric distributed rv and the given expectation is enough to characterize it
+        # so, fwd_burning_prob / (1 - fwd_burning_prob) = 1 / p
+        n_neighbors_to_burn = min(np.random.geometric(p=(1-fwd_burning_prob)/fwd_burning_prob, size=1)[0], len(neighbors))
         neighbors_to_burn = random.sample(neighbors, n_neighbors_to_burn) 
         return neighbors_to_burn
 
