@@ -40,6 +40,12 @@ class Vertex:
         self.vertex_id = vertex_id
         self.status = status
 
+    def __eq__(self, vert: Vertex):
+        return hasattr(vert, "vertex_id") and self.vertex_id == vert.vertex_id
+
+    def __hash__(self):
+        return hash(self.vertex_id)
+
 
 class Fire:
 
@@ -59,7 +65,7 @@ class Fire:
         self.burning_vertices.add(vertex)
 
     # execute math to determine what neighbors to burn
-    def determine_burn_list(self, neighbors: list):
+    def determine_burn_list(self, neighbors: List[Vertex]) -> List[Vertex]:
         # interpretation from ahmed11, n_neighbors_to_burn is a geometric distributed rv and the given expectation is enough to characterize it
         # so, fwd_burning_prob / (1 - fwd_burning_prob) = 1 / p
         n_neighbors_to_burn = min(np.random.geometric(p=(1-fwd_burning_prob)/fwd_burning_prob, size=1)[0], len(neighbors))
@@ -77,14 +83,14 @@ class Fire:
         # 
         while(len(self.burning_vertices) > 0 and not self.received_stop_signal):
             vertex = self.burning_vertices[0]
-            neighbors = self.graph.get_neighbors_to_burn(vertex.vertex_id)
-
+            self.graph.set_vertex_status(vertex, Vertex_Status.BURNED)
+            neighbors = self.graph.get_neighbors_to_burn(vertex)
             neighbors_to_burn = self.determine_burn_list(neighbors)
-            self.graph.set_vertex_status(neighbors_to_burn, Vertex_Status.BURNING)
-            self.graph.spread_fire_to_other_nodes(neighbors_to_burn)
-            for new_burning_vertex in neighbors_to_burn:
-                self.burned_vertices.add(new_burning_vertex)
-            self.burned_vertices.pop(0)
+            local_neighbors_to_burn = self.graph.spread_fire_to_other_nodes(neighbors_to_burn)
+            for new_burning_vertex in local_neighbors_to_burn:
+                self.graph.set_vertex_status(local_neighbors_to_burn, Vertex_Status.BURNING)
+                self.burning_vertices.add(new_burning_vertex)
+            self.burning_vertices.pop(0)
         if not self.received_stop_signal:
             ignite_random_node()
             spread()
@@ -132,20 +138,23 @@ class Graph:
         else:
             self.graph[vertex] = [neighbor]
 
-
-    def get_neighbors_to_burn(self, vertex: Vertex) -> list:
+    def get_neighbors_to_burn(self, vertex: Vertex) -> List[Vertex]:
         all_neighbors = self.graph[vertex]
         neighbors_to_burn = list(filter(lambda vert: vert.status == Vertex_Status.NOT_BURNED, all_neighbors))
         if len(neighbors_to_burn) == 0:
             return list()
         return neighbors_to_burn
 
-    def spread_fire_to_other_nodes(self, burning_vertices: list):
+    def spread_fire_to_other_nodes(self, burning_vertices: List[Vertex]) -> List[Vertex]:
+        local_neighbors_to_burn = []
         for vertex in burning_vertices:
             # if the vertex is not in the graph, then it belongs to another partition
             # tell the compute node to handle the communication
-            if vertex not in self.graph.keys():
-                self.compute_node.send_burn_request(vertex.vertex_id)
+            if self.compute_node.is_local(vertex.vertex_id): # if vertex not in self.graph.keys()
+                self.compute_node.send_burn_request(vertex.vertex_id) # can be optimised that smaller msgs can be combined
+            else:
+                local_neighbors_to_burn.add[vertex]
+        return local_neighbors_to_burn
 
 
 def data_only(file) -> str:
