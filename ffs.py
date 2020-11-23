@@ -140,13 +140,12 @@ class Graph:
             return list()
         return neighbors_to_burn
 
-    def spread_fire_to_other_nodes(self, burning_vertices):
+    def spread_fire_to_other_nodes(self, burning_vertices: list):
         for vertex in burning_vertices:
             # if the vertex is not in the graph, then it belongs to another partition
             # tell the compute node to handle the communication
-            if vertex not in self.graph:
+            if vertex not in self.graph.keys():
                 self.compute_node.send_burn_request(vertex.vertex_id)
-
 
 
 def data_only(file) -> str:
@@ -192,7 +191,8 @@ class Compute_node:
         # send burn request to node with partition that has vertex_id
         # something like this
         if not __LOCAL__:
-            comm.Send([np.array(neighbor, 1, dtype=np.int), 1, MPI.INT], dest=get_vertex_rank(neighbor), tag=11)
+            data = np.array([vertex_id], dtype=np.int)
+            comm.Send([data, 1, MPI.INT], dest=get_vertex_rank(vertex_id), tag=11)
 
     def listen_for_burn_requests(self):
         if not __LOCAL__:
@@ -201,13 +201,13 @@ class Compute_node:
                 comm.Recv(vertex, MPI.ANY_SOURCE, 11)
                 partitioned_graph.fire.add_burning_vertex(vertex[0])
 
-
     def send_heartbeat(self):
         # something like this.
         # make sure to wrap it in a function that executes code below
         # at a standard interval.
         if not __LOCAL__:
-            comm.Send([np.array(len(vertexes_to_burn), dtype=np.int), 1, MPI.INT], dest=0, tag=12)
+            data = np.array(len(vertexes_to_burn), dtype=np.int)
+            comm.Send([data, 1, MPI.INT], dest=0, tag=12)
 
 
     def return_burned_vertices(self):
