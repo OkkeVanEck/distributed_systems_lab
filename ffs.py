@@ -36,11 +36,11 @@ class Vertex_Status(Enum):
 
 class Vertex:
 
-    def __init__(self, vertex_id: int, status: Vertex_Status):
+    def __init__(self, vertex_id, status):
         self.vertex_id = vertex_id
         self.status = status
 
-    def __eq__(self, vert: Vertex):
+    def __eq__(self, vert):
         return hasattr(vert, "vertex_id") and self.vertex_id == vert.vertex_id
 
     def __hash__(self):
@@ -88,9 +88,10 @@ class Fire:
             neighbors_to_burn = self.determine_burn_list(neighbors)
             local_neighbors_to_burn = self.graph.spread_fire_to_other_nodes(neighbors_to_burn)
             for new_burning_vertex in local_neighbors_to_burn:
-                self.graph.set_vertex_status(local_neighbors_to_burn, Vertex_Status.BURNING)
+                self.graph.set_vertex_status(new_burning_vertex, Vertex_Status.BURNING)
                 self.burning_vertices.add(new_burning_vertex)
             self.burning_vertices.pop(0)
+
         if not self.received_stop_signal:
             ignite_random_node()
             spread()
@@ -114,11 +115,16 @@ class Graph:
     def stop_fire(self):
         self.fire.stop_burning()
 
-    def get_vertex_status(self, vertex_id: int):
-        for vertex in self.graph.keys():
-            if vertex.vertex_id == vertex_id:
-                return vertex.status
+    def get_vertex_status(self, vertex: Vertex):
+        for vert in self.graph.keys():
+            if vert.vertex_id == vertex.vertex_id:
+                return vert.status
         return Vertex_Status.DOESNT_EXIST
+
+    def set_vertex_status(self, vertex: Vertex, status: Vertex_Status):
+        for vert in self.graph.keys():
+            if vert.vertex_id == vertex.vertex_id:
+                vert.status == status
 
     def get_burned_vertices(self) -> list:
         burned_vertices = []
