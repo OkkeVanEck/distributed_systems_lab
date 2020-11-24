@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #SBATCH -J <job_name>
-#SBATCH	-o jobs/<job_name>/results/<job_name>.out
+#SBATCH	-o jobs/<job_name>/<job_name>.out
 #SBATCH --partition=defq
 #SBATCH -n <number of tasks>
 #SBATCH -N <number of nodes>
@@ -25,8 +25,11 @@ mkdir -p "${TMP_DATA}"
 mkdir -p "${TMP_RES}"
 mkdir -p "${TMP_PLAY}"
 
-# Copy data and existing results to TMP partition.
-cp -r "${PWD}/data/${DATASET}" "${TMP_DATA}"
+# Copy Vertex and Edge data to TMP partition.
+cp -r "${PWD}/data/${DATASET}/${DATASET}.v" "${TMP_DATA}"
+cp -r "${PWD}/data/${DATASET}/${DATASET}.e" "${TMP_DATA}"
+
+#  Copy existing results to TMP partition.
 cp -r "${PWD}/jobs/${JOBNAME}/results" "${TMP_RES}"
 
 # Run simulation.

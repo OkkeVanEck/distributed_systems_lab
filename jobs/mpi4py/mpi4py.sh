@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 #SBATCH	-J mpi4py
-#SBATCH	-o jobs/mpi4py/results/mpi4py.out
+#SBATCH	-o jobs/mpi4py/mpi4py.out
 #SBATCH --partition=defq
 #SBATCH -n 16
 #SBATCH -N 4
 #SBATCH -t 30
 SIMPATH="code/simulations/"
 SIMFILE="testmpi.py"
-DATASET="example_undirected"
+DATASET="example-undirected"
 JOBNAME="mpi4py"
 
 
@@ -25,8 +25,11 @@ mkdir -p "${TMP_DATA}"
 mkdir -p "${TMP_RES}"
 mkdir -p "${TMP_PLAY}"
 
-# Copy data and existing results to TMP partition.
-cp -r "${PWD}/data/${DATASET}" "${TMP_DATA}"
+# Copy Vertex and Edge data to TMP partition.
+cp -r "${PWD}/data/${DATASET}/${DATASET}.v" "${TMP_DATA}"
+cp -r "${PWD}/data/${DATASET}/${DATASET}.e" "${TMP_DATA}"
+
+#  Copy existing results to TMP partition.
 cp -r "${PWD}/jobs/${JOBNAME}/results" "${TMP_RES}"
 
 # Run simulation.
