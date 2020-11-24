@@ -10,7 +10,6 @@ SIMFILE="testmpi.py"
 DATASET="example-undirected"
 JOBNAME="mpi4py"
 
-
 # Load modules.
 module load python/3.6.0
 module load intel-mpi/64/5.1.2/150
@@ -26,20 +25,18 @@ mkdir -p "${TMP_RES}"
 mkdir -p "${TMP_PLAY}"
 
 # Copy Vertex and Edge data to TMP partition.
-cp -r "${PWD}/data/${DATASET}/${DATASET}.v" "${TMP_DATA}"
-cp -r "${PWD}/data/${DATASET}/${DATASET}.e" "${TMP_DATA}"
+cp "${PWD}/data/${DATASET}/${DATASET}.v" "${TMP_DATA}"
+cp "${PWD}/data/${DATASET}/${DATASET}.e" "${TMP_DATA}"
 
 #  Copy existing results to TMP partition.
-cp -r "${PWD}/jobs/${JOBNAME}/results" "${TMP_RES}"
+cp -a "${PWD}/jobs/${JOBNAME}/results/." "${TMP_RES}"
 
 # Run simulation.
 srun -n ${SLURM_NTASKS} --mpi=pmi2 python3 "${SIMPATH}${SIMFILE}" "${DATASET}" \
     "${TMP_PLAY}" "${TMP_DATA}" "${TMP_RES}"
 
 # Copy results to HOME partition.
-cp -r "${TMP_RES}" "${PWD}/jobs/${JOBNAME}/results"
+cp -a "${TMP_RES}/." "${PWD}/jobs/${JOBNAME}/results"
 
 # Clean TMP partition for reuse of job script.
-rm -rf "${TMP_DATA}"
-rm -rf "${TMP_RES}"
-rm -rf "${TMP_PLAY}"
+rm -rf "${TMPDIR:?}/${JOBNAME:?}"
