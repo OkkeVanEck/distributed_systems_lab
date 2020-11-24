@@ -15,13 +15,13 @@ each other. The main structure of the project is divided into:
 
 ## Installation guide
 First, load the Python 3.6.0 and Intel MPI modules:
-```bash
+```shell
 module load python/3.6.0
 module load intel-mpi/64/5.1.2/150
 ```
 
 Then install **mpi4py** in userspace with **pip3**: 
-```bash
+```shell
 pip3 install --user mpi4py
 ```
 
@@ -29,17 +29,17 @@ pip3 install --user mpi4py
 ## Creating jobs
 A job can easily be created via the `manage.sh` script. This is done with the
 `create_job` command, which needs the job name as the second argument:
-```bash
+```shell
 ./manage.sh create_job <job_name>
 ```
 
 The script checks if the specified job name is available and gives an error if
 this is not the case. Otherwise, a new job folder is created containing a 
 default SLURM script. The default script contains:
-```bash
-#!/bin/bash
+```shell
+#!/usr/bin/env bash
 #SBATCH -J <simulation_name>
-#SBATCH	-o jobs/<job_name>/results/<job_name>.out
+#SBATCH -o jobs/<job_name>/results/<job_name>.out
 #SBATCH --partition=defq
 #SBATCH -n <number of tasks>
 #SBATCH -N <number of nodes>
@@ -75,7 +75,7 @@ simulation has to be filled in at the `<simulation_name>` placeholder.
 ## Running jobs
 A job can be run via the `manage.sh` script. This is done with the
 `run_job` command, which needs the job name as the second argument:
-```bash
+```shell
 ./manage.sh run_job <job_name>
 ```
 The script checks if the specified job name is available and gives an error if
@@ -83,7 +83,7 @@ this is not the case. Otherwise, the specified job is executed and placed in the
 job queue on the DAS-5.
 
 Your current queued jobs can be listed with:
-```bash
+```shell
 squeue -u <username>
 ```
 

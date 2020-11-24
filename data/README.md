@@ -6,18 +6,18 @@ contains three commands with respect to data.
 Datasets can be fetched in zip form and are stored in the `/data/zips` folder.
 This folder is automatically generated when running the script. In order to 
 fetch the datasets, run:
-```bash
+```shell
 ./manage.sh get_data
 ```
 
 Datasets can be extracted into their own folder. In order to extract datasets
 that are located in the `/data/zips` folder, run:
-```bash
+```shell
 ./manage.sh extract_data
 ```
 
 Sometimes it might be needed to delete all datasets: zips and files. In order to
 delete all files in the data folder, run:
-```bash
+```shell
 ./manage.sh clear_data
 ```

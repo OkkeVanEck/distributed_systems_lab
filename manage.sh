@@ -69,6 +69,10 @@ case "$1" in
 
     # Check if given job name exists.
     if [ -d "jobs/${2}" ]; then
+        # Create results folder if it doesn't exist already.
+        mkdir -p "jobs/${2}/results"
+
+        # Run SLURM job.
         echo "Starting job ${2}.."
         sbatch "jobs/${2}/${2}.sh"
     else
