@@ -1,15 +1,3 @@
-#!/usr/bin/env bash
-#SBATCH -J <job_name>
-#SBATCH	-o jobs/<job_name>/<job_name>.out
-#SBATCH --partition=defq
-#SBATCH -n <number of tasks>
-#SBATCH -N <number of nodes>
-#SBATCH -t <time in minutes>
-SIMPATH="code/simulations/"
-SIMFILE="<simulation_name>"
-DATASET="<dataset_name>"
-JOBNAME="<job_name>"
-
 # Load modules.
 module load python/3.6.0
 module load intel-mpi/64/5.1.2/150

@@ -30,11 +30,17 @@ pip3 install --user mpi4py
 A job can easily be created via the `manage.sh` script. This is done with the
 `create_job` command, which needs the job name as the second argument:
 ```shell script
-./manage.sh create_job <job_name>
+./manage.sh create_job <job_name> <simulation_name> <dataset_name> \
+    <number_of_tasks> <number_of_nodes> <time_in_minutes>
 ```
 
-The script checks if the specified job name is available and gives an error if
-this is not the case. Otherwise, a new job folder is created containing a 
+What the given variables exactly mean for a SLURM job is described below after 
+the header of a generated job is presented. First, the script checks if the 
+specified job name is available and gives an error if this is not the case. The 
+same goes for the simulation filename. The script only checks whether the 
+dataset name is provided, not if the dataset is present on the machine as jobs
+could be created locally while the dataset is only downloaded on the DAS-5. 
+If all tests are passed with no errors, a new job folder is created containing a
 default SLURM script. The default script is composed of a header and a body. The
 header contains:
 ```shell script
@@ -42,9 +48,9 @@ header contains:
 #SBATCH -J <job_name>
 #SBATCH	-o jobs/<job_name>/<job_name>.out
 #SBATCH --partition=defq
-#SBATCH -n <number of tasks>
-#SBATCH -N <number of nodes>
-#SBATCH -t <time in minutes>
+#SBATCH -n <number_of_tasks>
+#SBATCH -N <number_of_nodes>
+#SBATCH -t <time_in_minutes>
 SIMPATH="code/simulations/"
 SIMFILE="<simulation_name>"
 DATASET="<dataset_name>"
