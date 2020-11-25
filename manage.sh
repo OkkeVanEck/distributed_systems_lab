@@ -79,7 +79,7 @@ case "$1" in
 
     echo "#!/usr/bin/env bash
 #SBATCH -J ${2}
-#SBATCH	-o jobs/${2}/${2}.out
+#SBATCH -o jobs/${2}/${2}.out
 #SBATCH --partition=defq
 #SBATCH -n ${5:-16}
 #SBATCH -N ${6:-4}

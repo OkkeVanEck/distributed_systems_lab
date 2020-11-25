@@ -46,7 +46,7 @@ header contains:
 ```shell script
 #!/usr/bin/env bash
 #SBATCH -J <job_name>
-#SBATCH	-o jobs/<job_name>/<job_name>.out
+#SBATCH -o jobs/<job_name>/<job_name>.out
 #SBATCH --partition=defq
 #SBATCH -n <number_of_tasks>
 #SBATCH -N <number_of_nodes>
