@@ -91,7 +91,7 @@ JOBNAME=\"${2}\"
 " >> "jobs/${2}/${2}.sh"
     cat jobs/job_body.sh >> "jobs/${2}/${2}.sh"
     ;;
-# Run an existing job.
+# Run an existing job on the DAS-5.
 "run_job")
     # Check if job name is given.
     if [ -z "$2" ]; then
@@ -105,8 +105,39 @@ JOBNAME=\"${2}\"
         mkdir -p "jobs/${2}/results"
 
         # Run SLURM job.
-        echo "Starting job ${2}.."
+        echo "Starting DAS-5 job ${2}.."
         sbatch "jobs/${2}/${2}.sh"
+    else
+        echo "Job name does not exist."
+        exit 1
+    fi
+    ;;
+# Run an existing job locally.
+"run_local")
+    # Check if job name is given.
+    if [ -z "$2" ]; then
+        echo "No name of job specified."
+        exit 1
+    fi
+
+    # Check if given job name exists.
+    if [ -d "jobs/${2}" ]; then
+        # Create results folder if it doesn't exist already.
+        mkdir -p "jobs/${2}/results"
+
+        # Create runtime folders to work with.
+        # TODO: Create results and playground folders in tmp/job and set dataset folder for running python.
+
+        # Fetch needed variables from job script.
+        NUMTASKS=$(sed -n 5p "jobs/${2}/${2}.sh" | cut -c 12-)
+        SIMPATH=$(sed -n 8p "jobs/${2}/${2}.sh" | cut -c 10- | sed 's/.$//')
+        SIMFILE=$(sed -n 9p "jobs/${2}/${2}.sh" | cut -c 10- | sed 's/.$//')
+        DATASET=$(sed -n 10p "jobs/${2}/${2}.sh" | cut -c 10- | sed 's/.$//')
+
+        # Run python locally.
+        echo "Starting local job ${2}.."
+        mpiexec -n $NUMTASKS python3 "${SIMPATH}${SIMFILE}" "${DATASET}" \
+            "${TMP_PLAY}" "${TMP_DATA}" "${TMP_RES}"
     else
         echo "Job name does not exist."
         exit 1
