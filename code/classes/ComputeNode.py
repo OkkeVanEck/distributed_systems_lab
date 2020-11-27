@@ -33,6 +33,7 @@ class Compute_Node:
 
         self.kill_received = False
 
+        # for simulating without a HEAD NODE
         self.hard_threshold = 10
 
 
@@ -47,7 +48,6 @@ class Compute_Node:
         if self.machine_with_vertex(vertex_id) == self.rank:
             return True
         return False
-        # return self.get_vertex_rank(vertex_id) == self.rank
 
     def init_partition(self, file):
         file_uncrompressed = gzip.open(file, 'rt')
@@ -81,10 +81,10 @@ class Compute_Node:
         self.manage_fires()
         self.listen_thread.join()
         self.heartbeat_thread.join()
-        print("end of computing on node: " + str(self.rank))
-        print("burned vertexes on this partition are")
+        log("end of computing on node: " + str(self.rank))
+        log("burned vertexes on this partition are")
         for v in self.partitioned_graph.get_burned_vertices():
-            print(v)
+            log(v)
 
     def send_burn_request(self, vertex_id):
         """
@@ -99,11 +99,6 @@ class Compute_Node:
         comm.send(vertex_id, dest=dest, tag=MPI_TAG.FROM_COMPUTE_TO_COMPUTE.value)
 
     def send_heartbeat(self):
-        """
-        - something like this.
-        - make sure to wrap it in a function that executes code below
-        - at a standard interval.
-        """
         while not self.kill_received:
             log("sending heartbeat")
             burned_vertices = self.partitioned_graph.get_burned_vertices()
@@ -116,6 +111,7 @@ class Compute_Node:
             data = np.array(heartbeat_nodes, dtype=np.int)
             comm.send(data, dest=0, tag=MPI_TAG.FROM_HEADNODE_TO_COMPUTE.value)
 
+            # for simulations without head node object
             if len(self.nodes_sent_in_heartbeat.keys()) >= self.hard_threshold:
                 log("killing compute node: " + str(self.rank))
                 self.kill_received = True
