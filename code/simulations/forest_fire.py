@@ -7,7 +7,7 @@ from code.classes.ComputeNode import ComputeNode
 #   local if env variable is not defined.
 local = True
 
-if local:
+if not local:
     from mpi4py import MPI
 
     comm = MPI.COMM_WORLD
@@ -39,6 +39,7 @@ if __name__ == "__main__":
     else:
         compute_node = ComputeNode(rank, get_vertex_rank)
         compute_node.init_partition(file)
+        compute_node.start_fire()
         # these might all need to be on separate threads
         # compute_node.partitioned_graph.init_fire()
         # compute_node.listen_for_burn_requests()
