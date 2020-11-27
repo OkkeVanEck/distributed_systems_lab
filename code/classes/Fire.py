@@ -22,14 +22,14 @@ class Fire:
         self.ignite_random_node()
         self.spread()
 
-    def add_burning_vertex(self, vertex_id):
+    def add_burning_vertex(self, vertex_id: int):
         vertex = Vertex(vertex_id, VertexStatus.BURNING)
         # do we need to consider locks here?
         # the spread is on another thread
         self.burning_vertices.append(vertex)
 
     # execute math to determine what neighbors to burn
-    def determine_burn_list(self, neighbors):
+    def determine_burn_list(self, neighbors: list(Vertex)) -> list(Vertex):
         # interpretation from ahmed11, n_neighbors_to_burn is a geometric distributed rv and the given expectation is enough to characterize it
         # so, fwd_burning_prob / (1 - fwd_burning_prob) = 1 / p
         n_neighbors_to_burn = min(np.random.geometric(p=(1 - self.fwd_burning_prob) / self.fwd_burning_prob, size=1)[0], len(neighbors))
@@ -45,16 +45,12 @@ class Fire:
         # burning vertices list. This will maintain burning order until there are no
         # more vertices to burn on the assigned partition.
         #
-        log_calls = 0
         while len(self.burning_vertices) > 0 and not self.received_stop_signal:
             vertex = self.burning_vertices[0]
             self.graph.set_vertex_status(vertex, VertexStatus.BURNED)
             neighbors = self.graph.get_neighbors_to_burn(vertex)
             neighbors_to_burn = self.determine_burn_list(neighbors)
             local_neighbors_to_burn = self.graph.spread_fire_to_other_nodes(neighbors_to_burn)
-            if log_calls%3==0:
-                print("burning into neighbors " + str(local_neighbors_to_burn))
-            log_calls += 1
             for new_burning_vertex in local_neighbors_to_burn:
                 self.graph.set_vertex_status(new_burning_vertex, VertexStatus.BURNING)
                 self.burning_vertices.append(new_burning_vertex)

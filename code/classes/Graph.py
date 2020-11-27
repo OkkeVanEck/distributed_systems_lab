@@ -20,13 +20,13 @@ class Graph:
         self.fire.stop_burning()
         self.burning_vertices = {}
 
-    def get_vertex_status(self, vertex):
+    def get_vertex_status(self, vertex: Vertex):
         for vert in self.graph.keys():
             if vert.vertex_id == vertex.vertex_id:
                 return vert.status
         return VertexStatus.DOESNT_EXIST
 
-    def set_vertex_status(self, vertex, status):
+    def set_vertex_status(self, vertex: Vertex, status: VertexStatus)::
         for vert in self.graph.keys():
             if vert.vertex_id == vertex.vertex_id:
                 vert.status = status
@@ -36,10 +36,10 @@ class Graph:
     def get_burned_vertices(self):
         return self.burned_vertices
 
-    def get_neighbors(self, vertex):
+    def get_neighbors(self, vertex: Vertex) -> [Vertex]:
         return self.graph[vertex]
 
-    def add_vertex_and_neighbor(self, vertex_from, vertex_to):
+    def add_vertex_and_neighbor(self, vertex_from: int, vertex_to: int):
         vertex = Vertex(vertex_from, VertexStatus.NOT_BURNED)
         neighbor = Vertex(vertex_to, VertexStatus.NOT_BURNED)
         if vertex in self.graph:
@@ -59,7 +59,7 @@ class Graph:
             return list()
         return neighbors_to_burn
 
-    def spread_fire_to_other_nodes(self, burning_vertices):
+    def spread_fire_to_other_nodes(self, burning_vertices: list(Vertex)) -> list(Vertex):
         local_neighbors_to_burn = []
         for vertex in burning_vertices:
             # if the vertex is not in the graph, then it belongs to another partition
@@ -88,11 +88,9 @@ class GraphInterpreter:
 
     def data_only(self, file):
         for line in file:
-            check = line.decode('utf-8')
-            if check[0] == "#":
+            if line[0] == "#":
                 continue
-            # print(check)
-            yield check
+            yield line
 
     def read_graph_file(self, file_uncrompressed):
         # print("attempting to read")

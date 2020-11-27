@@ -12,17 +12,18 @@ from mpi4py import MPI
 comm = MPI.COMM_WORLD
 
 def log(message):
-    if (True):
+    if (False):
         print(message)
 
 
-class ComputeNode:
-    def __init__(self, rank):
+class Compute_Node:
+    def __init__(self, rank, n_nodes):
         """
         NOTE: get_vertex_rank is a function. This way we can use this class in
                 a flexible way.
         """
         self.rank = rank
+        self.num_compute_nodes = n_nodes - 1
         self.graph_reader = GraphInterpreter()
         self.partitioned_graph = Graph(self)
 
@@ -34,12 +35,16 @@ class ComputeNode:
 
         self.hard_threshold = 10
 
+
+    def machine_with_vertex(self, vertex_id):
+        return (vertex_id % self.num_compute_nodes + 1)
+
     def is_local(self, vertex_id):
         """
         - for partitioning, return True if vertex_id
         - belongs to the compute node.
         """
-        if (vertex_id % 5 + 1) == self.rank:
+        if self.machine_with_vertex(vertex_id) == self.rank:
             return True
         return False
         # return self.get_vertex_rank(vertex_id) == self.rank
@@ -89,8 +94,9 @@ class ComputeNode:
         """
         data = np.array([vertex_id], dtype=np.int)
         # find dest machine based on the vertex rank
-        # dest = self.get_vertex_rank(vertex_id)
-        # comm.send(vertex_id, dest=dest, tag=11)
+        dest = self.machine_with_vertex(vertex_id)
+        log("sending burn request to machine " + str(dest) + ". data = " + str(vertex_id))
+        comm.send(vertex_id, dest=dest, tag=MPI_TAG.FROM_COMPUTE_TO_COMPUTE.value)
 
     def send_heartbeat(self):
         """
@@ -99,6 +105,7 @@ class ComputeNode:
         - at a standard interval.
         """
         while not self.kill_received:
+            log("sending heartbeat")
             burned_vertices = self.partitioned_graph.get_burned_vertices()
             heartbeat_nodes = []
             for vertex in burned_vertices:
@@ -106,8 +113,8 @@ class ComputeNode:
                     heartbeat_nodes.append(vertex)
                     self.nodes_sent_in_heartbeat[vertex] = True
 
-            # data = np.array(heartbeat_nodes, dtype=np.int)
-            # comm.Send(data, dest=0, tag=MPI_TAG.FROM_HEADNODE_TO_COMPUTE)
+            data = np.array(heartbeat_nodes, dtype=np.int)
+            comm.send(data, dest=0, tag=MPI_TAG.FROM_HEADNODE_TO_COMPUTE.value)
 
             if len(self.nodes_sent_in_heartbeat.keys()) >= self.hard_threshold:
                 log("killing compute node: " + str(self.rank))
@@ -118,32 +125,32 @@ class ComputeNode:
 
     def listen(self):
         while not self.kill_received:
+            log("checking if other messages arrived")
             self.listen_for_burn_requests()
             self.listen_to_head_node()
-            time.sleep(2)
+            time.sleep(0.05)
 
         # listen to a burn request from another node
     def listen_for_burn_requests(self):
-        pass
-        # if comm.Iprobe(source=MPI.ANY_SOURCE,tag=MPI_TAG.FROM_COMPUTE_TO_COMPUTE):
-        #     data = comm.recv(source=MPI.ANY_SOURCE, tag=MPI_TAG.FROM_COMPUTE_TO_COMPUTE)
-        #     v = Vertex(data, 0)
-        #     # if the vertex is burned, ignore the message
-        #     if self.partitioned_graph.get_vertex_status(v) == VertexStatus.NOT_BURNED:
-        #         self.partitioned_graph.fire.add_burning_vertex(data)
+        if comm.Iprobe(source=MPI.ANY_SOURCE,tag=MPI_TAG.FROM_COMPUTE_TO_COMPUTE.value):
+            data = comm.recv(source=MPI.ANY_SOURCE, tag=MPI_TAG.FROM_COMPUTE_TO_COMPUTE.value)
+            v = Vertex(data, 0)
+            # if the vertex is burned, ignore the message
+            if self.partitioned_graph.get_vertex_status(v) == VertexStatus.NOT_BURNED:
+                log("received burn request on computer " + str(self.rank) + ". data = " + str(data))
+                self.partitioned_graph.fire.add_burning_vertex(data)
     
     def listen_to_head_node(self):
-        pass
-        # if comm.Iprobe(source=0,tag=MPI_TAG.FROM_HEADNODE_TO_COMPUTE):
-        #     data = comm.recv(source=0, tag=MPI_TAG.FROM_HEADNODE_TO_COMPUTE)
-        #     if data == "KILL":
-        #         # join all threads. (listening threads at least)
-        #         # put machine in a more idle state???
-        #         self.kill_received = True
-        #         self.partitioned_graph.stop_fire()
-        #     if data == "RESET":
-        #         self.partitioned_graph.stop_fire()
-        #         self.partitioned_graph.set_all_vertex_status(VertexStatus.NOT_BURNED)
+        if comm.Iprobe(source=0,tag=MPI_TAG.FROM_HEADNODE_TO_COMPUTE.value):
+            data = comm.recv(source=0, tag=MPI_TAG.FROM_HEADNODE_TO_COMPUTE.value)
+            if data == "KILL":
+                # join all threads. (listening threads at least)
+                # put machine in a more idle state???
+                self.kill_received = True
+                self.partitioned_graph.stop_fire()
+            if data == "RESET":
+                self.partitioned_graph.stop_fire()
+                self.partitioned_graph.set_all_vertex_status(VertexStatus.NOT_BURNED)
             
 
 

@@ -1,6 +1,6 @@
 import argparse
 
-from code.classes.ComputeNode import ComputeNode
+from code.classes.ComputeNode import Compute_Node
 
 # TODO: Pass the local variable to each class as an initialization argument. Or
 #   maybe set the variable as an environment variable and let every class assume
@@ -14,7 +14,7 @@ rank = comm.Get_rank()
 
 # This function would be stated somewhere. Only used by ComputeNode, but in
 # order to keep the program flexible, it is shared as a variable.
-def get_vertex_rank(vertex_id):
+def get_vertex_rank(vertex_id: int) -> int:
     return vertex_id % (size - 1) + 1
 
 
@@ -30,10 +30,7 @@ if __name__ == "__main__":
         print("init head node")
         # initialize a head node/head node class
     else:
-        compute_node = ComputeNode(rank)
-        compute_node.init_partition(file)
+        print("init compute node rank: " + str(rank)) 
+        compute_node = Compute_Node(rank, args.n_nodes)
+        compute_node.init_partition(args.data)
         compute_node.do_tasks()
-        # these might all need to be on separate threads
-        # compute_node.partitioned_graph.init_fire()
-        # compute_node.listen_for_burn_requests()
-        # compute.send_heartbeat()
