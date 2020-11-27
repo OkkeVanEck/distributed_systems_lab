@@ -10,6 +10,7 @@ class Graph:
         self.graph = {}
         self.fire = Fire(self)
         self.compute_node = compute_node
+        self.burned_vertices = {}
 
     def init_fire(self):
         self.fire.start_burning()
@@ -27,13 +28,11 @@ class Graph:
         for vert in self.graph.keys():
             if vert.vertex_id == vertex.vertex_id:
                 vert.status = status
+                if status == VertexStatus.BURNED or status == VertexStatus.BURNING:
+                    self.burned_vertices[vertex.vertex_id]
 
     def get_burned_vertices(self) -> list:
-        burned_vertices = []
-        for vertex in self.graph.keys():
-            if (vertex.status == VertexStatus.BURNED or vertex.status == VertexStatus.BURNING):
-                burned_vertices.add(vertex)
-        return burned_vertices
+        return self.burned_vertices
 
     def get_neighbors(self, vertex: Vertex) -> [Vertex]:
         return self.graph[vertex]
@@ -64,6 +63,15 @@ class Graph:
             else:
                 local_neighbors_to_burn.add[vertex]
         return local_neighbors_to_burn
+
+    def set_all_vertex_status(self, vertex_status: VertexStatus):
+        for vertex in self.graph.keys():
+            vertex.vertex_status = vertex_status
+
+    def recreate_fire(self):
+        self.stop_fire()
+        self.set_all_vertex_status(VertexStatus.NOT_BURNED)
+        self.init_fire()
 
 
 class GraphInterpreter:
