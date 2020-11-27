@@ -40,10 +40,23 @@ class ComputeNode:
                 self.partitioned_graph.add_vertex_and_neighbor(vertex, neighbor)
 
     
-    def start_fire(self):
+    def manage_fires(self):
+        # init_fire returns when stop_fire is called
+        # stop fire is called in the listening thread when either
+        #     1. A kill message is sent
+        #       - when kill is sent, all vertex statuses are set to NOT_BURNED
+        #.      - the graph stops the fire and set graph.burned_vertices to {}
+        #.      - and self.kill_received is set to True
+        #.    2. A reset meesage is sent.
+        #       - same as above except self.kill_received remains false
+        #.      - therefore, a new fire is started on the current thread
+        while not self.kill_received:
+            self.partitioned_graph.init_fire()
+
+    def do_tasks(self):
         self.listen_thread.start()
         self.heartbeat_thread.start()
-        self.partitioned_graph.init_fire()
+        self.partitioned_graph.manage_fires()
         self.listen_thread.join()
         self.heartbeat_thread.join()
         print("end of computing")
@@ -101,7 +114,8 @@ class ComputeNode:
                 self.kill_received = True
                 self.partitioned_graph.stop_fire()
             if data == "RESET":
-                self.partitioned_graph.recreate_fire()
+                self.partitioned_graph.stop_fire()
+                self.partitioned_graph.set_all_vertex_status(VertexStatus.NOT_BURNED)
             
 
 

@@ -17,6 +17,7 @@ class Graph:
 
     def stop_fire(self):
         self.fire.stop_burning()
+        self.burning_vertices = {}
 
     def get_vertex_status(self, vertex: Vertex):
         for vert in self.graph.keys():
@@ -67,11 +68,6 @@ class Graph:
     def set_all_vertex_status(self, vertex_status: VertexStatus):
         for vertex in self.graph.keys():
             vertex.vertex_status = vertex_status
-
-    def recreate_fire(self):
-        self.stop_fire()
-        self.set_all_vertex_status(VertexStatus.NOT_BURNED)
-        self.init_fire()
 
 
 class GraphInterpreter:
