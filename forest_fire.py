@@ -22,16 +22,17 @@ if __name__ == "__main__":
     # Set variable for local run.
 
     # TODO: Read arguments from args. (See a job file what is given in what order)
-    parser = argparse.ArgumentParser()
-    parser.add_argument("data")
-    parser.add_argument("n_nodes")
-    args = parser.parse_args()
+    # parser = argparse.ArgumentParser()
+    # parser.add_argument("data")
+    # parser.add_argument("n_nodes")
+    # args = parser.parse_args()
     if rank == 0:
         print("init head node")
         # initialize a head node/head node class
     else:
+        print("init compute node rank: " + str(rank)) 
         compute_node = ComputeNode(rank)
-        compute_node.init_partition(file)
+        compute_node.init_partition("/Users/tomebergen/Documents/VU/Classes/DistributedSystems/Lab/distributed_systems_lab/web-Stanford.txt.gz")
         compute_node.do_tasks()
         # these might all need to be on separate threads
         # compute_node.partitioned_graph.init_fire()
