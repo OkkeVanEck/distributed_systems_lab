@@ -104,13 +104,23 @@ class ComputeNode:
         while not self.kill_received:
             log("sending heartbeat")
             burned_vertices = self.partitioned_graph.get_burned_vertices()
+            burned_edges = self.partitioned_graph.get_burned_edges()
             heartbeat_nodes = []
+            heartbeat_edges = []
+
+            # find new nodes to send in a heartbeat
             for vertex in burned_vertices:
                 if vertex not in self.nodes_sent_in_heartbeat:
                     heartbeat_nodes.append(vertex)
                     self.nodes_sent_in_heartbeat[vertex] = True
 
-            data = np.array(heartbeat_nodes, dtype=np.int)
+            # find the edges
+            for vertex in heartbeat_nodes:
+                for edge in burned_edges:
+                    if edge[1] == vertex:
+                        heartbeat_edges.append(edge)
+
+            data = np.array(heartbeat_edges, dtype=np.int)
             comm.send(data, dest=0, tag=MPI_TAG.FROM_HEADNODE_TO_COMPUTE.value)
 
             # for simulations without head node object

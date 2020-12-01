@@ -59,6 +59,7 @@ class Fire:
             for new_burning_vertex in local_neighbors_to_burn:
                 self.graph.set_vertex_status(new_burning_vertex,
                                              VertexStatus.BURNING)
+                self.graph.add_burned_edge(vertex, new_burning_vertex)
                 self.burning_vertices.append(new_burning_vertex)
 
             # if stop fire is called self.burning_vertices might have been set

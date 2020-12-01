@@ -11,15 +11,15 @@ class Graph:
         self.graph = {}
         self.fire = Fire(self)
         self.compute_node = compute_node
+        # dict of vertex_id's
         self.burned_vertices = {}
-        self.burning_vertices = {}
+        self.burned_edges = {}
 
     def init_fire(self):
         self.fire.start_burning()
 
     def stop_fire(self):
         self.fire.stop_burning()
-        self.burning_vertices = {}
 
     def get_vertex_status(self, vertex: Vertex):
         for vert in self.graph.keys():
@@ -34,8 +34,14 @@ class Graph:
                 if status == VertexStatus.BURNED or status == VertexStatus.BURNING:
                     self.burned_vertices[vertex.vertex_id] = True
 
+    def add_burned_edge(self, vertex_from: Vertex, vertex_to: Vertex):
+        self.burned_edges.append([vertex_from.vertex_id, vertex_to.vertex_id])
+
     def get_burned_vertices(self):
         return self.burned_vertices
+
+    def get_burned_edges(self):
+        return self.burned_edges
 
     def get_neighbors(self, vertex: Vertex) -> [Vertex]:
         return self.graph[vertex]
