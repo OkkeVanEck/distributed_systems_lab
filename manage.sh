@@ -127,14 +127,13 @@ JOBNAME=\"${2}\"
 
         # Define paths for the job to work with.
         TMPDIR="runtime_tmps/${2}"
-        TMP_DATA="${TMPDIR}/data"
+        TMP_DATA="data"
         TMP_RES="${TMPDIR}/results"
         TMP_PLAY="${TMPDIR}/playground"
 
         # Create runtime folders to work with.
         mkdir -p "runtime_tmps"
         mkdir -p "${TMPDIR}"
-        mkdir -p "data"
         mkdir -p "${TMPDIR}/results"
         mkdir -p "${TMPDIR}/playground"
 
@@ -144,6 +143,9 @@ JOBNAME=\"${2}\"
         SIMFILE=$(sed -n 9p "jobs/${2}/${2}.sh" | cut -c 10- | sed 's/.$//')
         DATASET=$(sed -n 10p "jobs/${2}/${2}.sh" | cut -c 10- | sed 's/.$//')
 
+        # Create folder for dataset if it does not exist for catching faults.
+        mkdir -p "${TMP_DATA}/${DATASET}"
+
         # Run python locally.
         echo "Starting local job ${2}.."
         mpirun -n $NUMTASKS python3 "${SIMPATH}${SIMFILE}" "${DATASET}" \
@@ -151,6 +153,10 @@ JOBNAME=\"${2}\"
 
         # Copy results to jobs directory.
         cp -a "${TMP_RES}/." "${PWD}/jobs/${JOBNAME}/results"
+
+        # Only delete dataset folder if it is empty, as it was generated to
+        # catch faults.
+        rmdir "${TMP_DATA}/${DATASET}" &>/dev/null
 
         # Clean TMP directories for reuse of job script.
         rm -rf "${TMPDIR:?}"

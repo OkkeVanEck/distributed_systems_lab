@@ -1,6 +1,7 @@
 from mpi4py import MPI
 import numpy as np
 from sys import argv
+import os
 
 
 if __name__ == '__main__':
@@ -9,11 +10,15 @@ if __name__ == '__main__':
 
     if rank == 0:
         # Print all given arguments.
-        print(f"DATASET\n=======\n\t{argv[1]}")
+        print(f"DATASET\n=======\nName:   {argv[1]}")
+        print("Contains:")
+        for file in os.listdir(f"{argv[3]}/{argv[1]}"):
+            if file.endswith(".v") or file.endswith(".e"):
+                print(f"\t{file}")
 
         print("\nPATHS\n=====")
         print(f"Playground:  {argv[2]}")
-        print(f"Data:        {argv[3]}")
+        print(f"Data:        {argv[3]}/{argv[1]}")
         print(f"Results:     {argv[4]}\n\n")
 
         # Set data for further testing.
