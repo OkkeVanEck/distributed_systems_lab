@@ -88,8 +88,8 @@ SIMPATH=\"${SIMPATH}\"
 SIMFILE=\"${3}\"
 DATASET=\"${4}\"
 JOBNAME=\"${2}\"
-" >> "jobs/${2}/${2}.sh"
-    cat jobs/job_body.sh >> "jobs/${2}/${2}.sh"
+" >>"jobs/${2}/${2}.sh"
+    cat jobs/job_body.sh >>"jobs/${2}/${2}.sh"
     ;;
 # Run an existing job on the DAS-5.
 "run_job")
@@ -125,8 +125,18 @@ JOBNAME=\"${2}\"
         # Create results folder if it doesn't exist already.
         mkdir -p "jobs/${2}/results"
 
+        # Define paths for the job to work with.
+        TMPDIR="runtime_tmps/${2}"
+        TMP_DATA="${TMPDIR}/data"
+        TMP_RES="${TMPDIR}/results"
+        TMP_PLAY="${TMPDIR}/playground"
+
         # Create runtime folders to work with.
-        # TODO: Create results and playground folders in tmp/job and set dataset folder for running python.
+        mkdir -p "runtime_tmps"
+        mkdir -p "${TMPDIR}"
+        mkdir -p "data"
+        mkdir -p "${TMPDIR}/results"
+        mkdir -p "${TMPDIR}/playground"
 
         # Fetch needed variables from job script.
         NUMTASKS=$(sed -n 5p "jobs/${2}/${2}.sh" | cut -c 12-)
@@ -136,8 +146,14 @@ JOBNAME=\"${2}\"
 
         # Run python locally.
         echo "Starting local job ${2}.."
-        mpiexec -n $NUMTASKS python3 "${SIMPATH}${SIMFILE}" "${DATASET}" \
+        mpirun -n $NUMTASKS python3 "${SIMPATH}${SIMFILE}" "${DATASET}" \
             "${TMP_PLAY}" "${TMP_DATA}" "${TMP_RES}"
+
+        # Copy results to jobs directory.
+        cp -a "${TMP_RES}/." "${PWD}/jobs/${JOBNAME}/results"
+
+        # Clean TMP directories for reuse of job script.
+        rm -rf "${TMPDIR:?}"
     else
         echo "Job name does not exist."
         exit 1
