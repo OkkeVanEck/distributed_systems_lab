@@ -14,15 +14,41 @@ each other. The main structure of the project is divided into:
 
 
 ## Installation guide
-First, load the Python 3.6.0 and Intel MPI modules:
+The project supports local execution as well as execution on the DAS-5. 
+Different supercomputers or clusters that use the SLURM workload manager might 
+also be compatible, but there is no guarantee. All the code is written with
+Python 3 in mind, so make sure that that's the version you are using. 
+
+Installing the necessary packages for a local setup is different than installing
+the packages on the DAS-5. Thus both are described in their own section below.
+
+#### Local instructions
+In order to install all packages locally, one can choose to create a virtual
+environment to keep everything separate from other environments. When in the
+desired environment, install all required packages with **pip3**: 
+```shell script
+pip3 install -r requirements.txt
+```
+
+The project makes use of **mpi4py** package, which relies on the MPI header 
+files. If come across an error loading the MPI header files, please make sure
+that the `libopenmpi-dev` is installed on your system. Or install the header
+files simply with:
+```shell script
+sudo apt install libopenmpi-dev
+```
+
+#### DAS-5 instructions
+When installing the packages on the DAS-5, make sure that the Python 3.6.0 and 
+Intel MPI modules are loaded:
 ```shell script
 module load python/3.6.0
 module load intel-mpi/64/5.1.2/150
 ```
 
-Then install **mpi4py** in userspace with **pip3**: 
+Then install all required packages in userspace with **pip3**: 
 ```shell script
-pip3 install --user mpi4py
+pip3 install --user -r requirements.txt
 ```
 
 
