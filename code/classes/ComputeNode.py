@@ -7,16 +7,18 @@ from .Graph import Graph, GraphInterpreter
 from .Vertex import Vertex
 from .Enums import MPI_TAG, VertexStatus
 
-
 from mpi4py import MPI
 comm = MPI.COMM_WORLD
 
+DO_LOG=False
+
+
 def log(message):
-    if (False):
+    if DO_LOG:
         print(message)
 
 
-class Compute_Node:
+class ComputeNode:
     def __init__(self, rank, n_nodes):
         """
         NOTE: get_vertex_rank is a function. This way we can use this class in
@@ -28,7 +30,8 @@ class Compute_Node:
         self.partitioned_graph = Graph(self)
 
         self.listen_thread = threading.Thread(target=self.listen, args=())
-        self.heartbeat_thread = threading.Thread(target=self.send_heartbeat, args=())
+        self.heartbeat_thread = threading.Thread(target=self.send_heartbeat,
+                                                 args=())
         self.nodes_sent_in_heartbeat = {}
 
         self.kill_received = False
@@ -36,9 +39,8 @@ class Compute_Node:
         # for simulating without a HEAD NODE
         self.hard_threshold = 10
 
-
     def machine_with_vertex(self, vertex_id):
-        return (vertex_id % self.num_compute_nodes + 1)
+        return vertex_id % self.num_compute_nodes + 1
 
     def is_local(self, vertex_id):
         """
@@ -50,26 +52,27 @@ class Compute_Node:
         return False
 
     def init_partition(self, file):
-        file_uncrompressed = gzip.open(file, 'rt')
+        file_uncompressed = gzip.open(file, 'rt')
         assigned_vertices = 0
-        for line in self.graph_reader.read_graph_file(file_uncrompressed):
+
+        for line in self.graph_reader.read_graph_file(file_uncompressed):
             vertex, neighbor = map(int, line.split())
             if self.is_local(vertex):
                 self.partitioned_graph.add_vertex_and_neighbor(vertex, neighbor)
                 assigned_vertices += 1
+
         log("assigned_vertices = " + str(assigned_vertices))
 
-    
     def manage_fires(self):
         # init_fire returns when stop_fire is called
         # stop fire is called in the listening thread when either
         #     1. A kill message is sent
-        #       - when kill is sent, all vertex statuses are set to NOT_BURNED
-        #.      - the graph stops the fire and set graph.burned_vertices to {}
-        #.      - and self.kill_received is set to True
-        #.    2. A reset meesage is sent.
-        #       - same as above except self.kill_received remains false
-        #.      - therefore, a new fire is started on the current thread
+        #       - when kill is sent, all vertex statuses are set to NOT_BURNED.
+        #       - the graph stops the fire and set graph.burned_vertices to {}.
+        #       - and self.kill_received is set to True.
+        #     2. A reset message is sent.
+        #       - same as above except self.kill_received remains false.
+        #       - therefore, a new fire is started on the current thread.
         while not self.kill_received:
             self.partitioned_graph.init_fire()
         log("return from assigned_vertices")
@@ -92,7 +95,6 @@ class Compute_Node:
         - send burn request to node with partition that has vertex_id
         - something like this
         """
-        data = np.array([vertex_id], dtype=np.int)
         # find dest machine based on the vertex rank
         dest = self.machine_with_vertex(vertex_id)
         log("sending burn request to machine " + str(dest) + ". data = " + str(vertex_id))
@@ -135,7 +137,7 @@ class Compute_Node:
             if self.partitioned_graph.get_vertex_status(v) == VertexStatus.NOT_BURNED:
                 log("received burn request on computer " + str(self.rank) + ". data = " + str(data))
                 self.partitioned_graph.fire.add_burning_vertex(data)
-    
+
     def listen_to_head_node(self):
         if comm.Iprobe(source=0,tag=MPI_TAG.FROM_HEADNODE_TO_COMPUTE.value):
             data = comm.recv(source=0, tag=MPI_TAG.FROM_HEADNODE_TO_COMPUTE.value)
@@ -147,6 +149,3 @@ class Compute_Node:
             if data == "RESET":
                 self.partitioned_graph.stop_fire()
                 self.partitioned_graph.set_all_vertex_status(VertexStatus.NOT_BURNED)
-            
-
-

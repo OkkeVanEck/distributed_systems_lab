@@ -1,6 +1,6 @@
 import argparse
 
-from code.classes.ComputeNode import Compute_Node
+from code.classes.ComputeNode import ComputeNode
 
 # TODO: Pass the local variable to each class as an initialization argument. Or
 #   maybe set the variable as an environment variable and let every class assume
@@ -31,6 +31,6 @@ if __name__ == "__main__":
         # initialize a head node/head node class
     else:
         print("init compute node rank: " + str(rank)) 
-        compute_node = Compute_Node(rank, args.n_nodes)
+        compute_node = ComputeNode(rank, args.n_nodes)
         compute_node.init_partition(args.data)
         compute_node.do_tasks()

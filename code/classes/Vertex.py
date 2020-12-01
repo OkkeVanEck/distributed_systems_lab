@@ -1,5 +1,3 @@
-from enum import Enum
-
 class Vertex:
     def __init__(self, vertex_id, status):
         self.vertex_id = vertex_id
