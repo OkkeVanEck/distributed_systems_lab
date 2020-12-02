@@ -13,7 +13,7 @@ class Graph:
         self.compute_node = compute_node
         # dict of vertex_id's
         self.burned_vertices = {}
-        self.burned_edges = {}
+        self.burned_edges = []
 
     def init_fire(self):
         self.fire.start_burning()
@@ -33,6 +33,12 @@ class Graph:
                 vert.status = status
                 if status == VertexStatus.BURNED or status == VertexStatus.BURNING:
                     self.burned_vertices[vertex.vertex_id] = True
+                    return
+        # possible setting a remote vertex status from the fire
+        # if that's the case, add burned_vertex here so that the 
+        # edge can be sent
+        self.burned_vertices[vertex.vertex_id] = True
+
 
     def add_burned_edge(self, vertex_from: Vertex, vertex_to: Vertex):
         self.burned_edges.append([vertex_from.vertex_id, vertex_to.vertex_id])
@@ -70,16 +76,18 @@ class Graph:
 
     def spread_fire_to_other_nodes(self, burning_vertices: List[Vertex]) -> List[Vertex]:
         local_neighbors_to_burn = []
+        remote_neighbors_to_burn = []
         for vertex in burning_vertices:
             # if the vertex is not in the graph, then it belongs to another partition
             # tell the compute node to handle the communication
             # if vertex not in self.graph.keys()
-            if self.compute_node.is_local(vertex.vertex_id):  
+            if not self.compute_node.is_local(vertex.vertex_id):  
                 # can be optimised that smaller msgs can be combined
-                self.compute_node.send_burn_request(vertex.vertex_id)  
+                self.compute_node.send_burn_request(vertex.vertex_id)
+                remote_neighbors_to_burn.append(vertex)
             else:
                 local_neighbors_to_burn.append(vertex)
-        return local_neighbors_to_burn
+        return local_neighbors_to_burn, remote_neighbors_to_burn
 
     def set_all_vertex_status(self, vertex_status):
         for vertex in self.graph.keys():
