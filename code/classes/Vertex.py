@@ -8,3 +8,6 @@ class Vertex:
 
     def __hash__(self):
         return hash(self.vertex_id)
+
+    def __str__(self):
+        return str(self.vertex_id)

@@ -60,6 +60,6 @@ def run_sim(scale_factor, dataset, tmp_play, tmp_data, tmp_res):
 
         # Start a ComputeNode.
         log(f"Starting ComputeNode on {rank}..")
-        compute_node = ComputeNode(rank, n_nodes)
+        compute_node = ComputeNode(rank, False, n_nodes)
         compute_node.init_partition(data)
         compute_node.do_tasks()
