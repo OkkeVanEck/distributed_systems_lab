@@ -28,6 +28,7 @@ class Graph:
         return VertexStatus.DOESNT_EXIST
 
     def set_vertex_status(self, vertex: Vertex, status: VertexStatus):
+        # TODO: Issue/Enhancement https://github.com/OkkeVanEck/distributed_systems_lab/issues/13
         for vert in self.graph.keys():
             if vert.vertex_id == vertex.vertex_id:
                 vert.status = status
@@ -53,6 +54,7 @@ class Graph:
         return self.graph[vertex]
 
     def add_vertex_and_neighbor(self, vertex_from: int, vertex_to: int):
+        # TODO: Issue https://github.com/OkkeVanEck/distributed_systems_lab/issues/14
         vertex = Vertex(vertex_from, VertexStatus.NOT_BURNED)
         neighbor = Vertex(vertex_to, VertexStatus.NOT_BURNED)
         if vertex in self.graph:

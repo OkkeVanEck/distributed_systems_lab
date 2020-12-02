@@ -42,8 +42,9 @@ class ComputeNode:
         self.allowed_fires = 1
 
         # for simulating without a HEAD NODE
-        self.hard_threshold = 10
+        # self.hard_threshold = 10
 
+    # TODO: https://github.com/OkkeVanEck/distributed_systems_lab/issues/15
     def machine_with_vertex(self, vertex_id):
         # add 1 because compute node rank starts at 1
         return (vertex_id % self.num_compute_nodes) + 1
@@ -61,6 +62,7 @@ class ComputeNode:
         file_uncompressed = gzip.open(file, 'rt')
         assigned_vertices = 0
 
+        # TODO: Issue https://github.com/OkkeVanEck/distributed_systems_lab/issues/14
         for line in self.graph_reader.read_graph_file(file_uncompressed):
             vertex, neighbor = map(int, line.split())
             if self.is_local(vertex):
@@ -137,6 +139,7 @@ class ComputeNode:
                         self.nodes_sent_in_heartbeat[vertex] = True
 
                 # heartbeat nodes are new nodes burned.
+                # TODO: https://github.com/OkkeVanEck/distributed_systems_lab/issues/16
                 for vertex in heartbeat_nodes:
                     for edge in burned_edges:
                         if edge[1] == vertex and edge not in heartbeat_edges:
@@ -147,10 +150,10 @@ class ComputeNode:
                 comm.send(data, dest=0, tag=MPI_TAG.FROM_HEADNODE_TO_COMPUTE.value)
 
                 # for simulations without head node object
-                if len(self.nodes_sent_in_heartbeat.keys()) >= self.hard_threshold:
+                # if len(self.nodes_sent_in_heartbeat.keys()) >= self.hard_threshold:
                     # log("killing compute node: " + str(self.rank))
-                    self.kill_received = True
-                    self.partitioned_graph.stop_fire()
+                    # self.kill_received = True
+                    # self.partitioned_graph.stop_fire()
 
             time.sleep(SLEEP_TIMES.COMPUTE_NODE_SEND_HEARTBEAT.value)
 

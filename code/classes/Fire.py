@@ -45,13 +45,6 @@ class Fire:
             self.burning_vertices = random.sample(list(filter(lambda x: x.status == VertexStatus.NOT_BURNED,
                                     self.graph.graph.keys())), 1)
 
-
-    def get_vertexe_print_list(self, vertex_list):
-        ret = []
-        for v in vertex_list:
-            ret.append(v.vertex_id)
-        return ret
-
     def spread(self):
         # Every burn step adds new burning_vertices to the
         # burning vertices list. This will maintain burning order until there
