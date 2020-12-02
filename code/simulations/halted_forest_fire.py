@@ -1,42 +1,42 @@
 # Load packages.
 from mpi4py import MPI
 
-# Load all classes and functions from own files.
+# Load classes and functions from own files.
 from ComputeNode import ComputeNode
+from HeadNode import HeadNode
 
 # Setup globals for each process.
 comm = MPI.COMM_WORLD
 size = comm.Get_size()
 rank = comm.Get_rank()
+DO_LOG=True
+
+
+def log(message):
+    """General function for logging actions if global variable is set."""
+    if DO_LOG:
+        print(message)
 
 
 def get_vertex_rank(vertex_id: int) -> int:
-    """Function used by ComputeNodes to propagate fires accross nodes."""
+    """Function used by ComputeNodes to propagate fires across nodes."""
     return vertex_id % (size - 1) + 1
 
 
-def run_sim():
-    print(f"\nWOOHOOO, I got Called by {rank}!")
-    cn = ComputeNode(rank, 10)
-    print(cn)
+def run_sim(scale_factor, dataset, tmp_play, tmp_data, tmp_res):
+    """
+    Entrypoint for starting a halted forst fire simulation.
+    Starts up a single HeadNode and multiple compute nodes.
+    """
 
-    # # Parse call arguments for execution.
-    # dataset, tmp_play, tmp_data, tmp_res = parse_args()
-    #
-    # # Set environment variable for triggering logs during execution.
-    # os.environ["DEBUG"] = "True"
-    #
-    # print(f"\nRank: {rank}\n\tDataset: {dataset}\n\tTmp_play: {tmp_play}\n\t"
-    #       f"Tmp_data: {tmp_data}\n\t Tmp_res: {tmp_res}\nDebug: "
-    #       f"{os.environ['DEBUG']}\n")
-    #
-    #
-    # # TODO: Read arguments from args. (See a job file what is given in what order)
-    # # if rank == 0:
-    # #     print("init head node")
-    # #     # initialize a head node/head node class
-    # # else:
-    # #     print("init compute node rank: " + str(rank))
-    # #     compute_node = ComputeNode(rank, args.n_nodes)
-    # #     compute_node.init_partition(args.data)
-    # #     compute_node.do_tasks()
+    # Fetch the right datafiles according to rank of process.
+
+    # Startup node process according to rank of process.
+    if rank == 0:
+        log(f"Starting HeadNode on {rank}..")
+        hn = HeadNode(rank, n_nodes, float(scale_factor), total_vertices)
+    else:
+        log(f"Starting ComputeNode on {rank}..")
+        compute_node = ComputeNode(rank, n_nodes)
+        compute_node.init_partition(data)
+        compute_node.do_tasks()

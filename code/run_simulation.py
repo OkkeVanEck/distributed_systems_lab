@@ -1,18 +1,14 @@
+# Load packages.
 from mpi4py import MPI
 import importlib.util
 import argparse
 import sys
 import os
 
-
-def load_dir_structure():
-    """Add structure of dirs to path for short imports."""
-    root = os.path.dirname(os.path.realpath(__file__))
-    sys.path.append(os.path.join(root))
-    sys.path.append(os.path.join(root, "algorithms"))
-    sys.path.append(os.path.join(root, "classes"))
-    sys.path.append(os.path.join(root, "helpers"))
-    sys.path.append(os.path.join(root, "simulations"))
+# Setup globals for each process.
+comm = MPI.COMM_WORLD
+size = comm.Get_size()
+rank = comm.Get_rank()
 
 
 def parse_args():
@@ -21,6 +17,8 @@ def parse_args():
         ArgumentParser(description="Process input for execution of simulation.")
     parser.add_argument("simpath", type=str,
                         help="Path to the simulation file")
+    parser.add_argument("scale_factor", type=str,
+                        help="Scale factor for algorithm")
     parser.add_argument("dataset", type=str,
                         help="Name of the dataset to use during runtime")
     parser.add_argument("tmp_play", type=str,
@@ -34,11 +32,17 @@ def parse_args():
     return parser.parse_args()
 
 
+def load_dir_structure():
+    """Add structure of dirs to path for short imports."""
+    root = os.path.dirname(os.path.realpath(__file__))
+    sys.path.append(os.path.join(root))
+    sys.path.append(os.path.join(root, "algorithms"))
+    sys.path.append(os.path.join(root, "classes"))
+    sys.path.append(os.path.join(root, "helpers"))
+    sys.path.append(os.path.join(root, "simulations"))
+
+
 if __name__ == '__main__':
-    # Setup globals for each process.
-    comm = MPI.COMM_WORLD
-    size = comm.Get_size()
-    rank = comm.Get_rank()
     args = None
 
     if rank == 0:
@@ -48,6 +52,7 @@ if __name__ == '__main__':
     # Wait for argument parsing to finish and broadcast results.
     args = comm.bcast(args, root=0)
 
+    # Load directory structure for short imports.
     load_dir_structure()
 
     # Parse simulation path and find module.
@@ -58,6 +63,7 @@ if __name__ == '__main__':
     sim_module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(sim_module)
 
-    # Load import structure in path, sync all processes, and run simulation.
+    # Sync all processes, and run the simulation.
     comm.Barrier()
-    sim_module.run_sim()
+    sim_module.run_sim(args.scale_factor, args.dataset, args.tmp_play,
+                       args.tmp_data, args.tmp_res)
