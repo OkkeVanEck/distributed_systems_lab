@@ -156,19 +156,19 @@ SCALE=\"${4}\"
 
         # Run python locally.
         echo "Starting local job ${2}.."
-        mpirun -n ${NUMTASKS} python3 "code/run_simulation.py" \
+        mpirun -n "${NUMTASKS}" python3 "code/run_simulation.py" \
             "${SIMPATH}${SIMFILE}" "${SCALE}" "${DATASET}" "${TMP_PLAY}" \
             "${TMP_DATA}" "${TMP_RES}"
 
         # Copy results to jobs directory.
-        cp -a "${TMP_RES}/." "${PWD}/jobs/${JOBNAME}/results"
+        cp -rf "${TMP_RES}/." "jobs/${2}/results"
 
         # Only delete dataset folder if it is empty, as it was generated to
         # catch faults.
         rmdir "${TMP_DATA}/${DATASET}" &>/dev/null
 
         # Clean TMP directories for reuse of job script.
-        rm -rf "${TMPDIR:?}"
+        rm -rf "${TMPDIR}"
     else
         echo "Job name does not exist."
         exit 1
