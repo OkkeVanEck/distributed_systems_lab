@@ -1,16 +1,3 @@
-from enum import Enum
-
-
-class VertexStatus(Enum):
-    NOT_BURNED = 0
-    # Neighbours of Burning vertices can be Burned, Not Burned, or Burning.
-    BURNING = 1
-    # All neighbors of the vertex are either Burning or are also Burned
-    # nothing uses BURNED yet, could be nice to use as an optimization
-    BURNED = 2
-    DOESNT_EXIST = 3
-
-
 class Vertex:
     def __init__(self, vertex_id, status):
         self.vertex_id = vertex_id
@@ -21,3 +8,6 @@ class Vertex:
 
     def __hash__(self):
         return hash(self.vertex_id)
+
+    def __str__(self):
+        return str(self.vertex_id)
