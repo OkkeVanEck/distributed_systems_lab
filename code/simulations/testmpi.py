@@ -1,8 +1,6 @@
 from mpi4py import MPI
 import numpy as np
 
-from code.classes import ComputeNode
-
 
 if __name__ == '__main__':
     comm = MPI.COMM_WORLD

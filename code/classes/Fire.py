@@ -2,8 +2,8 @@ from typing import List
 import numpy as np
 import random
 
-from .Enums import VertexStatus
-from .Vertex import Vertex
+from Enums import VertexStatus
+from Vertex import Vertex
 
 
 class Fire:

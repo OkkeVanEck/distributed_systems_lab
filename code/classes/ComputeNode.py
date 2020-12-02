@@ -3,9 +3,9 @@ import threading
 import gzip
 import time
 
-from .Graph import Graph, GraphInterpreter
-from .Vertex import Vertex
-from .Enums import MPI_TAG, VertexStatus
+from Graph import Graph, GraphInterpreter
+from Vertex import Vertex
+from Enums import MPI_TAG, VertexStatus
 
 from mpi4py import MPI
 comm = MPI.COMM_WORLD
@@ -38,6 +38,9 @@ class ComputeNode:
 
         # for simulating without a HEAD NODE
         self.hard_threshold = 10
+
+    def __str__(self):
+        return f"ComputeNode for machine {self.rank}"
 
     def machine_with_vertex(self, vertex_id):
         return vertex_id % self.num_compute_nodes + 1

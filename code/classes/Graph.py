@@ -1,8 +1,8 @@
 from typing import List
 
-from .Enums import VertexStatus
-from .Vertex import Vertex
-from .Fire import Fire
+from Enums import VertexStatus
+from Vertex import Vertex
+from Fire import Fire
 
 
 class Graph:

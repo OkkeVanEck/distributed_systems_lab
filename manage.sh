@@ -148,8 +148,9 @@ JOBNAME=\"${2}\"
 
         # Run python locally.
         echo "Starting local job ${2}.."
-        mpirun -n $NUMTASKS python3 "${SIMPATH}${SIMFILE}" "${DATASET}" \
-            "${TMP_PLAY}" "${TMP_DATA}" "${TMP_RES}"
+        mpirun -n ${NUMTASKS} python3 "code/run_simulation.py" \
+            "${SIMPATH}${SIMFILE}" "${DATASET}" "${TMP_PLAY}" "${TMP_DATA}" \
+            "${TMP_RES}"
 
         # Copy results to jobs directory.
         cp -a "${TMP_RES}/." "${PWD}/jobs/${JOBNAME}/results"

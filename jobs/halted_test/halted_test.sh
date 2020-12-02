@@ -1,3 +1,15 @@
+#!/usr/bin/env bash
+#SBATCH -J halted_test
+#SBATCH -o jobs/halted_test/halted_test.out
+#SBATCH --partition=defq
+#SBATCH -n 4
+#SBATCH -N 4
+#SBATCH -t 30
+SIMPATH="code/simulations/"
+SIMFILE="halted_forest_fire.py"
+DATASET="example-directed"
+JOBNAME="halted_test"
+
 # Load modules.
 module load python/3.6.0
 module load intel-mpi/64/5.1.2/150
@@ -21,7 +33,7 @@ cp -a "${PWD}/jobs/${JOBNAME}/results/." "${TMP_RES}"
 
 # Run simulation.
 srun -n ${SLURM_NTASKS} --mpi=pmi2 python3 "code/run_simulation.py" \
-    "${SIMFILE}" "${DATASET}" "${TMP_PLAY}" "${TMP_DATA}" "${TMP_RES}"
+    "${SIMPATH}${SIMFILE}" "${DATASET}" "${TMP_PLAY}" "${TMP_DATA}" "${TMP_RES}"
 
 # Copy results to HOME partition.
 cp -a "${TMP_RES}/." "${PWD}/jobs/${JOBNAME}/results"
