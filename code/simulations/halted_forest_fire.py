@@ -39,7 +39,7 @@ def get_vertex_rank(vertex_id: int) -> int:
 
 def run_sim(scale_factor, dataset, tmp_play, tmp_data, tmp_res):
     """
-    Entrypoint for starting a halted forst fire simulation.
+    Entrypoint for starting a halted forest fire simulation.
     Starts up a single HeadNode and multiple compute nodes.
     """
     if rank == 0:
@@ -48,19 +48,18 @@ def run_sim(scale_factor, dataset, tmp_play, tmp_data, tmp_res):
 
         # Start a HeadNode.
         log(f"Starting HeadNode on {rank}..")
-        outfile = f"{tmp_res}/scaled_graph.out"
-        f = open(outfile, "w")
+        out_v = f"{tmp_res}/scaled_graph.v"
+        out_e = f"{tmp_res}/scaled_graph.e"
+        f = open(out_v, "w")
         f.close()
-        # HeadNode(rank, size - 1, float(scale_factor), num_vertices, outfile)
+        f = open(out_e, "w")
+        f.close()
+        # HeadNode(rank, size - 1, float(scale_factor), num_vertices, out_v, out_e)
     else:
         # Fetch a dataset partition according to the rank of the process.
-        # print(f"DATASET\n=======\nName:   {argv[1]}")
-        # print("Contains:")
-        # for file in os.listdir(f"{argv[3]}/{argv[1]}"):
-        #     if file.endswith(".v") or file.endswith(".e"):
-        #         print(f"\t{file}")
-        #
-        # # Start a ComputeNode.
+        # TODO: Load dataset according to rank of process.
+
+        # Start a ComputeNode.
         log(f"Starting ComputeNode on {rank}..")
         # compute_node = ComputeNode(rank, False, n_nodes)
         # compute_node.init_partition(data)
