@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-DATASETS=("example-undirected.zip" "example-directed.zip")
+DATASETS=("example-undirected" "kgs")
 SIMPATH="code/simulations/"
 
 case "$1" in
@@ -9,10 +9,10 @@ case "$1" in
 "get_data")
     mkdir -p "data/zips"
     for dset in "${DATASETS[@]}"; do
-        if [ ! -f "data/zips/${dset}" ]; then
+        if [ ! -f "data/zips/${dset}.zip" ]; then
             echo "Fetching ${dset}.."
-            wget -qc "https://atlarge.ewi.tudelft.nl/graphalytics/zip/${dset}" \
-                -O "data/zips/${dset}"
+            wget -qc "https://atlarge.ewi.tudelft.nl/graphalytics/zip/${dset}.zip" \
+                -O "data/zips/${dset}.zip"
         else
             echo "${dset} already fetched."
         fi
@@ -28,9 +28,9 @@ case "$1" in
 
     for dset in "${DATASETS[@]}"; do
         # Check if zip exists on machine.
-        if [ -f "data/zips/${dset}" ]; then
+        if [ -f "data/zips/${dset}.zip" ]; then
             echo "Extracting ${dset}.."
-            unzip -uq "data/zips/${dset}" -d "data/"
+            unzip -uq "data/zips/${dset}.zip" -d "data/"
         else
             echo "Dataset ${dset} not found."
         fi
@@ -39,6 +39,38 @@ case "$1" in
 # Clear all files and folders from the /data folder.
 "clear_data")
     rm -rf data/*/
+    ;;
+# Create partitions
+"create_partitions")
+    # Check if KaHIP folder exists.
+    if [ ! -d "KaHIP/" ]; then
+        git clone https://github.com/KaHIP/KaHIP
+        module load openmpi/gcc/64
+        module load cmake
+        cd KaHIP; sh ./compile_withcmake.sh
+        module unload openmpi/gcc/64
+        module unload cmake
+        cd ..
+    fi
+    # Convert graph format into Metis format that KaHIP supports.
+    module load python/3.6.0
+    for dset in "${DATASETS[@]}"; do
+        echo "Converting ${dset}.."
+        srun -n 16 python3 code/scripts/convert.py $dset
+    done
+    # # Start partitioning.
+    # module load openmpi/gcc/64
+    # for dset in "${DATASETS[@]}"; do
+    #     for k in {2..16}; do
+    #         echo "Partitioning ${dset} into ${k} parts.."
+    #         APP="KaHIP/deploy/parhip"
+    #         NPROC="-n 32"
+    #         ARGS="data/${dset}/${dset}.graph --k ${k} --preconfiguration=fastsocial --save_partition"
+    #         $MPI_RUN $NPROC $APP $ARGS
+    #         mv tmppartition.txtp data/${dset}/${dset}${k}.p
+    #     done
+    # done
+    # module unload openmpi/gcc/64
     ;;
 # Create new job.
 "create_job")
