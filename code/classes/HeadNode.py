@@ -5,7 +5,7 @@ import time
 import math
 
 from .HeadGraph import HeadGraph
-from .Enums import MPI_TAG
+from .Enums import MPI_TAG, VertexStatus, SLEEP_TIMES
 
 
 from mpi4py import MPI
@@ -17,14 +17,14 @@ def log(message):
 
 
 class HeadNode:
-    def __init__(self, rank, n_nodes, scale_factor, total_vertices):
+    def __init__(self, rank, n_nodes, scale_factor, total_vertices, out_e, out_v):
         """
         NOTE: get_vertex_rank is a function. This way we can use this class in
                 a flexible way.
         """
         self.rank = rank
         self.num_compute_nodes = n_nodes - 1
-        self.graph = HeadGraph(total_vertices)
+        self.graph = HeadGraph(total_vertices, out_e, out_v)
         self.total_vertices = total_vertices
         # variable for stitching
         self.partition_center = [None] * self.num_compute_nodes
@@ -74,12 +74,12 @@ class HeadNode:
 
     def send_kill(self):
         for dest in range(1, num_compute_nodes+1):
-            comm.send(None, dest=dest, tag=MPI_TAG.KILL.value)
+            comm.send(None, dest=dest, tag=MPI_TAG.KILL_FROM_HEAD.value)
 
     def send_restart(self):
         for dest in range(1, num_compute_nodes+1):
             self.need_ack[dest-1] = True
-            comm.send(None, dest=dest, tag=MPI_TAG.RESTART.value)
+            comm.send(None, dest=dest, tag=MPI_TAG.RESET_FROM_HEAD_TAG.value)
 
     def listen(self):
         while (self.samples_remain > 0):
@@ -95,9 +95,9 @@ class HeadNode:
         self.send_kill()
 
     def listen_for_heartbeat(self):
-        if comm.Iprobe(source=MPI.ANY_SOURCE,tag=MPI_TAG.FROM_COMPUTE_TO_HEAD.value):
+        if comm.Iprobe(source=MPI.ANY_SOURCE,tag=MPI_TAG.HEARTBEAT.value):
             status = MPI.Status()
-            data = comm.recv(source=MPI.ANY_SOURCE, tag=MPI_TAG.FROM_COMPUTE_TO_HEAD.value, status=status)
+            data = comm.recv(source=MPI.ANY_SOURCE, tag=MPI_TAG.HEARTBEAT.value, status=status)
 
             sender = status.Get_source() - 1 # only works if head is rank 0
 
@@ -119,9 +119,9 @@ class HeadNode:
                     break
 
     def listen_for_ack(self):
-        if comm.Iprobe(source=MPI.ANY_SOURCE,tag=MPI_TAG.ACK.value):
+        if comm.Iprobe(source=MPI.ANY_SOURCE,tag=MPI_TAG.RESET_ACK.value):
             status = MPI.Status()
-            data = comm.recv(source=MPI.ANY_SOURCE, tag=MPI_TAG.FROM_COMPUTE_TO_HEAD.value, status=status)
+            data = comm.recv(source=MPI.ANY_SOURCE, tag=MPI_TAG.RESET_ACK.value, status=status)
 
             sender = status.Get_source() - 1 # only works if head is rank 0
             self.need_ack[sender] = False

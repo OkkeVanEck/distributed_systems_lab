@@ -1,15 +1,13 @@
-from typing import List
-
-from .Vertex import Vertex
 
 
 class HeadGraph:
-    def __init__(self, total_vertices):
+    def __init__(self, total_vertices, out_e, out_v):
         self.base_id = 0
         self.total_vertices = total_vertices;
         self.vertices = set()
+        self.vert_in_file = set()
         self.edges = set()
-        self.written_to_file = set()
+        self.edges_in_file = set()
 
     def get_number_vertices(self):
         return len(vertices)
@@ -26,4 +24,16 @@ class HeadGraph:
         self.base_id += total_vertices
 
     def write_to_file(self):
-        pass
+        diff_e = self.edges - self.edges_in_file
+        diff_v = self.vertices - self.vert_in_file
+
+        with open(out_e, 'a') as f:
+            for e in diff_e:
+                f.write(f"{e}\n")
+
+        with open(out_v, 'a') as f:
+            for v in diff_v:
+                f.write(f"{v}\n")
+
+        self.vert_in_file += diff_v
+        self.edges_in_file += diff_e

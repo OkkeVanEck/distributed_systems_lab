@@ -147,7 +147,7 @@ class ComputeNode:
                             self.edges_sent_in_heartbeat.append(edge)
 
                 data = np.array(heartbeat_edges, dtype=np.int)
-                comm.send(data, dest=0, tag=MPI_TAG.FROM_HEADNODE_TO_COMPUTE.value)
+                comm.send(data, dest=0, tag=MPI_TAG.HEARTBEAT.value)
 
                 # for simulations without head node object
                 # if len(self.nodes_sent_in_heartbeat.keys()) >= self.hard_threshold:
