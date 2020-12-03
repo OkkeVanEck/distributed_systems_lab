@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-DATASETS=("example-undirected" "kgs")
+DATASETS=("kgs") # Undirected graphs
 SIMPATH="code/simulations/"
 
 case "$1" in
@@ -44,7 +44,8 @@ case "$1" in
 "create_partitions")
     # Check if KaHIP folder exists.
     if [ ! -d "KaHIP/" ]; then
-        git clone https://github.com/KaHIP/KaHIP
+        # Clone and compile KaHIP.
+        git clone git@github.com:estsaon/KaHIP.git
         module load openmpi/gcc/64
         module load cmake
         cd KaHIP; sh ./compile_withcmake.sh
@@ -58,19 +59,35 @@ case "$1" in
         echo "Converting ${dset}.."
         srun -n 16 python3 code/scripts/convert.py $dset
     done
-    # # Start partitioning.
-    # module load openmpi/gcc/64
-    # for dset in "${DATASETS[@]}"; do
-    #     for k in {2..16}; do
-    #         echo "Partitioning ${dset} into ${k} parts.."
-    #         APP="KaHIP/deploy/parhip"
-    #         NPROC="-n 32"
-    #         ARGS="data/${dset}/${dset}.graph --k ${k} --preconfiguration=fastsocial --save_partition"
-    #         $MPI_RUN $NPROC $APP $ARGS
-    #         mv tmppartition.txtp data/${dset}/${dset}${k}.p
-    #     done
-    # done
-    # module unload openmpi/gcc/64
+    # Start partitioning.
+    module load openmpi/gcc/64
+    mkdir "jobs/create_partitions"
+    for dset in "${DATASETS[@]}"; do
+        # Create partition jobs for each graph.
+        for p in {2..16}; do
+            echo "Partitioning ${dset} into ${p} parts.."
+            touch "jobs/create_partitions/${dset}-${p}p.sh"
+            echo "#!/usr/bin/env bash
+#SBATCH -N 2
+#SBATCH --ntasks-per-node=16
+#SBATCH --output jobs/create_partitions/${dset}-${p}p.info
+
+. /etc/bashrc
+. /etc/profile.d/modules.sh
+module load openmpi/gcc/64
+
+APP=KaHIP/deploy/parhip
+NPROC=\"-n 32\"
+ARGS=\"./data/${dset}/${dset}.graph --k ${p} --preconfiguration=fastsocial --save_partition\"
+OMPI_OPTS=\"--mca btl ^usnic\"
+" >>"jobs/create_partitions/${dset}-${p}p.sh"
+
+            echo '$MPI_RUN $OMPI_OPTS $NPROC $APP $ARGS
+' >>"jobs/create_partitions/${dset}-${p}p.sh"
+            sbatch "jobs/create_partitions/${dset}-${p}p.sh"
+        done
+    done
+    module unload openmpi/gcc/64
     ;;
 # Create new job.
 "create_job")
