@@ -6,7 +6,7 @@ import os
 
 # Load classes and functions from own files.
 from ComputeNode import ComputeNode
-# from HeadNode import HeadNode
+from HeadNode import HeadNode
 
 # Setup globals for each process.
 comm = MPI.COMM_WORLD
@@ -54,13 +54,14 @@ def run_sim(scale_factor, dataset, tmp_play, tmp_data, tmp_res):
         f.close()
         f = open(out_e, "w")
         f.close()
-        # HeadNode(rank, size - 1, float(scale_factor), num_vertices, out_v, out_e)
+        head_node = HeadNode(rank, size, float(10), num_vertices, out_v, out_e)
+        head_node.run()
     else:
         # Fetch a dataset partition according to the rank of the process.
         # TODO: Load dataset according to rank of process.
 
         # Start a ComputeNode.
         log(f"Starting ComputeNode on {rank}..")
-        # compute_node = ComputeNode(rank, False, n_nodes)
-        # compute_node.init_partition(data)
-        # compute_node.do_tasks()
+        compute_node = ComputeNode(rank, False, size)
+        compute_node.init_partition(f"{tmp_data}/{dataset}/{dataset}.e")
+        compute_node.do_tasks()

@@ -59,12 +59,12 @@ class ComputeNode:
         return False
 
     def init_partition(self, file):
-        file_uncompressed = gzip.open(file, 'rt')
+        file_uncompressed = open(file, 'rt')
         assigned_vertices = 0
 
         # TODO: Issue https://github.com/OkkeVanEck/distributed_systems_lab/issues/14
         for line in self.graph_reader.read_graph_file(file_uncompressed):
-            vertex, neighbor = map(int, line.split())
+            vertex, neighbor = map(int, line.split()[:2])
             if self.is_local(vertex):
                 self.partitioned_graph.add_vertex_and_neighbor(vertex, neighbor)
                 assigned_vertices += 1
@@ -119,6 +119,7 @@ class ComputeNode:
         self.num_fires = 0
         comm.send("", dest=0, tag=MPI_TAG.RESET_ACK.value)
         self.reset_received = False
+        self.partitioned_graph.init_fire()
 
     def send_heartbeat(self):
         while not self.kill_received:
