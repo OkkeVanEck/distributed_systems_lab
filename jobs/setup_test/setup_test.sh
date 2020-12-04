@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
-#SBATCH -J local_test
-#SBATCH -o jobs/local_test/local_test.out
+#SBATCH -J setup_test
+#SBATCH -o jobs/setup_test/setup_test.out
 #SBATCH --partition=defq
 #SBATCH -n 4
 #SBATCH -N 4
 #SBATCH -t 30
 SIMPATH="code/simulations/"
-SIMFILE="local_test.py"
+SIMFILE="setup_test.py"
 DATASET="example-undirected"
-JOBNAME="local_test"
+JOBNAME="setup_test"
+SCALE="0.5"
 
 # Load modules.
 module load python/3.6.0
@@ -32,8 +33,9 @@ cp "${PWD}/data/${DATASET}/${DATASET}.e" "${TMP_DATA}"
 cp -a "${PWD}/jobs/${JOBNAME}/results/." "${TMP_RES}"
 
 # Run simulation.
-srun -n ${SLURM_NTASKS} --mpi=pmi2 python3 "${SIMPATH}${SIMFILE}" "${DATASET}" \
-    "${TMP_PLAY}" "${TMP_DATA}" "${TMP_RES}"
+srun -n ${SLURM_NTASKS} --mpi=pmi2 python3 "code/run_simulation.py" \
+    "${SIMPATH}${SIMFILE}" "${SCALE}" "${DATASET}" "${TMP_PLAY}" "${TMP_DATA}" \
+    "${TMP_RES}"
 
 # Copy results to HOME partition.
 cp -a "${TMP_RES}/." "${PWD}/jobs/${JOBNAME}/results"

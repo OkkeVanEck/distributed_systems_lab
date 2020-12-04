@@ -56,8 +56,8 @@ pip3 install --user -r requirements.txt
 A job can easily be created via the `manage.sh` script. This is done with the
 `create_job` command, which needs the job name as the second argument:
 ```shell script
-./manage.sh create_job <job_name> <simulation_name> <dataset_name> \
-    <number_of_tasks> <number_of_nodes> <time_in_minutes>
+./manage.sh create_job <job_name> <simulation_name> <scale_factor> \
+    <dataset_name> <number_of_tasks> <number_of_nodes> <time_in_minutes>
 ```
 
 What the given variables exactly mean for a SLURM job is described below after 
@@ -81,6 +81,7 @@ SIMPATH="code/simulations/"
 SIMFILE="<simulation_name>"
 DATASET="<dataset_name>"
 JOBNAME="<job_name>"
+SCALE="<scale_factor>"
 ```
 
 As you can see, the default script header contains placeholder lines for
@@ -118,8 +119,9 @@ cp "${PWD}/data/${DATASET}/${DATASET}.e" "${TMP_DATA}"
 cp -a "${PWD}/jobs/${JOBNAME}/results/." "${TMP_RES}"
 
 # Run simulation.
-srun -n ${SLURM_NTASKS} --mpi=pmi2 python3 "${SIMPATH}${SIMFILE}" "${DATASET}" \
-    "${TMP_PLAY}" "${TMP_DATA}" "${TMP_RES}"
+srun -n ${SLURM_NTASKS} --mpi=pmi2 python3 "code/run_simulation.py" \
+    "${SIMPATH}${SIMFILE}" "${SCALE}" "${DATASET}" "${TMP_PLAY}" "${TMP_DATA}" \
+    "${TMP_RES}"
 
 # Copy results to HOME partition.
 cp -a "${TMP_RES}/." "${PWD}/jobs/${JOBNAME}/results"

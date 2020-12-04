@@ -3,9 +3,9 @@ import threading
 import gzip
 import time
 
-from .Graph import Graph, GraphInterpreter
-from .Vertex import Vertex
-from .Enums import MPI_TAG, VertexStatus, SLEEP_TIMES
+from Graph import Graph, GraphInterpreter
+from Vertex import Vertex
+from Enums import MPI_TAG, VertexStatus, SLEEP_TIMES
 
 from mpi4py import MPI
 comm = MPI.COMM_WORLD
