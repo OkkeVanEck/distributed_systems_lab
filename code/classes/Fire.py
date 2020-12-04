@@ -19,7 +19,9 @@ class Fire:
         self.fwd_burning_prob = fwd_burning_prob
 
     def start_burning(self):
+        print("before start burning. number of burning vertices = " + str(len(self.burning_vertices)))
         self.ignite_random_node()
+        print("random node has been ignited. Node is " + str(self.burning_vertices))
         self.received_stop_signal = False
         self.spread()
 
@@ -42,6 +44,7 @@ class Fire:
 
     def ignite_random_node(self):
         if len(self.burning_vertices) == 0:
+            self.graph.check_vertex_status()
             self.burning_vertices = random.sample(list(filter(lambda x: x.status == VertexStatus.NOT_BURNED,
                                     self.graph.graph.keys())), 1)
 

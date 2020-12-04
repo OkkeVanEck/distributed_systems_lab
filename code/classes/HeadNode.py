@@ -98,9 +98,12 @@ class HeadNode:
             if self.samples_remain > 0:
                 self.send_restart()
                 self.graph.next_sample()
+                self.partition_center = [None] * self.num_compute_nodes
+                self.need_stitch = True
         self.send_kill()
 
     def listen_for_heartbeat(self):
+        # log("listening for heartbeat on headnode")
         if comm.Iprobe(source=MPI.ANY_SOURCE,tag=MPI_TAG.HEARTBEAT.value):
             status = MPI.Status()
             data = comm.recv(source=MPI.ANY_SOURCE, tag=MPI_TAG.HEARTBEAT.value, status=status)
@@ -109,6 +112,7 @@ class HeadNode:
 
             # message is still received so computed node doesnt get into deadlock when sending message head doesnt want
             if self.need_ack[sender]:
+                log("dont need this data from sender = " + str(sender))
                 return
 
             if self.partition_center[sender] == None and len(data) > 0:
@@ -126,11 +130,11 @@ class HeadNode:
 
     def listen_for_ack(self):
         if comm.Iprobe(source=MPI.ANY_SOURCE,tag=MPI_TAG.RESET_ACK.value):
-            log("found ack")
+            
             status = MPI.Status()
             data = comm.recv(source=MPI.ANY_SOURCE, tag=MPI_TAG.RESET_ACK.value, status=status)
-
             sender = status.Get_source() - 1 # only works if head is rank 0
+            log("found ack. sender is = " + str(sender))
             self.need_ack[sender] = False
 
     def done_burning(self):

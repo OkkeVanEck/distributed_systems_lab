@@ -29,7 +29,7 @@ class HeadGraph:
         self.edges.add(f"{dest} {src}")
 
     def next_sample(self):
-        self.prev_vertices = self.get_num_vertices
+        self.prev_vertices = self.get_num_vertices()
         self.base_id += self.total_vertices
 
     def write_to_file(self):

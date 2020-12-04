@@ -10,7 +10,7 @@ from Enums import MPI_TAG, VertexStatus, SLEEP_TIMES
 from mpi4py import MPI
 comm = MPI.COMM_WORLD
 
-DO_LOG=False
+DO_LOG=True
 
 
 def log(message):
@@ -80,12 +80,9 @@ class ComputeNode:
         #       - same as above except self.kill_received remains false.
         #       - therefore, a new fire is started on the current thread.
         while not self.kill_received:
-            # log("in manage fires")
-            if self.num_fires < self.allowed_fires:
-                self.partitioned_graph.init_fire()
-                self.num_fires += 1
-            else:
-                time.sleep(SLEEP_TIMES.COMPUTE_NODE_MANAGE_FIRES.value)
+            log("in manage fires. rank " + str(self.rank))
+            self.partitioned_graph.init_fire()
+        print("out of while loop. rank = " + str(self.rank))
 
 
     def do_tasks(self):
@@ -116,16 +113,16 @@ class ComputeNode:
     def reset_fire(self):
         self.partitioned_graph.stop_fire()
         self.partitioned_graph.set_all_vertex_status(VertexStatus.NOT_BURNED)
-        self.num_fires = 0
+        self.partitioned_graph.check_vertex_status()
         comm.send("", dest=0, tag=MPI_TAG.RESET_ACK.value)
         self.reset_received = False
-        self.partitioned_graph.init_fire()
 
     def send_heartbeat(self):
         while not self.kill_received:
             if self.reset_received:
                 # manage reset in heartbeat thread so that we don't send an edge from fire 1
                 # in the heartbeats from fire #2
+                log("reset fire called")
                 self.reset_fire()
             else:
                 burned_vertices = self.partitioned_graph.get_burned_vertices()
@@ -147,6 +144,7 @@ class ComputeNode:
                             heartbeat_edges.append(edge)
                             self.edges_sent_in_heartbeat.append(edge)
 
+                log("sent heartbeat. data is " + str(heartbeat_edges) + ". sender is " + str(self.rank))
                 data = np.array(heartbeat_edges, dtype=np.int)
                 comm.send(data, dest=0, tag=MPI_TAG.HEARTBEAT.value)
 
@@ -179,6 +177,7 @@ class ComputeNode:
     def listen_to_head_node(self):
         if comm.Iprobe(source=MPI.ANY_SOURCE,tag=MPI_TAG.RESET_FROM_HEAD_TAG.value):
             # receive the message so it doesn't idle out there
+            log("receieved reset signal")
             data = comm.recv(source=0, tag=MPI_TAG.RESET_FROM_HEAD_TAG.value)
             self.reset_received = True
         if comm.Iprobe(source=MPI.ANY_SOURCE, tag=MPI_TAG.KILL_FROM_HEAD.value):

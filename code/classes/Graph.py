@@ -69,8 +69,7 @@ class Graph:
             all_neighbors = self.graph[vertex]
         else:
             return []
-        neighbors_to_burn = list(filter(
-            lambda vert: vert.status == VertexStatus.NOT_BURNED,
+        neighbors_to_burn = list(filter(lambda vert: vert.status == VertexStatus.NOT_BURNED,
             all_neighbors))
         if len(neighbors_to_burn) == 0:
             return []
@@ -91,14 +90,19 @@ class Graph:
                 local_neighbors_to_burn.append(vertex)
         return local_neighbors_to_burn, remote_neighbors_to_burn
 
-    def set_all_vertex_status(self, vertex_status):
+    def check_vertex_status(self):
         for vertex in self.graph.keys():
-            vertex.vertex_status = vertex_status
+            for neighbor in self.graph[vertex]:
+                if neighbor.vertex_status != VertexStatus.NOT_BURNED:
+                    print("vertex status not 'not burned'. " + str(neighbor.vertex_id))
+            if vertex.vertex_status != VertexStatus.NOT_BURNED:
+                print("vertex status not 'not burned'. " + str(vertex.vertex_id))
 
     def set_all_vertex_status(self, vertex_status):
         for vertex in self.graph.keys():
+            for neighbor in self.graph[vertex]:
+                neighbor.vertex_status = vertex_status
             vertex.vertex_status = vertex_status
-
 
 class GraphInterpreter:
     """
