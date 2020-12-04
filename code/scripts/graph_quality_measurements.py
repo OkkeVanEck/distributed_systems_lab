@@ -5,13 +5,15 @@ import random
 import argparse
 import sys
 
-calls = 0
-
 def load_graph(vertex_file, edge_file):
     G = nx.Graph()
     with open(vertex_file, "r+") as vertexes:
         for v in vertexes.readlines():
-            G.add_node(int(v))
+            if v.strip().isdigit():
+                G.add_node(int(v))
+            else:
+                raise Exception("Please pass a vertex file with only integer vertices. \n" + \
+                    str(v.strip()) + " is not a digit. See usage for questions")
     with open(edge_file, "w+") as edges:
         for e in edges.readlines():
             e.split()
@@ -21,10 +23,6 @@ def load_graph(vertex_file, edge_file):
     return G
     # random graph for testing
     # return nx.erdos_renyi_graph(100, 0.2)
-
-# G_original = load_graph("original.v", "original.e")
-# G_new = load_graph("new.v", "new.e")
-
 
 # test if graph is biconnected
 # returns bool
