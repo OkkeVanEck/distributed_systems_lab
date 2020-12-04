@@ -29,8 +29,10 @@ class Graph:
 
     def set_vertex_status(self, vertex: Vertex, status: VertexStatus):
         # TODO: Issue/Enhancement https://github.com/OkkeVanEck/distributed_systems_lab/issues/13
+
         for vert in self.graph.keys():
             if vert.vertex_id == vertex.vertex_id:
+                # print("set vertex burned. vertex_id = " + str(vertex.vertex_id) + " machine rank = " + str(self.compute_node.rank))
                 vert.status = status
                 if status == VertexStatus.BURNED or status == VertexStatus.BURNING:
                     self.burned_vertices[vertex.vertex_id] = True
@@ -91,18 +93,22 @@ class Graph:
         return local_neighbors_to_burn, remote_neighbors_to_burn
 
     def check_vertex_status(self):
+        all_burned = True
         for vertex in self.graph.keys():
             for neighbor in self.graph[vertex]:
-                if neighbor.vertex_status != VertexStatus.NOT_BURNED:
-                    print("vertex status not 'not burned'. " + str(neighbor.vertex_id))
-            if vertex.vertex_status != VertexStatus.NOT_BURNED:
-                print("vertex status not 'not burned'. " + str(vertex.vertex_id))
+                if neighbor.status != VertexStatus.NOT_BURNED:
+                    all_burned = False
+            if vertex.status != VertexStatus.NOT_BURNED:
+                all_burned = False
+        return all_burned
 
     def set_all_vertex_status(self, vertex_status):
+        self.burned_vertices = {}
+        self.burned_edges = []
         for vertex in self.graph.keys():
             for neighbor in self.graph[vertex]:
-                neighbor.vertex_status = vertex_status
-            vertex.vertex_status = vertex_status
+                neighbor.status = vertex_status
+            vertex.status = vertex_status
 
 class GraphInterpreter:
     """
