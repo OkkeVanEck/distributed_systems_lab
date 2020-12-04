@@ -127,4 +127,4 @@ class HeadNode:
             self.need_ack[sender] = False
 
     def done_burning():
-        return graph.get_number_vertices() > self.cutoff_vertices
+        return graph.get_sample_vertices() > self.cutoff_vertices

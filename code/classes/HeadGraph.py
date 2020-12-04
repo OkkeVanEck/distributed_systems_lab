@@ -4,12 +4,16 @@ class HeadGraph:
     def __init__(self, total_vertices, out_e, out_v):
         self.base_id = 0
         self.total_vertices = total_vertices;
+        self.prev_vertices = 0
         self.vertices = set()
         self.vert_in_file = set()
         self.edges = set()
         self.edges_in_file = set()
 
-    def get_number_vertices(self):
+    def get_sample_vertices(self):
+        return self.get_num_vertices() - self.prev_vertices
+
+    def get_num_vertices(self):
         return len(vertices)
 
     def add_edge(self, vertex_from: int, vertex_to: int, base_id=self.base_id):
@@ -21,6 +25,7 @@ class HeadGraph:
         self.edges.add(f"{dest} {src}")
 
     def next_sample(self):
+        self.prev_vertices = get_num_vertices
         self.base_id += total_vertices
 
     def write_to_file(self):
