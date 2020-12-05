@@ -4,7 +4,6 @@ Discription:
 """
 
 import re
-from argparse import ArgumentParser
 from functools import singledispatch
 from pathlib import Path
 
@@ -22,13 +21,6 @@ def _(pos, line):
 @get_value_from_line.register(slice)
 def _(pos, line):
     return [int(x) for x in line.strip().split(" ")[pos]]
-
-
-def parse_args():
-    parser = ArgumentParser()
-    parser.add_argument("name")
-    args = parser.parse_args()
-    return args
 
 
 class GraphParser:

@@ -16,12 +16,21 @@ Details:
         3. check if vertex 2 is in the partition file, if not add to local vertices
 """
 
+
 import gzip
+from argparse import ArgumentParser
 from contextlib import ExitStack
 
-from graph_parser import GraphParser, parse_args
+from graph_parser import GraphParser
 
 WORKER_NODES_RANK_OFFSET = 1
+
+def parse_args():
+    parser = ArgumentParser()
+    parser.add_argument("name")
+    parser.add_argument("n_partition", type=int)
+    args = parser.parse_args()
+    return args
 
 def split_partitions_and_edge_files(graph_parser, n_partition):
     path_to_partition_file = f"{graph_parser.path_to_graph}.m.{n_partition}p"
