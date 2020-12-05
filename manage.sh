@@ -40,8 +40,8 @@ case "$1" in
 "clear_data")
     rm -rf data/*/
     ;;
-# Remove KaHIP installation, download new one and call the build function.
-"install_KaHIP")
+# Remove KaHIP installation and download new one.
+"get_KaHIP")
     # Delete existing folder and clone new one.
     if [ -d "KaHIP/" ]; then
         echo "Removing KaHIP.."
@@ -97,33 +97,34 @@ case "$1" in
     fi
 
     # Check if the dataset is already converted to Metis format.
-    if [ -f "/data/${2}/${2}.m" ]; then
+    if [ -f "data/${2}/${2}.m" ]; then
         echo "Dataset ${2} is already converted into Metis format."
     else
         # Convert graph format into Metis format that KaHIP supports.
         echo "Converting ${2} into Metis format.."
+        module load python/3.6.0
         srun python3 code/scripts/convert_nse_to_metis.py "${2}"
         module unload python/3.6.0
     fi
 
     # Check if the dataset is already partitioned with given setup.
-    if [ -d "/data/${2}/${2}-${3}-partitions" ]; then
+    if [ -d "data/${2}/${2}-${3}-partitions" ]; then
         echo "Dataset is already split in ${3} partitions."
         exit 1
     fi
 
     # Compute the total number of processes and run ParHIP.
-    echo "Creating ${3} partitions for ${2}.."
     N_PROCS=$(( $3 * 16 ))
+    echo "Creating ${3} partitions for ${2} with ${N_PROCS} processes.."
     module load openmpi/gcc/64
-    srun -n "${N_PROCS}" --mpi=pmi2 KaHIP/deploy/parhip "./data/${2}/${2}.m" \
+    srun -n "${N_PROCS}" --mpi=pmi2 KaHIP/deploy/parhip "data/${2}/${2}.m" \
         --k "${3}" --preconfiguration=fastsocial --save_partition
     module unload openmpi/gcc/64
 
     # Split the newly created partitions across the number of nodes.
     echo "Splitting ${2} with ${3} partitions across new node folders.."
     module load python/3.6.0
-    mkdir -p "/data/${2}/${2}-${3}-partitions"
+    mkdir -p "data/${2}/${2}-${3}-partitions"
     srun -n 16 python3 code/scripts/split_partitions.py "${2}"
     module unload python/3.6.0
     ;;
