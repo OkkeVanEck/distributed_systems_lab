@@ -98,7 +98,7 @@ OMPI_OPTS=\"--mca btl ^usnic\"
         # Check whether partition jobs have finished.
         for p in {2, 16}; do
             if ! grep -q "AND WE R DONE" "jobs/create_partitions/${dset}-p-${p}.log"; then
-                echo "Please wait for partition jobs finish."
+                echo "Please wait for partition jobs on ${dset} to finish."
                 exit 1
             fi
         done

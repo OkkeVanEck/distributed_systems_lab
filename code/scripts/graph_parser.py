@@ -30,6 +30,7 @@ def parse_args():
     return args
 
 class GraphParser:
+    
     def __init__(self, name):
         self.name = name
         self.path_to_graph = f"data/{self.name}/{self.name}"
@@ -72,6 +73,7 @@ class GraphParser:
             with open(path_to_partition_file, 'r') as fp:
                 vertice_ranks_mapping = self.get_vertice_ranks_mapping(fp)
                 yield vertice_ranks_mapping, n_partitions
+
 
 if __name__ == "__main__":
     pass

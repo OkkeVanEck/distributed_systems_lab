@@ -3,16 +3,14 @@ Discription:
     Dataset format converter from NSE graph format to Metis graph format.
     Ignore all weights on the graph.
 
-Input format:
-    NSE: <v_id> <v_id>
-         vertex index can start from any non-negative integer, and each edge just appear once
-         used by LDBC Graphalytics
+NSE graph format: <v_id> <v_id>
+    vertex index can start from any non-negative integer, and each edge just appear once
+    used by LDBC Graphalytics
 
-Output format:
-    Metis: <v_id> <v_id> ... <v_id>
-         vertex index starts from 1, line i contains all neighbours of vertex i
-         first line gives metadata info: <n_vertices> <n_edges>
-         used by KaHIP, Metis...
+Metis graph format: <v_id> <v_id> ... <v_id>
+    vertex index starts from 1, line i contains all neighbours of vertex i
+    first line gives metadata info: <n_vertices> <n_edges>
+    used by KaHIP, Metis...
 """
 
 

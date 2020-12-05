@@ -50,13 +50,10 @@ def split_partitions_and_edge_files(graph_parser):
                 edge_files_ptrs[rank_for_vert_2].write(f"{vert_2} {vert_1}\n")
 
                 # add to partition files
-                if rank_for_vert_1 == rank_for_vert_2:
-                    continue
-                else:
-                    # for rank_for_vert_1, if vert_2 is not on the node, then add to the partition file
-                    # for rank_for_vert_2, if vert_1 is not on the node, then add to the partition file
+                if rank_for_vert_1 != rank_for_vert_2:
                     partition_files_ptrs[rank_for_vert_1].write(f"{vert_2} {rank_for_vert_2 + WORKER_NODES_RANK_OFFSET}\n")
                     partition_files_ptrs[rank_for_vert_2].write(f"{vert_1} {rank_for_vert_1 + WORKER_NODES_RANK_OFFSET}\n")
+
 
 if __name__ == "__main__":
     args = parse_args()
