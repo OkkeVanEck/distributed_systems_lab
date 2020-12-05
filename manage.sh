@@ -125,7 +125,7 @@ case "$1" in
     echo "Splitting ${2} with ${3} partitions across new node folders.."
     module load python/3.6.0
     mkdir -p "data/${2}/${2}-${3}-partitions"
-    srun python3 code/scripts/split_partitions.py "${2}"
+    srun -n 16 python3 code/scripts/split_partitions.py "${2}" "${3}"
     module unload python/3.6.0
     ;;
 # Create new job.
