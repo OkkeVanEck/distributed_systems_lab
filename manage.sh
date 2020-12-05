@@ -113,28 +113,18 @@ case "$1" in
     fi
 
     # Compute the total number of processes and run ParHIP.
+    echo "Creating ${3} partitions for ${2}.."
     N_PROCS=$(( $3 * 16 ))
     module load openmpi/gcc/64
     srun -n "${N_PROCS}" --mpi=pmi2 KaHIP/deploy/parhip "./data/${2}/${2}.m" \
         --k "${3}" --preconfiguration=fastsocial --save_partition
     module unload openmpi/gcc/64
-    ;;
-# Split edge and partition files for each node.
-"split_partitions")
+
+    # Split the newly created partitions across the number of nodes.
+    echo "Splitting ${2} with ${3} partitions across new node folders.."
     module load python/3.6.0
-    # Iterate over all datasets.
-    for dset in "${DATASETS[@]}"; do
-        # Check whether partition jobs have finished.
-        for p in {2..16}; do
-            if ! grep -q "AND WE R DONE" "jobs/create_partitions/${dset}-p-${p}.log"; then
-                echo "Please wait for partition jobs on ${dset} to finish."
-                exit 1
-            fi
-            mkdir "./data/${dset}/${dset}-${p}-partitions"
-        done
-        echo "Splitting ${dset}.."
-        srun -n 16 python3 code/scripts/split_partitions.py $dset
-    done
+    mkdir -p "/data/${2}/${2}-${3}-partitions"
+    srun -n 16 python3 code/scripts/split_partitions.py "${2}"
     module unload python/3.6.0
     ;;
 # Create new job.
