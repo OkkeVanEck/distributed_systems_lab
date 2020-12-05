@@ -46,25 +46,22 @@ class ComputeNode:
         # for simulating without a HEAD NODE
         # self.hard_threshold = 10
 
+
     def is_local(self, vertex_id):
         """
         - for partitioning, return True if vertex_id
         - belongs to the compute node.
         """
-        if self.machine_with_vertex(vertex_id) == self.rank:
-            return True
-        return False
+        # partition file only contains neighbours on on the remote nodes
+        if vertex_id in self.machine_with_vertex.keys():
+            return False
+        return True
+
 
     def init_partition(self, file):
-        file_uncompressed = gzip.open(file, 'rt')
-        assigned_vertices = 0
+        for vert_1, vert_2 in self.graph_reader.read_graph_file(file):
+            self.partitioned_graph.add_vertex_and_neighbor(vert_1, vert_2)
 
-        # TODO: Issue https://github.com/OkkeVanEck/distributed_systems_lab/issues/14
-        for line in self.graph_reader.read_graph_file(file_uncompressed):
-            vertex, neighbor = map(int, line.split())
-            if self.is_local(vertex):
-                self.partitioned_graph.add_vertex_and_neighbor(vertex, neighbor)
-                assigned_vertices += 1
 
     def manage_fires(self):
         # init_fire returns when stop_fire is called
@@ -107,7 +104,7 @@ class ComputeNode:
         """
         # find dest machine based on the vertex rank
         if self.fires_wild:
-            dest = self.machine_with_vertex(vertex_id)
+            dest = self.machine_with_vertex[vertex_id]
             comm.send(vertex_id, dest=dest, tag=MPI_TAG.FROM_COMPUTE_TO_COMPUTE.value)
 
     def reset_fire(self):
