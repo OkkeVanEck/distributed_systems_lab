@@ -1,3 +1,16 @@
+#!/usr/bin/env bash
+#SBATCH -J halted_s05
+#SBATCH -o jobs/halted_s05/halted_s05.out
+#SBATCH --partition=defq
+#SBATCH -n 4
+#SBATCH -N 4
+#SBATCH -t 30
+SIMPATH="code/simulations/"
+SIMFILE="halted_forest_fire.py"
+DATASET="example-undirected"
+JOBNAME="halted_s05"
+SCALE="0.5"
+
 # Load modules.
 module load python/3.6.0
 module load intel-mpi/64/5.1.2/150

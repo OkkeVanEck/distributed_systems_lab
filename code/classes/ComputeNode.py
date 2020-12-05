@@ -3,9 +3,9 @@ import threading
 import gzip
 import time
 
-from .Graph import Graph, GraphInterpreter
-from .Vertex import Vertex
-from .Enums import MPI_TAG, VertexStatus, SLEEP_TIMES
+from Graph import Graph, GraphInterpreter
+from Vertex import Vertex
+from Enums import MPI_TAG, VertexStatus, SLEEP_TIMES
 
 from mpi4py import MPI
 comm = MPI.COMM_WORLD
@@ -19,14 +19,14 @@ def log(message):
 
 
 class ComputeNode:
-    def __init__(self, rank, fires_wild, n_nodes):
+    def __init__(self, rank, fires_wild, n_comp_nodes, machine_with_vertex):
         """
         NOTE: get_vertex_rank is a function. This way we can use this class in
                 a flexible way.
         """
         self.rank = rank
         self.fires_wild = fires_wild
-        self.num_compute_nodes = n_nodes - 1
+        self.num_compute_nodes = n_comp_nodes
         self.graph_reader = GraphInterpreter()
         self.partitioned_graph = Graph(self)
 
@@ -41,13 +41,10 @@ class ComputeNode:
         self.num_fires = 0
         self.allowed_fires = 1
 
+        self.machine_with_vertex = machine_with_vertex
+
         # for simulating without a HEAD NODE
         # self.hard_threshold = 10
-
-    # TODO: https://github.com/OkkeVanEck/distributed_systems_lab/issues/15
-    def machine_with_vertex(self, vertex_id):
-        # add 1 because compute node rank starts at 1
-        return (vertex_id % self.num_compute_nodes) + 1
 
     def is_local(self, vertex_id):
         """
