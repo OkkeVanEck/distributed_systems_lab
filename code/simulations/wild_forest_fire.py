@@ -58,7 +58,7 @@ def run_sim(scale_factor, dataset, tmp_play, tmp_data, tmp_res):
 
         # Start a ComputeNode.
         log(f"Starting ComputeNode on {rank}..")
-        compute_node = ComputeNode(rank, False, size - 1, get_vertex_rank)
+        compute_node = ComputeNode(rank, True, size - 1, get_vertex_rank)
         compute_node.init_partition(e_file)
         compute_node.do_tasks()
         e_file.close()
