@@ -134,8 +134,14 @@ OMPI_OPTS=\"--mca btl ^usnic\"
         exit 1
     fi
 
+    # Check if scale factor is valid positive float.
+    if ! [[ $4 =~ ^[0-9]+([.][0-9]+)?$ ]]; then
+        echo "Given scale factor is invalid. Provide a positive float."
+        exit 1
+    fi
+
     # Check if dataset name is given.
-    if [[ -z "${4}" ]]; then
+    if [[ -z "${5}" ]]; then
         echo "No dataset specified."
         exit 1
     fi
@@ -149,13 +155,14 @@ OMPI_OPTS=\"--mca btl ^usnic\"
 #SBATCH -J ${2}
 #SBATCH -o jobs/${2}/${2}.out
 #SBATCH --partition=defq
-#SBATCH -n ${5:-16}
-#SBATCH -N ${6:-4}
-#SBATCH -t ${7:-30}
+#SBATCH -n ${6:-16}
+#SBATCH -N ${7:-4}
+#SBATCH -t ${8:-30}
 SIMPATH=\"${SIMPATH}\"
 SIMFILE=\"${3}\"
-DATASET=\"${4}\"
+DATASET=\"${5}\"
 JOBNAME=\"${2}\"
+SCALE=\"${4}\"
 " >>"jobs/${2}/${2}.sh"
     cat jobs/job_body.sh >>"jobs/${2}/${2}.sh"
     ;;
@@ -210,24 +217,26 @@ JOBNAME=\"${2}\"
         SIMPATH=$(sed -n 8p "jobs/${2}/${2}.sh" | cut -c 10- | sed 's/.$//')
         SIMFILE=$(sed -n 9p "jobs/${2}/${2}.sh" | cut -c 10- | sed 's/.$//')
         DATASET=$(sed -n 10p "jobs/${2}/${2}.sh" | cut -c 10- | sed 's/.$//')
+        SCALE=$(sed -n 12p "jobs/${2}/${2}.sh" | cut -c 8- | sed 's/.$//')
 
         # Create folder for dataset if it does not exist for catching faults.
         mkdir -p "${TMP_DATA}/${DATASET}"
 
         # Run python locally.
         echo "Starting local job ${2}.."
-        mpirun -n $NUMTASKS python3 "${SIMPATH}${SIMFILE}" "${DATASET}" \
-            "${TMP_PLAY}" "${TMP_DATA}" "${TMP_RES}"
+        mpirun -n "${NUMTASKS}" python3 "code/run_simulation.py" \
+            "${SIMPATH}${SIMFILE}" "${SCALE}" "${DATASET}" "${TMP_PLAY}" \
+            "${TMP_DATA}" "${TMP_RES}"
 
         # Copy results to jobs directory.
-        cp -a "${TMP_RES}/." "${PWD}/jobs/${JOBNAME}/results"
+        cp -rf "${TMP_RES}/." "jobs/${2}/results"
 
         # Only delete dataset folder if it is empty, as it was generated to
         # catch faults.
         rmdir "${TMP_DATA}/${DATASET}" &>/dev/null
 
         # Clean TMP directories for reuse of job script.
-        rm -rf "${TMPDIR:?}"
+        rm -rf "${TMPDIR}"
     else
         echo "Job name does not exist."
         exit 1

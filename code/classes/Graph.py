@@ -1,8 +1,8 @@
 from typing import List
 
-from .Enums import VertexStatus
-from .Vertex import Vertex
-from .Fire import Fire
+from Enums import VertexStatus
+from Vertex import Vertex
+from Fire import Fire
 
 
 class Graph:
@@ -90,6 +90,10 @@ class Graph:
             else:
                 local_neighbors_to_burn.append(vertex)
         return local_neighbors_to_burn, remote_neighbors_to_burn
+
+    def set_all_vertex_status(self, vertex_status):
+        for vertex in self.graph.keys():
+            vertex.vertex_status = vertex_status
 
     def set_all_vertex_status(self, vertex_status):
         for vertex in self.graph.keys():
