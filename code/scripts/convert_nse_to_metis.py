@@ -13,18 +13,19 @@ Metis graph format: <v_id> <v_id> ... <v_id>
     used by KaHIP, Metis...
 """
 
-
 from argparse import ArgumentParser
 from graph_parser import GraphParser
 
 METIS_VERTEX_ID_OFFSET = 1
 METIS_N_LINES_OF_METADATA = 1
 
+
 def parse_args():
     parser = ArgumentParser()
     parser.add_argument("name")
     args = parser.parse_args()
     return args
+
 
 def convert_nse_to_metis(graph_parser):
     # initialize metis graph data structure
