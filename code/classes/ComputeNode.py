@@ -117,7 +117,7 @@ class ComputeNode:
         self.partitioned_graph.stop_fire()
         self.partitioned_graph.set_all_vertex_status(VertexStatus.NOT_BURNED)
         self.num_fires = 0
-        comm.send("", dest=0, tag=MPI_TAG.RESET_ACK.value)
+        comm.send(None, dest=0, tag=MPI_TAG.RESET_ACK.value)
         self.reset_received = False
         self.partitioned_graph.init_fire()
 
