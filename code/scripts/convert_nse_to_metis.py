@@ -15,6 +15,7 @@ Output format:
          used by KaHIP, Metis...
 """
 
+
 from .graph_parser import GraphParser, parse_args
 
 def convert_nse_to_metis(graph_parser):
@@ -27,8 +28,10 @@ def convert_nse_to_metis(graph_parser):
 
     # put data into metis graph data structure
     for vert_1, vert_2 in graph_parser.lines_in_edge_file():
-        metis_data[vert_1].append(vert_2)
-        metis_data[vert_2].append(vert_1)
+        align_vert_1 = vert_1 - graph_parser.offset + METIS_VERTICE_ID_OFFSET
+        align_vert_2 = vert_2 - graph_parser.offset + METIS_VERTICE_ID_OFFSET
+        metis_data[align_vert_1].append(align_vert_2)
+        metis_data[align_vert_2].append(align_vert_1)
 
     # save data on disk
     with open(f"{graph_parser.path_to_graph}.m", "w") as f:
@@ -39,5 +42,4 @@ def convert_nse_to_metis(graph_parser):
 if __name__ == '__main__':
     args = parse_args()
     graph_parser = GraphParser(args.name)
-    graph_parser.get_properties()
     convert_nse_to_metis(graph_parser)

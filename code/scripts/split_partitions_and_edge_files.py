@@ -1,6 +1,7 @@
 """
 Discription: 
     Split edge files and partition files per node
+
 Details:
     For each edge, it should be in both edge files of the compute node of two vertices.
     In each line of the edge file of each node, the first vertex is guaranteed on the node, 
@@ -15,21 +16,23 @@ Details:
         3. check if vertex 2 is in the partition file, if not add to local vertices
 """
 
+
 from contextlib import ExitStack
 
 from .graph_parser import GraphParser, parse_args
 
+WORKER_NODES_RANK_OFFSET = 1
+
 def split_partitions_and_edge_files(graph_parser):
-    WORKER_NODES_RANK_OFFSET = 1
 
     for vertice_ranks_mapping, n_partitions in graph_parser.vertice_ranks_mappings():
         with ExitStack() as stack:
             # prepare and open .e and .p files for write
             paths_to_edge_files_on_nodes = \
-                [f"{graph_parser.path_to_graph}-{n_partitions}partitions/node{i + WORKER_NODES_RANK_OFFSET}.e" \
+                [f"{graph_parser.path_to_graph}-{n_partitions}-partitions/node{i + WORKER_NODES_RANK_OFFSET}.e" \
                     for i in range(n_partitions)]
             paths_to_partition_files_on_nodes = \
-                [f"{graph_parser.path_to_graph}-{n_partitions}partitions/node{i + WORKER_NODES_RANK_OFFSET}.p" \
+                [f"{graph_parser.path_to_graph}-{n_partitions}-partitions/node{i + WORKER_NODES_RANK_OFFSET}.p" \
                     for i in range(n_partitions)]
             
             edge_files_ptrs = [stack.enter_context(open(path_to_edge_file), 'w') \
@@ -52,12 +55,11 @@ def split_partitions_and_edge_files(graph_parser):
                 else:
                     # for rank_for_vert_1, if vert_2 is not on the node, then add to the partition file
                     # for rank_for_vert_2, if vert_1 is not on the node, then add to the partition file
-                    partition_files_ptrs[rank_for_vert_1].write(f"{vert_2}\n")
-                    partition_files_ptrs[rank_for_vert_2].write(f"{vert_1}\n")
+                    partition_files_ptrs[rank_for_vert_1].write(f"{vert_2} {rank_for_vert_2 + WORKER_NODES_RANK_OFFSET}\n")
+                    partition_files_ptrs[rank_for_vert_2].write(f"{vert_1} {rank_for_vert_1 + WORKER_NODES_RANK_OFFSET}\n")
 
 if __name__ == "__main__":
     args = parse_args()
     graph_parser = GraphParser(args.name)
-    graph_parser.get_properties()
     split_partitions_and_edge_files(graph_parser)
     

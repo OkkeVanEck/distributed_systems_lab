@@ -4,6 +4,7 @@ from argparse import ArgumentParser
 from functools import singledispatch
 from pathlib import Path
 
+
 @singledispatch
 def get_value_from_line(pos, line):
     raise TypeError
@@ -26,11 +27,7 @@ class GraphParser:
     def __init__(self, name):
         self.name = name
         self.path_to_graph = f"data/{self.name}/{self.name}"
-        self.n_vertices = None
-        self.n_edges = None
-        self.offset = None
 
-    def get_properties(self):
         # get #vertice and #edges
         with open(f"{self.path_to_graph}.properties", 'r') as fp:
             for line in fp:
@@ -46,7 +43,7 @@ class GraphParser:
     def get_vertice_ranks_mapping(self, fp):
         vertice_ranks_mapping = dict()
         for vert_id, node_id in enumerate(fp): 
-            vertice_ranks_mapping[vert_id] = int(node_id)
+            vertice_ranks_mapping[vert_id + self.offset] = int(node_id)
         return vertice_ranks_mapping
 
     def lines_in_edge_file(self):
