@@ -35,9 +35,9 @@ def split_partitions_and_edge_files(graph_parser):
                 [f"{graph_parser.path_to_graph}-{n_partitions}-partitions/node{i + WORKER_NODES_RANK_OFFSET}.p" \
                     for i in range(n_partitions)]
             
-            edge_files_ptrs = [stack.enter_context(open(path_to_edge_file), 'w') \
+            edge_files_ptrs = [stack.enter_context(open(path_to_edge_file, 'w')) \
                                 for path_to_edge_file in paths_to_edge_files_on_nodes]
-            partition_files_ptrs = [stack.enter_context(open(path_to_partition_file), 'w') \
+            partition_files_ptrs = [stack.enter_context(open(path_to_partition_file, 'w')) \
                                 for path_to_partition_file in paths_to_partition_files_on_nodes]
 
             # iterate over original .e file

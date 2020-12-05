@@ -79,7 +79,7 @@ module load openmpi/gcc/64
 
 APP=KaHIP/deploy/parhip
 NPROC=\"-n 32\"
-ARGS=\"./data/${dset}/${dset}.graph --k ${p} --preconfiguration=fastsocial --save_partition\"
+ARGS=\"./data/${dset}/${dset}.m --k ${p} --preconfiguration=fastsocial --save_partition\"
 OMPI_OPTS=\"--mca btl ^usnic\"
 " >>"jobs/create_partitions/${dset}-p-${p}.sh"
 
@@ -96,11 +96,12 @@ OMPI_OPTS=\"--mca btl ^usnic\"
     # Iterate over all datasets.
     for dset in "${DATASETS[@]}"; do
         # Check whether partition jobs have finished.
-        for p in {2, 16}; do
+        for p in {2..16}; do
             if ! grep -q "AND WE R DONE" "jobs/create_partitions/${dset}-p-${p}.log"; then
                 echo "Please wait for partition jobs on ${dset} to finish."
                 exit 1
             fi
+            mkdir "./data/${dset}/${dset}-${p}-partitions"
         done
         echo "Splitting ${dset}.."
         srun -n 16 python3 code/scripts/split_partitions.py $dset

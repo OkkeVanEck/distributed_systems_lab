@@ -30,7 +30,7 @@ def parse_args():
     return args
 
 class GraphParser:
-    
+
     def __init__(self, name):
         self.name = name
         self.path_to_graph = f"data/{self.name}/{self.name}"
@@ -62,14 +62,14 @@ class GraphParser:
     def paths_to_partition_files(self):
         p = Path(".")
         for path_to_partition_file in p.glob(f"{self.path_to_graph}.m.*p"):
-            assert path_to_partition_file.startswith(self.path_to_graph)
-            m = re.match(rf'{path_to_graph}\.m\.([0-9]+)p', path_to_partition_file)
-            n_partitions = m.group(1)
+            path_to_partition_file = str(path_to_partition_file)
+            m = re.match(rf'{self.path_to_graph}\.m\.([0-9]+)p', path_to_partition_file)
+            n_partitions = int(m.group(1))
             yield path_to_partition_file, n_partitions
 
     def vertice_ranks_mappings(self):
         for path_to_partition_file, n_partitions in self.paths_to_partition_files():
-            os.mkdir(f"{self.path_to_graph}-{n_partitions}-partitions")
+            # os.mkdir(f"{self.path_to_graph}-{n_partitions}-partitions")
             with open(path_to_partition_file, 'r') as fp:
                 vertice_ranks_mapping = self.get_vertice_ranks_mapping(fp)
                 yield vertice_ranks_mapping, n_partitions
