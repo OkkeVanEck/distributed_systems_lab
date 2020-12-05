@@ -25,7 +25,7 @@ class ComputeNode:
                 a flexible way.
         """
         self.rank = rank
-        self.fires_wild = True
+        self.fires_wild = fires_wild
         self.num_compute_nodes = n_nodes - 1
         self.graph_reader = GraphInterpreter()
         self.partitioned_graph = Graph(self)
@@ -89,7 +89,7 @@ class ComputeNode:
         self.manage_fires()
         self.listen_thread.join()
         self.heartbeat_thread.join()
-        # log("burned vertexes on this partition are")
+        log("burned vertexes on this partition are")
         if DO_LOG:
             log("edges sent")
             for edge in self.edges_sent_in_heartbeat:

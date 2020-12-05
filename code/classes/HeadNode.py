@@ -11,8 +11,10 @@ from Enums import MPI_TAG, VertexStatus, SLEEP_TIMES
 from mpi4py import MPI
 comm = MPI.COMM_WORLD
 
+DO_LOG=False
+
 def log(message):
-    if (True):
+    if (DO_LOG):
         print(message)
 
 
@@ -24,7 +26,6 @@ class HeadNode:
         """
         self.rank = rank
         self.num_compute_nodes = n_nodes - 1
-        self.graph = HeadGraph(total_vertices, out_e, out_v)
         self.total_vertices = total_vertices
         # variable for stitching
         self.partition_center = [None] * self.num_compute_nodes
@@ -41,6 +42,8 @@ class HeadNode:
 
         # to detect which sample a heartbeat belongs too
         self.need_ack = [False] * self.num_compute_nodes
+
+        self.graph = HeadGraph(total_vertices, self.cutoff_vertices, out_e, out_v)
 
         self.keep_burning = True
         self.need_stitch = True
@@ -65,16 +68,20 @@ class HeadNode:
             self.sample_center[index - i] += i * self.total_vertices
 
     def add_stitch(self):
-        for i in range(len(self.partition_center) - 1):
-            self.graph.add_edge(self.partition_center[i], self.partition_center[i+1])
-        self.graph.add_edge(self.partition_center[-1], self.partition_center[0])
+        center_list = [x for x in self.sample_center if x != None]
+        if (len(center_list)) < 2:
+            return
+        for i in range(len(center_list) - 1):
+            self.graph.add_edge(center_list[i], center_list[i+1])
+        self.graph.add_edge(center_list[-1], center_list[0])
 
     def add_sample_stitch(self):
-        if (len(self.sample_center)) < 2:
+        center_list = [x for x in self.sample_center if x != None]
+        if (len(center_list)) < 2:
             return
-        for i in range(len(self.sample_center) - 1):
-            self.graph.add_edge(self.sample_center[i], self.sample_center[i+1], 0)
-        self.graph.add_edge(self.sample_center[-1], self.sample_center[0], 0)
+        for i in range(len(center_list) - 1):
+            self.graph.add_edge(center_list[i], center_list[i+1], 0)
+        self.graph.add_edge(center_list[-1], center_list[0], 0)
 
     def send_kill(self):
         for dest in range(1, self.num_compute_nodes+1):
@@ -99,15 +106,15 @@ class HeadNode:
                 self.graph.next_sample()
                 self.partition_center = [None] * self.num_compute_nodes
                 self.need_stitch = True
+        self.keep_burning = False
         self.send_kill()
 
     def listen_for_heartbeat(self):
-        # log("listening for heartbeat on headnode")
         if comm.Iprobe(source=MPI.ANY_SOURCE,tag=MPI_TAG.HEARTBEAT.value):
             status = MPI.Status()
             data = comm.recv(source=MPI.ANY_SOURCE, tag=MPI_TAG.HEARTBEAT.value, status=status)
-            log(data)
             sender = status.Get_source() - 1 # only works if head is rank 0
+            log(f"{data}, sender: {sender}")
 
             # message is still received so computed node doesnt get into deadlock when sending message head doesnt want
             if self.need_ack[sender]:
@@ -129,7 +136,7 @@ class HeadNode:
 
     def listen_for_ack(self):
         if comm.Iprobe(source=MPI.ANY_SOURCE,tag=MPI_TAG.RESET_ACK.value):
-            
+
             status = MPI.Status()
             data = comm.recv(source=MPI.ANY_SOURCE, tag=MPI_TAG.RESET_ACK.value, status=status)
             sender = status.Get_source() - 1 # only works if head is rank 0
@@ -137,4 +144,4 @@ class HeadNode:
             self.need_ack[sender] = False
 
     def done_burning(self):
-        return self.graph.get_sample_vertices() > self.cutoff_vertices
+        return self.graph.get_sample_vertices() >= self.cutoff_vertices
