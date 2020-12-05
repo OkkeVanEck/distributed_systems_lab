@@ -16,15 +16,13 @@ Details:
         3. check if vertex 2 is in the partition file, if not add to local vertices
 """
 
-
 from contextlib import ExitStack
-
 from graph_parser import GraphParser, parse_args
 
 WORKER_NODES_RANK_OFFSET = 1
 
-def split_partitions_and_edge_files(graph_parser):
 
+def split_partitions_and_edge_files(graph_parser):
     for vertice_ranks_mapping, n_partitions in graph_parser.vertice_ranks_mappings():
         with ExitStack() as stack:
             # prepare and open .e and .p files for write
@@ -59,4 +57,3 @@ if __name__ == "__main__":
     args = parse_args()
     graph_parser = GraphParser(args.name)
     split_partitions_and_edge_files(graph_parser)
-    

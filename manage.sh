@@ -40,54 +40,83 @@ case "$1" in
 "clear_data")
     rm -rf data/*/
     ;;
+# Remove KaHIP installation, download new one and call the build function.
+"install_KaHIP")
+    # Delete existing folder and clone new one.
+    if [ -d "KaHIP/" ]; then
+        echo "Removing KaHIP.."
+        rm -rf "KaHIP/"
+    fi
+
+    echo "Cloning new version of KaHIP.."
+    git clone git@github.com:estsaon/KaHIP.git
+    ;;
+# Build the KaHIP code on the DAS5.
+"build_KaHIP")
+    if [ ! -d "KaHIP/" ]; then
+        echo "No KaHIP folder found, please run ./manage.sh install_KaHIP."
+        exit 1
+    fi
+
+    # Load modules.
+    module load openmpi/gcc/64
+    module load cmake
+
+    # Build KaHIP.
+    cd KaHIP; sh ./compile_withcmake.sh
+
+    # Unload modules.
+    module unload openmpi/gcc/64
+    module unload cmake
+    cd ..
+    ;;
 # Create partitions
 "create_partitions")
     # Check if KaHIP folder exists.
     if [ ! -d "KaHIP/" ]; then
-        # Clone and compile KaHIP.
-        git clone git@github.com:estsaon/KaHIP.git
-        module load openmpi/gcc/64
-        module load cmake
-        cd KaHIP; sh ./compile_withcmake.sh
-        module unload openmpi/gcc/64
-        module unload cmake
-        cd ..
+        echo "No KaHIP folder found.."
+        exit 1
     fi
-    # Convert graph format into Metis format that KaHIP supports.
-    module load python/3.6.0
-    for dset in "${DATASETS[@]}"; do
-        echo "Converting ${dset}.."
-        srun -n 16 python3 code/scripts/convert_nse_to_metis.py $dset
-    done
-    module unload python/3.6.0
-    # Start partitioning.
+
+    # Check if dataset was provided to partition.
+    if [ -z "$2" ]; then
+        echo "No dataset specified."
+        exit 1
+    fi
+
+    # Check if dataset exists.
+    if [ ! -d "data/${2}" ]; then
+        echo "Dataset '${2}' does not exist."
+        exit 1
+    fi
+
+    # Check if number of partitions was provided.
+    if [ -z "$3" ]; then
+        echo "No number of partitions specified."
+        exit 1
+    fi
+
+    # Check if the dataset is already converted to Metis format.
+    if [ -f "/data/${2}/${2}.m" ]; then
+        echo "Dataset ${2} is already converted into Metis format."
+    else
+        # Convert graph format into Metis format that KaHIP supports.
+        echo "Converting ${2} into Metis format.."
+        srun python3 code/scripts/convert_nse_to_metis.py "${2}"
+        module unload python/3.6.0
+    fi
+
+    # Check if the dataset is already partitioned with given setup.
+    if [ -d "/data/${2}/${2}-${3}-partitions" ]; then
+        echo "Dataset is already split in ${3} partitions."
+        exit 1
+    fi
+
+    # Compute the total number of processes and run ParHIP.
+    N_PROCS=$(( $3 * 16 ))
     module load openmpi/gcc/64
-    mkdir -p "jobs/create_partitions"
-    for dset in "${DATASETS[@]}"; do
-        # Create partition jobs for each graph.
-        for p in {2..16}; do
-            echo "Partitioning ${dset} into ${p} parts.."
-            touch "jobs/create_partitions/${dset}-p-${p}.sh"
-            echo "#!/usr/bin/env bash
-#SBATCH -N 2
-#SBATCH --ntasks-per-node=16
-#SBATCH --output jobs/create_partitions/${dset}-p-${p}.log
-
-. /etc/bashrc
-. /etc/profile.d/modules.sh
-module load openmpi/gcc/64
-
-APP=KaHIP/deploy/parhip
-NPROC=\"-n 32\"
-ARGS=\"./data/${dset}/${dset}.m --k ${p} --preconfiguration=fastsocial --save_partition\"
-OMPI_OPTS=\"--mca btl ^usnic\"
-" >>"jobs/create_partitions/${dset}-p-${p}.sh"
-
-            echo '$MPI_RUN $OMPI_OPTS $NPROC $APP $ARGS
-' >>"jobs/create_partitions/${dset}-p-${p}.sh"
-            sbatch "jobs/create_partitions/${dset}-p-${p}.sh"
-        done
-    done
+    srun -n "${N_PROCS}" --mpi=pmi2 KaHIP/deploy/parhip "./data/${2}/${2}.m" \
+        --k "${3}" --preconfiguration=fastsocial --save_partition
     module unload openmpi/gcc/64
     ;;
 # Split edge and partition files for each node.

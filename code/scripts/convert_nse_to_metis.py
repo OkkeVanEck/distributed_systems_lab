@@ -13,14 +13,13 @@ Metis graph format: <v_id> <v_id> ... <v_id>
     used by KaHIP, Metis...
 """
 
-
 from graph_parser import GraphParser, parse_args
 
 METIS_VERTEX_ID_OFFSET = 1
 METIS_N_LINES_OF_METADATA = 1
 
-def convert_nse_to_metis(graph_parser):
 
+def convert_nse_to_metis(graph_parser):
     # initialize metis graph data structure
     metis_data = [[] for i in range(graph_parser.n_vertices + METIS_N_LINES_OF_METADATA)]
     metis_data[0] = [graph_parser.n_vertices, graph_parser.n_edges]

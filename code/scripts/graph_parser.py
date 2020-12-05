@@ -3,8 +3,6 @@ Discription:
     Class for NSE graph data parser.  
 """
 
-
-import os
 import re
 from argparse import ArgumentParser
 from functools import singledispatch
@@ -15,13 +13,16 @@ from pathlib import Path
 def get_value_from_line(pos, line):
     raise TypeError
 
+
 @get_value_from_line.register(int)
 def _(pos, line):
     return int(line.strip().split(" ")[pos])
 
+
 @get_value_from_line.register(slice)
 def _(pos, line):
     return [int(x) for x in line.strip().split(" ")[pos]]
+
 
 def parse_args():
     parser = ArgumentParser()
@@ -29,8 +30,8 @@ def parse_args():
     args = parser.parse_args()
     return args
 
-class GraphParser:
 
+class GraphParser:
     def __init__(self, name):
         self.name = name
         self.path_to_graph = f"data/{self.name}/{self.name}"

@@ -20,7 +20,7 @@ cp "${PWD}/data/${DATASET}/${DATASET}.e" "${TMP_DATA}"
 cp -a "${PWD}/jobs/${JOBNAME}/results/." "${TMP_RES}"
 
 # Run simulation.
-srun -n ${SLURM_NTASKS} --mpi=pmi2 python3 "code/run_simulation.py" \
+srun -n "${SLURM_NTASKS}" --mpi=pmi2 python3 "code/run_simulation.py" \
     "${SIMPATH}${SIMFILE}" "${SCALE}" "${DATASET}" "${TMP_PLAY}" "${TMP_DATA}" \
     "${TMP_RES}"
 
