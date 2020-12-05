@@ -52,8 +52,8 @@ def split_partitions_and_edge_files(graph_parser, n_partition):
             edge_files_ptrs[rank_for_vert_2].write(f"{vert_2} {vert_1}\n")
 
             if rank_for_vert_1 != rank_for_vert_2:
-                partition_data[rank_for_vert_1].write(f"{vert_2} {rank_for_vert_2 + WORKER_NODES_RANK_OFFSET}\n")
-                partition_data[rank_for_vert_2].write(f"{vert_1} {rank_for_vert_1 + WORKER_NODES_RANK_OFFSET}\n")
+                partition_data[rank_for_vert_1].add(f"{vert_2} {rank_for_vert_2 + WORKER_NODES_RANK_OFFSET}\n")
+                partition_data[rank_for_vert_2].add(f"{vert_1} {rank_for_vert_1 + WORKER_NODES_RANK_OFFSET}\n")
 
         for data, fp in zip(partition_data, partition_files_ptrs):
             for line in data:
