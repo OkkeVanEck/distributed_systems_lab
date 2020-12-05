@@ -57,9 +57,9 @@ class GraphParser:
 
     def paths_to_partition_files(self):
         p = Path(".")
-        for path_to_partition_file in p.glob(f"{self.path_to_graph}.graph.*p"):
+        for path_to_partition_file in p.glob(f"{self.path_to_graph}.m.*p"):
             assert path_to_partition_file.startswith(self.path_to_graph)
-            m = re.match(rf'{path_to_graph}\.graph\.([0-9]+)p', path_to_partition_file)
+            m = re.match(rf'{path_to_graph}\.m\.([0-9]+)p', path_to_partition_file)
             n_partitions = m.group(1)
             yield path_to_partition_file, n_partitions
 
