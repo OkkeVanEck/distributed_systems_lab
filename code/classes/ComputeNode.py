@@ -80,9 +80,7 @@ class ComputeNode:
         #       - same as above except self.kill_received remains false.
         #       - therefore, a new fire is started on the current thread.
         while not self.kill_received:
-            log("in manage fires. rank " + str(self.rank))
             self.partitioned_graph.init_fire()
-        log("out of while loop. rank = " + str(self.rank))
 
 
     def do_tasks(self):
@@ -114,7 +112,6 @@ class ComputeNode:
     def reset_fire(self):
         self.partitioned_graph.stop_fire()
         self.partitioned_graph.set_all_vertex_status(VertexStatus.NOT_BURNED)
-        self.partitioned_graph.check_vertex_status()
         self.edges_sent_in_heartbeat = []
         self.nodes_sent_in_heartbeat = {}
         comm.send("", dest=0, tag=MPI_TAG.RESET_ACK.value)
@@ -152,7 +149,6 @@ class ComputeNode:
                 log("sent heartbeat. burned edges are " + str(burned_edges))
                 data = np.array(heartbeat_edges, dtype=np.int)
                 comm.send(data, dest=0, tag=MPI_TAG.HEARTBEAT.value)
-                log("sent")
 
                 # for simulations without head node object
                 # if len(self.nodes_sent_in_heartbeat.keys()) >= self.hard_threshold:

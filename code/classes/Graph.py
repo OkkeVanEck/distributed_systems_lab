@@ -32,7 +32,7 @@ class Graph:
 
         for vert in self.graph.keys():
             if vert.vertex_id == vertex.vertex_id:
-                # print("set vertex burned. vertex_id = " + str(vertex.vertex_id) + " machine rank = " + str(self.compute_node.rank))
+                # log("set vertex burned. vertex_id = " + str(vertex.vertex_id) + " machine rank = " + str(self.compute_node.rank))
                 vert.status = status
                 if status == VertexStatus.BURNED or status == VertexStatus.BURNING:
                     self.burned_vertices[vertex.vertex_id] = True

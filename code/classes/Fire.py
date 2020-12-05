@@ -43,9 +43,9 @@ class Fire:
     def ignite_random_node(self):
         if len(self.burning_vertices) == 0:
             self.graph.check_vertex_status()
-            # print("num graph keys = " + str(list(self.graph.graph.keys())))
-            # print("random sample list = " + str(list(map(lambda y: y.vertex_id, filter(lambda x: x.status == VertexStatus.NOT_BURNED, self.graph.graph.keys())))))
-            # print("num graph keys not burned = " + str(len(list(filter(lambda x: x.status == VertexStatus.NOT_BURNED), self.graph.graph.keys()))))
+            # log("num graph keys = " + str(list(self.graph.graph.keys())))
+            # log("random sample list = " + str(list(map(lambda y: y.vertex_id, filter(lambda x: x.status == VertexStatus.NOT_BURNED, self.graph.graph.keys())))))
+            # log("num graph keys not burned = " + str(len(list(filter(lambda x: x.status == VertexStatus.NOT_BURNED), self.graph.graph.keys()))))
             self.burning_vertices = random.sample(list(filter(lambda x: x.status == VertexStatus.NOT_BURNED,
                                     self.graph.graph.keys())), 1)
 
@@ -60,8 +60,8 @@ class Fire:
             neighbors_to_burn = self.determine_burn_list(neighbors)
             local_neighbors_to_burn, remote_neighbors_to_burn = \
                 self.graph.spread_fire_to_other_nodes(neighbors_to_burn)
-            # print("burning to local neighbors " + str(list(map(lambda x: x.vertex_id, local_neighbors_to_burn))))
-            # print("burning to remote neighbors " + str(list(map(lambda x: x.vertex_id, remote_neighbors_to_burn))))
+            # log("burning to local neighbors " + str(list(map(lambda x: x.vertex_id, local_neighbors_to_burn))))
+            # log("burning to remote neighbors " + str(list(map(lambda x: x.vertex_id, remote_neighbors_to_burn))))
             for new_burning_vertex in local_neighbors_to_burn:
                 self.graph.set_vertex_status(new_burning_vertex, VertexStatus.BURNING)
                 self.graph.add_burned_edge(vertex, new_burning_vertex)
