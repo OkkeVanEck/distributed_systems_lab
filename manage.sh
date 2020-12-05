@@ -59,9 +59,10 @@ case "$1" in
         echo "Converting ${dset}.."
         srun -n 16 python3 code/scripts/convert_graph_format.py $dset
     done
+    module unload python/3.6.0
     # Start partitioning.
     module load openmpi/gcc/64
-    mkdir "jobs/create_partitions"
+    mkdir -p "jobs/create_partitions"
     for dset in "${DATASETS[@]}"; do
         # Create partition jobs for each graph.
         for p in {2..16}; do
@@ -88,6 +89,17 @@ OMPI_OPTS=\"--mca btl ^usnic\"
         done
     done
     module unload openmpi/gcc/64
+    ;;
+# Split edge and partition files for each node.
+# Make sure partition jobs have finished
+"split_partitions")
+    module load python/3.6.0
+    # Iterate over all datasets.
+    for dset in "${DATASETS[@]}"; do
+        echo "Splitting ${dset}.."
+        srun -n 16 python3 code/scripts/split_partitions.py $dset
+    done
+    module unload python/3.6.0
     ;;
 # Create new job.
 "create_job")

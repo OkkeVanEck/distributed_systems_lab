@@ -15,74 +15,29 @@ Output format:
          used by KaHIP, Metis...
 """
 
-import argparse
-from functools import singledispatch
+from .graph_parser import GraphParser, parse_args
 
-@singledispatch
-def get_value_from_line(pos, line):
-    raise TypeError
+def convert_nse_to_metis(graph_parser):
+    METIS_VERTICE_ID_OFFSET = 1
+    METIS_N_LINES_OF_METADATA = 1
 
-@get_value_from_line.register(int)
-def _(pos, line):
-    return int(line.strip().split(" ")[pos])
+    # initialize metis graph data structure
+    metis_data = [[] for i in range(graph_parser.n_vertices + METIS_N_LINES_OF_METADATA)]
+    metis_data[0] = [graph_parser.n_vertices, graph_parser.n_edges]
 
-@get_value_from_line.register(slice)
-def _(pos, line):
-    return [int(x) for x in line.strip().split(" ")[pos]]
+    # put data into metis graph data structure
+    for vert_1, vert_2 in graph_parser.lines_in_edge_file():
+        metis_data[vert_1].append(vert_2)
+        metis_data[vert_2].append(vert_1)
 
-class Metis:
-    def __init__(self, graph_name, n_vertices, n_edges):
-        self.graph_name = graph_name
-        self.n_vertices = n_vertices
-        self.n_edges = n_edges
-        self.data = [[] for _ in range(n_vertices + 1)]
-        self.data[0] = [n_vertices, n_edges]
+    # save data on disk
+    with open(f"{graph_parser.path_to_graph}.m", "w") as f:
+        for line in metis_data:
+            f.write(' '.join(map(str, line)) + '\n')
 
-    def put(self, vertex_1, vertex_2):
-        # print(vertex_1, vertex_2)
-        self.data[vertex_1].append(vertex_2)
-        self.data[vertex_2].append(vertex_1)
-
-    def save(self):
-        with open(f"data/{self.graph_name}/{self.graph_name}.graph", "w") as f:
-            for line in self.data:
-                f.write(' '.join(map(str, line)) + '\n')
-
-def parse_metadata(graph_name):
-    properties_file_path = f"data/{graph_name}/{graph_name}.properties"
-    with open(properties_file_path, 'r') as fp:
-        for line in fp:
-            if "meta.vertices" in line:
-                n_vertices = get_value_from_line(-1, line)
-            if "meta.edges" in line:
-                n_edges = get_value_from_line(-1, line)
-
-    vertex_file_path = f"data/{graph_name}/{graph_name}.v"
-    with open(vertex_file_path, 'r') as fp:
-        # nse starts from n, metis starts from 1, so offset is n - 1
-        offset = int(fp.readline().strip()) - 1
-
-    return n_vertices, n_edges, offset
-
-def parse_nse(graph_name):
-    file_path = f"data/{graph_name}/{graph_name}.e"
-    with open(file_path, 'r') as fp:
-        for line in fp:
-            v_1, v_2 = get_value_from_line(slice(0, 2), line)
-            yield v_1, v_2
-
-def convert(args):
-    n_vertices, n_edges, offset = parse_metadata(args.graph_name)
-    metis = Metis(args.graph_name, n_vertices, n_edges)
-    for v_1, v_2 in parse_nse(args.graph_name):
-        metis.put(v_1 - offset, v_2 - offset)
-    metis.save()
-
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("graph_name")
-    args = parser.parse_args()
-    return args
 
 if __name__ == '__main__':
-    convert(parse_args())
+    args = parse_args()
+    graph_parser = GraphParser(args.name)
+    graph_parser.get_properties()
+    convert_nse_to_metis(graph_parser)
