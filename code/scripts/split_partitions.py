@@ -19,7 +19,7 @@ Details:
 
 from contextlib import ExitStack
 
-from .graph_parser import GraphParser, parse_args
+from graph_parser import GraphParser, parse_args
 
 WORKER_NODES_RANK_OFFSET = 1
 

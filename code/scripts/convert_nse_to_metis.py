@@ -14,7 +14,7 @@ Metis graph format: <v_id> <v_id> ... <v_id>
 """
 
 
-from .graph_parser import GraphParser, parse_args
+from graph_parser import GraphParser, parse_args
 
 METIS_VERTEX_ID_OFFSET = 1
 METIS_N_LINES_OF_METADATA = 1
