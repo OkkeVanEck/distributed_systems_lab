@@ -57,7 +57,7 @@ case "$1" in
     module load python/3.6.0
     for dset in "${DATASETS[@]}"; do
         echo "Converting ${dset}.."
-        srun -n 16 python3 code/scripts/convert_graph_format.py $dset
+        srun -n 16 python3 code/scripts/convert_nse_to_metis.py $dset
     done
     module unload python/3.6.0
     # Start partitioning.
@@ -67,11 +67,11 @@ case "$1" in
         # Create partition jobs for each graph.
         for p in {2..16}; do
             echo "Partitioning ${dset} into ${p} parts.."
-            touch "jobs/create_partitions/${dset}-${p}p.sh"
+            touch "jobs/create_partitions/${dset}-p-${p}.sh"
             echo "#!/usr/bin/env bash
 #SBATCH -N 2
 #SBATCH --ntasks-per-node=16
-#SBATCH --output jobs/create_partitions/${dset}-${p}p.info
+#SBATCH --output jobs/create_partitions/${dset}-p-${p}.log
 
 . /etc/bashrc
 . /etc/profile.d/modules.sh
@@ -81,21 +81,27 @@ APP=KaHIP/deploy/parhip
 NPROC=\"-n 32\"
 ARGS=\"./data/${dset}/${dset}.graph --k ${p} --preconfiguration=fastsocial --save_partition\"
 OMPI_OPTS=\"--mca btl ^usnic\"
-" >>"jobs/create_partitions/${dset}-${p}p.sh"
+" >>"jobs/create_partitions/${dset}-p-${p}.sh"
 
             echo '$MPI_RUN $OMPI_OPTS $NPROC $APP $ARGS
-' >>"jobs/create_partitions/${dset}-${p}p.sh"
-            sbatch "jobs/create_partitions/${dset}-${p}p.sh"
+' >>"jobs/create_partitions/${dset}-p-${p}.sh"
+            sbatch "jobs/create_partitions/${dset}-p-${p}.sh"
         done
     done
     module unload openmpi/gcc/64
     ;;
 # Split edge and partition files for each node.
-# Make sure partition jobs have finished
 "split_partitions")
     module load python/3.6.0
     # Iterate over all datasets.
     for dset in "${DATASETS[@]}"; do
+        # Check whether partition jobs have finished.
+        for p in {2, 16}; do
+            if ! grep -q "AND WE R DONE" "jobs/create_partitions/${dset}-p-${p}.log"; then
+                echo "Please wait for partition jobs finish."
+                exit 1
+            fi
+        done
         echo "Splitting ${dset}.."
         srun -n 16 python3 code/scripts/split_partitions.py $dset
     done

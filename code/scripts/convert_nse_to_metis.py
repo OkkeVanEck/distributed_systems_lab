@@ -18,9 +18,10 @@ Output format:
 
 from .graph_parser import GraphParser, parse_args
 
+METIS_VERTEX_ID_OFFSET = 1
+METIS_N_LINES_OF_METADATA = 1
+
 def convert_nse_to_metis(graph_parser):
-    METIS_VERTICE_ID_OFFSET = 1
-    METIS_N_LINES_OF_METADATA = 1
 
     # initialize metis graph data structure
     metis_data = [[] for i in range(graph_parser.n_vertices + METIS_N_LINES_OF_METADATA)]
@@ -28,8 +29,8 @@ def convert_nse_to_metis(graph_parser):
 
     # put data into metis graph data structure
     for vert_1, vert_2 in graph_parser.lines_in_edge_file():
-        align_vert_1 = vert_1 - graph_parser.offset + METIS_VERTICE_ID_OFFSET
-        align_vert_2 = vert_2 - graph_parser.offset + METIS_VERTICE_ID_OFFSET
+        align_vert_1 = vert_1 - graph_parser.offset + METIS_VERTEX_ID_OFFSET
+        align_vert_2 = vert_2 - graph_parser.offset + METIS_VERTEX_ID_OFFSET
         metis_data[align_vert_1].append(align_vert_2)
         metis_data[align_vert_2].append(align_vert_1)
 

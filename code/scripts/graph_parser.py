@@ -1,3 +1,9 @@
+"""
+Discription: 
+    Class for NSE graph data parser.  
+"""
+
+
 import os
 import re
 from argparse import ArgumentParser
@@ -62,7 +68,7 @@ class GraphParser:
 
     def vertice_ranks_mappings(self):
         for path_to_partition_file, n_partitions in self.paths_to_partition_files():
-            os.mkdir(f"{self.path_to_graph}-{n_partitions}partitions")
+            os.mkdir(f"{self.path_to_graph}-{n_partitions}-partitions")
             with open(path_to_partition_file, 'r') as fp:
                 vertice_ranks_mapping = self.get_vertice_ranks_mapping(fp)
                 yield vertice_ranks_mapping, n_partitions
