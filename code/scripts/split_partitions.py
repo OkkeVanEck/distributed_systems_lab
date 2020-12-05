@@ -63,4 +63,3 @@ if __name__ == "__main__":
     args = parse_args()
     graph_parser = GraphParser(args.name)
     split_partitions_and_edge_files(graph_parser, args.n_partition)
-    
