@@ -143,14 +143,3 @@ if __name__ == "__main__":
     print("-----writing to file----------")
     write_qualities(qualities, output_file_name)
     print("------------done--------------")
-
-
-
-
-
-
-
-
-
-
-
