@@ -31,7 +31,6 @@ class HeadGraph:
 
     def next_sample(self):
         self.prev_vertices += self.cutoff_vertices
-        print("prev vertices is ", self.prev_vertices)
         self.base_id += self.total_vertices
 
     def write_to_file(self):
