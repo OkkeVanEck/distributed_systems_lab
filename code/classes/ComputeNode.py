@@ -51,9 +51,7 @@ class ComputeNode:
         - for partitioning, return True if vertex_id
         - belongs to the compute node.
         """
-        if self.machine_with_vertex(vertex_id) == self.rank:
-            return True
-        return False
+        return self.machine_with_vertex(vertex_id) == self.rank
 
     def init_partition(self, file):
         file_uncompressed = gzip.open(file, 'rt')
@@ -77,13 +75,11 @@ class ComputeNode:
         #       - same as above except self.kill_received remains false.
         #       - therefore, a new fire is started on the current thread.
         while not self.kill_received:
-            # log("in manage fires")
             if self.num_fires < self.allowed_fires:
                 self.partitioned_graph.init_fire()
                 self.num_fires += 1
             else:
                 time.sleep(SLEEP_TIMES.COMPUTE_NODE_MANAGE_FIRES.value)
-
 
     def do_tasks(self):
         self.listen_thread.start()
@@ -91,13 +87,13 @@ class ComputeNode:
         self.manage_fires()
         self.listen_thread.join()
         self.heartbeat_thread.join()
-        # log("burned vertexes on this partition are")
+
         if DO_LOG:
             log("edges sent")
             for edge in self.edges_sent_in_heartbeat:
                 log(edge)
-            log("heartbeats nodes sent for machine " + str(self.rank) + " = " + str(len(self.nodes_sent_in_heartbeat)))
-
+            log(f"heartbeats nodes sent for machine {self.rank} = "
+                f"{len(self.nodes_sent_in_heartbeat)}")
 
     def send_burn_request(self, vertex_id):
         """
@@ -126,22 +122,20 @@ class ComputeNode:
             else:
                 burned_vertices = self.partitioned_graph.get_burned_vertices()
                 burned_edges = self.partitioned_graph.get_burned_edges()
-                heartbeat_nodes = []
-                heartbeat_edges = []
+                heartbeat_nodes = set()
+                heartbeat_edges = set()
 
                 # find new nodes to send in a heartbeat
-                for vertex in burned_vertices:
-                    if vertex not in self.nodes_sent_in_heartbeat:
-                        heartbeat_nodes.append(vertex)
-                        self.nodes_sent_in_heartbeat[vertex] = True
+                new_vertices = set(v for v in burned_vertices if v not in self.nodes_sent_in_heartbeat)
+                heartbeat_nodes.update(new_vertices)
+                self.nodes_sent_in_heartbeat.update(zip(new_vertices, [True * len(new_vertices)]))
 
                 # heartbeat nodes are new nodes burned.
-                # TODO: https://github.com/OkkeVanEck/distributed_systems_lab/issues/16
-                for vertex in heartbeat_nodes:
-                    for edge in burned_edges:
-                        if edge[1] == vertex and edge not in heartbeat_edges:
-                            heartbeat_edges.append(edge)
-                            self.edges_sent_in_heartbeat.append(edge)
+                # TODO https://github.com/OkkeVanEck/distributed_systems_lab/issues/16
+                #   Find a way to empty the burned_edges after every heartbeat.
+                #   Okke: Also maybe consider using sets for self.partitioned_graph.burned_vertices and burned_edges.
+                heartbeat_edges.update(set(e for e in burned_edges if e[1] in heartbeat_nodes))
+                self.edges_sent_in_heartbeat.extend(heartbeat_edges)
 
                 data = np.array(heartbeat_edges, dtype=np.int)
                 comm.send(data, dest=0, tag=MPI_TAG.FROM_HEADNODE_TO_COMPUTE.value)
