@@ -28,7 +28,7 @@ WORKER_NODES_RANK_OFFSET = 1
 def parse_args():
     parser = ArgumentParser()
     parser.add_argument("name")
-    parser.add_argument("n_partition", type=int)
+    parser.add_argument("n_partition")
     args = parser.parse_args()
     return args
 
@@ -47,7 +47,7 @@ def split_partitions_and_edge_files(graph_parser, n_partition):
         
         edge_files_ptrs = [stack.enter_context(gzip.open(path_to_edge_file, 'wt')) \
                             for path_to_edge_file in paths_to_edge_files_on_nodes]
-        partition_files_ptrs = [stack.enter_context(gzip.open(gzip.path_to_partition_file, 'wt')) \
+        partition_files_ptrs = [stack.enter_context(gzip.open(path_to_partition_file, 'wt')) \
                             for path_to_partition_file in paths_to_partition_files_on_nodes]
 
         # partition data will be duplicate, so write to a set instead of files directly
@@ -71,4 +71,4 @@ def split_partitions_and_edge_files(graph_parser, n_partition):
 if __name__ == "__main__":
     args = parse_args()
     graph_parser = GraphParser(args.name)
-    split_partitions_and_edge_files(graph_parser, args.n_partition)
+    split_partitions_and_edge_files(graph_parser, int(args.n_partition))
