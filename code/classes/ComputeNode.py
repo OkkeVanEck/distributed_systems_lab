@@ -52,15 +52,10 @@ class ComputeNode:
         - for partitioning, return True if vertex_id
         - belongs to the compute node.
         """
-<<<<<<< HEAD
         # partition file only contains neighbours on on the remote nodes
         if vertex_id in self.machine_with_vertex.keys():
             return False
         return True
-
-=======
-        return self.machine_with_vertex(vertex_id) == self.rank
->>>>>>> 09977d7a690715ec2bfdbdaf525acd215a959972
 
     def init_partition(self, file):
         for vert_1, vert_2 in self.graph_reader.read_graph_file(file):
