@@ -5,6 +5,13 @@ from Vertex import Vertex
 from Fire import Fire
 
 
+DO_LOG_GRAPH_CLASS=False
+
+
+def log(message):
+    if DO_LOG_GRAPH_CLASS:
+        print(message)
+
 class Graph:
     def __init__(self, compute_node):
         # mapping Vertex -> [Vertex]
@@ -29,8 +36,10 @@ class Graph:
 
     def set_vertex_status(self, vertex: Vertex, status: VertexStatus):
         # TODO: Issue/Enhancement https://github.com/OkkeVanEck/distributed_systems_lab/issues/13
+
         for vert in self.graph.keys():
             if vert.vertex_id == vertex.vertex_id:
+                # log("set vertex burned. vertex_id = " + str(vertex.vertex_id) + " machine rank = " + str(self.compute_node.rank))
                 vert.status = status
                 if status == VertexStatus.BURNED or status == VertexStatus.BURNING:
                     self.burned_vertices[vertex.vertex_id] = True
@@ -69,8 +78,7 @@ class Graph:
             all_neighbors = self.graph[vertex]
         else:
             return []
-        neighbors_to_burn = list(filter(
-            lambda vert: vert.status == VertexStatus.NOT_BURNED,
+        neighbors_to_burn = list(filter(lambda vert: vert.status == VertexStatus.NOT_BURNED,
             all_neighbors))
         if len(neighbors_to_burn) == 0:
             return []
@@ -91,14 +99,23 @@ class Graph:
                 local_neighbors_to_burn.append(vertex)
         return local_neighbors_to_burn, remote_neighbors_to_burn
 
-    def set_all_vertex_status(self, vertex_status):
+    def check_vertex_status(self):
+        all_burned = True
         for vertex in self.graph.keys():
-            vertex.vertex_status = vertex_status
+            for neighbor in self.graph[vertex]:
+                if neighbor.status != VertexStatus.NOT_BURNED:
+                    all_burned = False
+            if vertex.status != VertexStatus.NOT_BURNED:
+                all_burned = False
+        return all_burned
 
     def set_all_vertex_status(self, vertex_status):
+        self.burned_vertices = {}
+        self.burned_edges = []
         for vertex in self.graph.keys():
-            vertex.vertex_status = vertex_status
-
+            for neighbor in self.graph[vertex]:
+                neighbor.status = vertex_status
+            vertex.status = vertex_status
 
 class GraphInterpreter:
     """

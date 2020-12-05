@@ -1,9 +1,10 @@
 
 
 class HeadGraph:
-    def __init__(self, total_vertices, out_e, out_v):
+    def __init__(self, total_vertices, cutoff_vertices, out_e, out_v):
         self.base_id = 0
         self.total_vertices = total_vertices;
+        self.cutoff_vertices = cutoff_vertices
         self.prev_vertices = 0
         self.vertices = set()
         self.vert_in_file = set()
@@ -29,7 +30,7 @@ class HeadGraph:
         self.edges.add(f"{dest} {src}")
 
     def next_sample(self):
-        self.prev_vertices = self.get_num_vertices
+        self.prev_vertices += self.cutoff_vertices
         self.base_id += self.total_vertices
 
     def write_to_file(self):
