@@ -89,7 +89,6 @@ class HeadNode:
         while (self.samples_remain > 0):
             log(self.samples_remain)
             while self.keep_burning:
-                # log("checking if other messages arrived")
                 self.listen_for_heartbeat()
                 self.listen_for_ack()
                 time.sleep(0.05)

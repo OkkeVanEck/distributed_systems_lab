@@ -175,10 +175,8 @@ class ComputeNode:
         if comm.Iprobe(source=MPI.ANY_SOURCE,tag=MPI_TAG.FROM_COMPUTE_TO_COMPUTE.value):
             data = comm.recv(source=MPI.ANY_SOURCE, tag=MPI_TAG.FROM_COMPUTE_TO_COMPUTE.value)
             v = Vertex(data, 0)
-            log("received burn for data = " + str(data))
             # if the vertex is burned, ignore the message
             if self.partitioned_graph.get_vertex_status(v) == VertexStatus.NOT_BURNED:
-                log("adding vertex " + str(v.vertex_id) + " to burning vertices")
                 self.partitioned_graph.fire.add_burning_vertex(data)
 
 
