@@ -5,6 +5,13 @@ from Vertex import Vertex
 from Fire import Fire
 
 
+DO_LOG_GRAPH_CLASS=False
+
+
+def log(message):
+    if DO_LOG_GRAPH_CLASS:
+        print(message)
+
 class Graph:
     def __init__(self, compute_node):
         # mapping Vertex -> [Vertex]

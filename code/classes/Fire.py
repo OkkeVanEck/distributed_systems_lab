@@ -7,6 +7,13 @@ from Enums import VertexStatus
 from Vertex import Vertex
 
 
+DO_LOG_FIRE_CLASS=False
+
+
+def log(message):
+    if DO_LOG_FIRE_CLASS:
+        print(message)
+
 class Fire:
     def __init__(self, graph, fwd_burning_prob=0.7):
         """
