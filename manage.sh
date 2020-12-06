@@ -239,6 +239,13 @@ SCALE=\"${4}\"
         DATASET=$(sed -n 10p "jobs/${2}/${2}.sh" | cut -c 10- | sed 's/.$//')
         SCALE=$(sed -n 12p "jobs/${2}/${2}.sh" | cut -c 8- | sed 's/.$//')
 
+        # Check if the dataset is partitioned correctly for the requested job.
+        COMP_NODES=$(( NUMTASKS - 1 ))
+        if [ ! -d "${PWD}/data/${DATASET}/${DATASET}-${COMP_NODES}-partitions" ]; then
+            echo "Dataset '${DATASET}' is not partitioned for ${COMP_NODES} Compute Nodes."
+            exit 1
+        fi
+
         # Create folder for dataset if it does not exist for catching faults.
         mkdir -p "${TMP_DATA}/${DATASET}"
 
