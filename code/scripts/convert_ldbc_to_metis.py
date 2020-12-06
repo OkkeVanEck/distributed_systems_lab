@@ -33,9 +33,9 @@ def convert_ldbc_to_metis(graph_parser):
 
     # put data into metis graph data structure
     for ldbc_vert_1, ldbc_vert_2 in graph_parser.lines_in_edge_file():
-        metis_vert_1 = metis_by_ldbc(ldbc_vert_1) + METIS_N_LINES_OF_METADATA
-        metis_vert_2 = metis_by_ldbc(ldbc_vert_2) + METIS_N_LINES_OF_METADATA
-        
+        metis_vert_1 = metis_by_ldbc[ldbc_vert_1] + METIS_N_LINES_OF_METADATA
+        metis_vert_2 = metis_by_ldbc[ldbc_vert_2] + METIS_N_LINES_OF_METADATA
+
         metis_data[metis_vert_1].append(metis_vert_2)
         metis_data[metis_vert_2].append(metis_vert_1)
 
