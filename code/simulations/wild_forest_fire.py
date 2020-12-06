@@ -35,15 +35,10 @@ def read_partition_file(path_to_partition_file):
     vert_rank_mapping = dict()
     with gzip.open(path_to_partition_file, "rt") as fp:
         for line in fp:
-            vert, rank = list(map(int, line.strip().split(" ")))
-            vert_rank_mapping[vert] = rank
+            vert, machine = list(map(int, line.strip().split(" ")))
+            vert_rank_mapping[vert] = machine
 
     return vert_rank_mapping
-            
-
-# def get_vertex_rank(vertex_id: int) -> int:
-#     """Function used by ComputeNodes to propagate fires across nodes."""
-#     return vertex_id % (size - 1) + 1
 
 
 def run_sim(scale_factor, dataset, tmp_play, tmp_data, tmp_res):
