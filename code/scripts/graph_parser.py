@@ -1,12 +1,13 @@
 """
 Discription: 
-    Class for NSE graph data parser.  
+    Class for LDBC graph data parser.  
 """
 
 import re
 from functools import singledispatch
 from pathlib import Path
 
+METIS_N_LINES_OF_METADATA = 1
 
 @singledispatch
 def get_value_from_line(pos, line):
@@ -37,21 +38,45 @@ class GraphParser:
                     self.n_edges = get_value_from_line(-1, line)
 
         # get offset (nse starts from n; metis input file starts from 1, outputs file starts from 0)
-        with open(f"{self.path_to_graph}.v", 'r') as fp:
-            self.offset = get_value_from_line(0, fp.readline())
-
-    def get_vertice_ranks_mapping(self, fp):
-        vertice_ranks_mapping = dict()
-        for vert_id, node_id in enumerate(fp): 
-            vertice_ranks_mapping[vert_id + self.offset] = int(node_id)
-        return vertice_ranks_mapping
+        # with open(f"{self.path_to_graph}.v", 'r') as fp:
+        #     self.offset = get_value_from_line(0, fp.readline())
 
     def lines_in_edge_file(self):
         with open(f"{self.path_to_graph}.e", 'r') as fp:
             for line in fp:
-                vert_1, vert_2 = get_value_from_line(slice(0, 2), line)
-                yield vert_1, vert_2
+                yield get_value_from_line(slice(0, 2), line)
 
+    def lines_in_vert_file(self):
+        with open(f"{self.path_to_graph}.v", 'r') as fp:
+            for metis_id, ldbc_id in enumerate(fp):
+                yield metis_id, int(ldbc_id)
+
+    def lines_in_part_file(self, n_part):
+        with open(f"{self.path_to_graph}.m.{n_part}p", 'r') as fp:
+            for vert_id, rank_id in enumerate(fp): 
+                yield vert_id, int(rank_id)
+
+    def get_rank_by_metis_vert(self, n_part):
+        rank_by_metis_vert = dict()
+        for metis_vert_id, rank_id in lines_in_part_file(n_part): 
+            # the start id of vertex of input of KaHIP is METIS_N_LINES_OF_METADATA=1
+            # the output id of vertex of input of KaHIP is 0
+            rank_by_metis_vert[metis_vert_id + METIS_N_LINES_OF_METADATA] = rank_id
+        return rank_by_metis_vert
+
+    def get_metis_by_ldbc(self):
+        metis_by_ldbc = dict()
+        for metis_id, ldbc_id in self.lines_in_vert_file():
+            metis_by_ldbc[ldbc_id] = metis_id
+        return metis_by_ldbc
+
+    def get_ldbc_by_metis(self):
+        ldbc_by_metis = []
+        for metis_id, ldbc_id in self.lines_in_vert_file():
+            ldbc_by_metis.append(ldbc_id)
+        return ldbc_by_metis
+
+    # deprecated
     def paths_to_partition_files(self):
         p = Path(".")
         for path_to_partition_file in p.glob(f"{self.path_to_graph}.m.*p"):
@@ -60,6 +85,7 @@ class GraphParser:
             n_partitions = int(m.group(1))
             yield path_to_partition_file, n_partitions
 
+    # deprecated
     def vertice_ranks_mappings(self):
         for path_to_partition_file, n_partitions in self.paths_to_partition_files():
             # os.mkdir(f"{self.path_to_graph}-{n_partitions}-partitions")

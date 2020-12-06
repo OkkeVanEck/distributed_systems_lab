@@ -103,7 +103,7 @@ case "$1" in
         # Convert graph format into Metis format that KaHIP supports.
         echo "Converting ${2} into Metis format.."
         module load python/3.6.0
-        srun python3 code/scripts/convert_nse_to_metis.py "${2}"
+        srun python3 code/scripts/convert_ldbc_to_metis.py "${2}"
         module unload python/3.6.0
     fi
 
