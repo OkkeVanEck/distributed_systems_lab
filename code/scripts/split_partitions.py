@@ -30,7 +30,7 @@ def parse_args():
 
 def split_partitions(graph_parser, n_part):
     rank_by_metis_vert = graph_parser.get_rank_by_metis_vert(n_part)
-    ldbc_by_metis = graph_parser.get_ldbc_by_metis()
+    metis_by_ldbc = graph_parser.get_metis_by_ldbc()
 
     with ExitStack() as stack:
         paths_to_edge_files_on_nodes = \
@@ -49,7 +49,7 @@ def split_partitions(graph_parser, n_part):
         part_data = [set() for i in range(n_part)]
 
         for ldbc_vert_1, ldbc_vert_2 in graph_parser.lines_in_edge_file():
-            metis_vert_1, metis_vert_2 = ldbc_by_metis[ldbc_vert_1], ldbc_by_metis[ldbc_vert_2]
+            metis_vert_1, metis_vert_2 = metis_by_ldbc[ldbc_vert_1], metis_by_ldbc[ldbc_vert_2]
 
             rank_for_metis_vert_1 = rank_by_metis_vert[metis_vert_1]
             edge_files_ptrs[rank_for_metis_vert_1].write(f"{ldbc_vert_1} {ldbc_vert_2}\n")
