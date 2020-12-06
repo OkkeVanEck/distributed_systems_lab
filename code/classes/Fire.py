@@ -2,12 +2,13 @@ from typing import List
 import numpy as np
 import random
 import time
+import threading
 
 from Enums import VertexStatus
 from Vertex import Vertex
 
 
-DO_LOG_FIRE_CLASS=False
+DO_LOG_FIRE_CLASS=True
 
 
 def log(message):
@@ -21,6 +22,8 @@ class Fire:
         2.33 neighbors
         """
         self.burning_vertices = []
+        self.burning_vertices_lock = threading.Lock()
+        log("self.burning_vertices_lock. " + str(self.burning_vertices_lock))
         self.received_stop_signal = False
         self.graph = graph
         self.fwd_burning_prob = fwd_burning_prob
@@ -34,60 +37,94 @@ class Fire:
         vertex = Vertex(vertex_id, VertexStatus.BURNING)
         # do we need to consider locks here?
         # the spread is on another thread
+        log("about to burn, maybe waiting for the lock? " + str(self.burning_vertices_lock))
+        while not self.burning_vertices_lock.acquire():
+            sleep(0.2)
+        log("got lock. appending vertex " + str(vertex.vertex_id))
         self.burning_vertices.append(vertex)
+        log("self.burning_vertices is = " + str(list(map(lambda x: x.vertex_id, self.burning_vertices))))
+        self.burning_vertices_lock.release()
+        log("released lock " + str(self.burning_vertices_lock))
 
     # execute math to determine what neighbors to burn
     def determine_burn_list(self, neighbors: List[Vertex]) -> List[Vertex]:
         # interpretation from ahmed11, n_neighbors_to_burn is a geometric
         # distributed rv and the given expectation is enough to characterize it
         # so, fwd_burning_prob / (1 - fwd_burning_prob) = 1 / p
-        n_neighbors_to_burn = min(np.random.geometric(
-            p=(1 - self.fwd_burning_prob) / self.fwd_burning_prob, size=1)[0],
-                                  len(neighbors))
+        # log("top of determine burn list")
+        some_p = ((1 - self.fwd_burning_prob) / self.fwd_burning_prob)
+        # log("got some p " + str(some_p))
+        len_neighbors = len(neighbors)
+        # log("got len neighbors " + str(len_neighbors))
+        geom_call = np.random.geometric(p=some_p,size=1)[0]
+        # log("got geom call")
+        n_neighbors_to_burn = min(geom_call,len_neighbors)
+        # log("n_neighbors_to_burn = " + str(n_neighbors_to_burn))
         neighbors_to_burn = random.sample(neighbors, n_neighbors_to_burn)
+        
         return neighbors_to_burn
 
     def ignite_random_node(self):
         if len(self.burning_vertices) == 0:
-            self.graph.check_vertex_status()
+            # self.graph.check_vertex_status()
+            log("igniting random node on machine " + str(self.graph.compute_node.rank))
             # log("num graph keys = " + str(list(self.graph.graph.keys())))
             # log("random sample list = " + str(list(map(lambda y: y.vertex_id, filter(lambda x: x.status == VertexStatus.NOT_BURNED, self.graph.graph.keys())))))
             # log("num graph keys not burned = " + str(len(list(filter(lambda x: x.status == VertexStatus.NOT_BURNED), self.graph.graph.keys()))))
+            self.burning_vertices_lock.acquire()
             self.burning_vertices = random.sample(list(filter(lambda x: x.status == VertexStatus.NOT_BURNED,
                                     self.graph.graph.keys())), 1)
+            log("burning vertex is " + str(self.burning_vertices[0].vertex_id))
+            self.burning_vertices_lock.release()
+            log("relesed burning vertices lock " + str(self.burning_vertices_lock))
+            
 
     def spread(self):
         # Every burn step adds new burning_vertices to the
         # burning vertices list. This will maintain burning order until there
         # are no more vertices to burn on the assigned partition.
+        self.burning_vertices_lock.acquire()
+        log("acquired lock 3. " + str(self.burning_vertices))
+        log("top of spread. list(burning_vertices) = " + str(self.burning_vertices))
+        self.burning_vertices_lock.release()
+        log("relesed burning vertices 3 lock " + str(self.burning_vertices_lock))
         while len(self.burning_vertices) > 0 and not self.received_stop_signal:
+            log("acquired 4 " + str(self.burning_vertices_lock))
+            self.burning_vertices_lock.acquire()
             vertex = self.burning_vertices[0]
-            self.graph.set_vertex_status(vertex, VertexStatus.BURNED)
+            log("burning vertex " + str(vertex.vertex_id))
+            # log("number of burning_vertices is " + str(len(self.burning_vertices)))
             neighbors = self.graph.get_neighbors_to_burn(vertex)
             neighbors_to_burn = self.determine_burn_list(neighbors)
+            log("calling spread fire to other nodes. machine " + str(self.graph.compute_node.rank))
+            log("number of neighbors_to_burn is " + str(len(neighbors_to_burn)))
             local_neighbors_to_burn, remote_neighbors_to_burn = \
                 self.graph.spread_fire_to_other_nodes(neighbors_to_burn)
-            # log("burning to local neighbors " + str(list(map(lambda x: x.vertex_id, local_neighbors_to_burn))))
-            # log("burning to remote neighbors " + str(list(map(lambda x: x.vertex_id, remote_neighbors_to_burn))))
+            # log("Machine " + str(self.graph.compute_node.rank) + ": burning to local neighbors " + str(list(map(lambda x: x.vertex_id, local_neighbors_to_burn))))
+            # log("Machine " + str(self.graph.compute_node.rank) + ": burning to remote neighbors " + str(list(map(lambda x: x.vertex_id, remote_neighbors_to_burn))))
+        
             for new_burning_vertex in local_neighbors_to_burn:
-                self.graph.set_vertex_status(new_burning_vertex, VertexStatus.BURNING)
+                self.graph.set_vertex_status(vertex, neighbor, VertexStatus.BURNING)
                 self.graph.add_burned_edge(vertex, new_burning_vertex)
                 self.burning_vertices.append(new_burning_vertex)
-
             # add edges that go to remote partitions as well
             # they will be sent in the heartbeat, and will be added to stitching efforts
             for remote_neighbor in remote_neighbors_to_burn:
-                self.graph.set_vertex_status(remote_neighbor, VertexStatus.BURNING)
+                self.graph.set_vertex_status(vertex, remote_neighbor, VertexStatus.BURNING)
                 self.graph.add_burned_edge(vertex, remote_neighbor)
-
             # if stop fire is called self.burning_vertices might have been set
             # to 0
             if len(self.burning_vertices) > 0:
                 self.burning_vertices.pop(0)
+            log("exit spread length of burning vertices is " + str(len(self.burning_vertices)))
+            self.burning_vertices_lock.release()
+            log("relesed burning vertices lock 4" + str(self.burning_vertices_lock))
+
 
         if not self.received_stop_signal:
             # let the fire sleep for a while so that burn requests can come in from other nodes
-            time.sleep(0.1)
+            log("fire on machine " + str(self.graph.compute_node.rank) + " is sleeping. No burning vertices")
+            time.sleep(2)
             self.spread()
 
     def stop_burning(self):

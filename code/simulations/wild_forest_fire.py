@@ -2,7 +2,6 @@
 import gzip
 from itertools import takewhile, repeat
 from mpi4py import MPI
-
 # Load classes and functions from own files.
 from ComputeNode import ComputeNode
 from HeadNode import HeadNode
@@ -33,7 +32,7 @@ def rawincount(filename):
 
 def read_partition_file(path_to_partition_file):
     vert_rank_mapping = dict()
-    with gzip.open(path_to_partition_file, "rt") as fp:
+    with open(path_to_partition_file, "rt") as fp:
         for line in fp:
             vert, machine = list(map(int, line.strip().split(" ")))
             vert_rank_mapping[vert] = machine
@@ -54,18 +53,21 @@ def run_sim(scale_factor, dataset, tmp_play, tmp_data, tmp_res):
         log(f"Starting HeadNode on {rank}..")
         out_v = f"{tmp_res}/scaled_graph.v"
         out_e = f"{tmp_res}/scaled_graph.e"
-        hn = HeadNode(rank, size - 1, float(scale_factor), num_vertices, out_v,
-                      out_e)
-        hn.run()
+        f = open(out_v, "w")
+        f.close()
+        f = open(out_e, "w")
+        f.close()
+        head_node = HeadNode(rank, size, float(scale_factor), num_vertices, out_v, out_e)
+        head_node.run()
     else:
         # Fetch the set of edges according to the rank of the process and the
         # number of partitions in use.
-        path_to_partition_file = f"{tmp_data}/{dataset}/{dataset}-{size - 1}-partitions/node{rank}.p.gz"
-        path_to_edge_file = f"{tmp_data}/{dataset}/{dataset}-{size - 1}-partitions/node{rank}.e.gz"
+        path_to_partition_file = f"{tmp_data}/{dataset}/{dataset}-{size - 1}-partitions/node{rank}.p"
+        path_to_edge_file = f"{tmp_data}/{dataset}/{dataset}-{size - 1}-partitions/node{rank}.e"
         vert_rank_mapping = read_partition_file(path_to_partition_file)
 
         # Start a ComputeNode.
         log(f"Starting ComputeNode on {rank}..")
-        compute_node = ComputeNode(rank, True, size - 1, vert_rank_mapping)
-        compute_node.init_partition(path_to_edge_file)
+        compute_node = ComputeNode(rank, True, size, vert_rank_mapping)
+        compute_node.init_partition(f"{tmp_data}/{dataset}/{dataset}.e")
         compute_node.do_tasks()

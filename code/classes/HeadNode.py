@@ -11,7 +11,7 @@ from Enums import MPI_TAG, VertexStatus, SLEEP_TIMES
 from mpi4py import MPI
 comm = MPI.COMM_WORLD
 
-DO_LOG=False
+DO_LOG=True
 
 def log(message):
     if (DO_LOG):
@@ -114,11 +114,12 @@ class HeadNode:
             status = MPI.Status()
             data = comm.recv(source=MPI.ANY_SOURCE, tag=MPI_TAG.HEARTBEAT.value, status=status)
             sender = status.Get_source() - 1 # only works if head is rank 0
-            log(f"{data}, sender: {sender}")
+            # if len(data) > 0:
+            # log(f"{data}, sender: {sender}")
 
             # message is still received so computed node doesnt get into deadlock when sending message head doesnt want
             if self.need_ack[sender]:
-                log("dont need this data from sender = " + str(sender))
+                # log("dont need this data from sender = " + str(sender))
                 return
 
             if self.partition_center[sender] == None and len(data) > 0:
@@ -133,6 +134,9 @@ class HeadNode:
                 if self.done_burning():
                     self.keep_burning = False
                     break
+
+            if len(data) > 0:
+                log("head graph has " + str(len(self.graph.edges)) + " edges. " + str(len(self.graph.vertices)) + " vertices")
 
     def listen_for_ack(self):
         if comm.Iprobe(source=MPI.ANY_SOURCE,tag=MPI_TAG.RESET_ACK.value):
