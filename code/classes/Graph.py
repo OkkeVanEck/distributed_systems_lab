@@ -1,4 +1,3 @@
-import gzip
 from typing import List
 
 from Enums import VertexStatus
@@ -110,7 +109,7 @@ class GraphInterpreter:
         pass
 
     def read_graph_file(self, file):
-        with gzip.open(file, "rt") as fp:
+        with open(file, "r") as fp:
             for line in fp:
                 vert_1, vert_2 = list(map(int, line.strip().split(" ")))
                 yield vert_1, vert_2

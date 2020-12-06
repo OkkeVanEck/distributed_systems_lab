@@ -16,7 +16,7 @@ Details:
         3. check if vertex 2 is in the partition file, if not add to local vertices
 """
 
-import gzip
+# import gzip
 from argparse import ArgumentParser
 from contextlib import ExitStack
 
@@ -40,15 +40,15 @@ def split_partitions_and_edge_files(graph_parser, n_partition):
 
     with ExitStack() as stack:
         paths_to_edge_files_on_nodes = \
-            [f"{graph_parser.path_to_graph}-{n_partition}-partitions/node{i + WORKER_NODES_RANK_OFFSET}.e.gz" \
+            [f"{graph_parser.path_to_graph}-{n_partition}-partitions/node{i + WORKER_NODES_RANK_OFFSET}.e" \
                 for i in range(n_partition)]
         paths_to_partition_files_on_nodes = \
-            [f"{graph_parser.path_to_graph}-{n_partition}-partitions/node{i + WORKER_NODES_RANK_OFFSET}.p.gz" \
+            [f"{graph_parser.path_to_graph}-{n_partition}-partitions/node{i + WORKER_NODES_RANK_OFFSET}.p" \
                 for i in range(n_partition)]
         
-        edge_files_ptrs = [stack.enter_context(gzip.open(path_to_edge_file, 'wt')) \
+        edge_files_ptrs = [stack.enter_context(open(path_to_edge_file, 'w')) \
                             for path_to_edge_file in paths_to_edge_files_on_nodes]
-        partition_files_ptrs = [stack.enter_context(gzip.open(path_to_partition_file, 'wt')) \
+        partition_files_ptrs = [stack.enter_context(open(path_to_partition_file, 'w')) \
                             for path_to_partition_file in paths_to_partition_files_on_nodes]
 
         # partition data will be duplicate, so write to a set instead of files directly

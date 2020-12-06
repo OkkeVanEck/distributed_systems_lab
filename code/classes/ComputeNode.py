@@ -1,6 +1,5 @@
 import numpy as np
 import threading
-import gzip
 import time
 
 from Graph import Graph, GraphInterpreter
