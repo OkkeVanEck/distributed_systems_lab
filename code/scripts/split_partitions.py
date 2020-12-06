@@ -29,7 +29,7 @@ def parse_args():
 
 
 def split_partitions(graph_parser, n_part):
-    rank_by_metis_vert = graph_parser.rank_by_metis_vert(n_part)
+    rank_by_metis_vert = graph_parser.get_rank_by_metis_vert(n_part)
     ldbc_by_metis = graph_parser.get_ldbc_by_metis()
 
     with ExitStack() as stack:

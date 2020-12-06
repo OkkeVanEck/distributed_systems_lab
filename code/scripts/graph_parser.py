@@ -58,10 +58,8 @@ class GraphParser:
 
     def get_rank_by_metis_vert(self, n_part):
         rank_by_metis_vert = dict()
-        for metis_vert_id, rank_id in lines_in_part_file(n_part): 
-            # the start id of vertex of input of KaHIP is METIS_N_LINES_OF_METADATA=1
-            # the output id of vertex of input of KaHIP is 0
-            rank_by_metis_vert[metis_vert_id + METIS_N_LINES_OF_METADATA] = rank_id
+        for metis_vert_id, rank_id in self.lines_in_part_file(n_part): 
+            rank_by_metis_vert[metis_vert_id] = rank_id
         return rank_by_metis_vert
 
     def get_metis_by_ldbc(self):
