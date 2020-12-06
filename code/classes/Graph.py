@@ -1,3 +1,4 @@
+import gzip
 from typing import List
 
 from Enums import VertexStatus
@@ -63,7 +64,6 @@ class Graph:
         return self.graph[vertex]
 
     def add_vertex_and_neighbor(self, vertex_from: int, vertex_to: int):
-        # TODO: Issue https://github.com/OkkeVanEck/distributed_systems_lab/issues/14
         vertex = Vertex(vertex_from, VertexStatus.NOT_BURNED)
         neighbor = Vertex(vertex_to, VertexStatus.NOT_BURNED)
         if vertex in self.graph:
@@ -126,11 +126,8 @@ class GraphInterpreter:
     def __init__(self):
         pass
 
-    def data_only(self, file):
-        for line in file:
-            if line[0] == "#":
-                continue
-            yield line
-
-    def read_graph_file(self, file_uncompressed):
-        return self.data_only(file_uncompressed)
+    def read_graph_file(self, file):
+        with gzip.open(file, "rt") as fp:
+            for line in fp:
+                vert_1, vert_2 = list(map(int, line.strip().split(" ")))
+                yield vert_1, vert_2
