@@ -5,7 +5,7 @@ from Vertex import Vertex
 from Fire import Fire
 
 
-DO_LOG_GRAPH_CLASS=False
+DO_LOG_GRAPH_CLASS=True
 
 
 def log(message):

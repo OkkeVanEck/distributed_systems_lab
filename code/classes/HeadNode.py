@@ -11,7 +11,7 @@ from Enums import MPI_TAG, VertexStatus, SLEEP_TIMES
 from mpi4py import MPI
 comm = MPI.COMM_WORLD
 
-DO_LOG=False
+DO_LOG=True
 
 def log(message):
     if (DO_LOG):

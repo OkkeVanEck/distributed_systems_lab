@@ -7,7 +7,7 @@ from Enums import VertexStatus
 from Vertex import Vertex
 
 
-DO_LOG_FIRE_CLASS=False
+DO_LOG_FIRE_CLASS=True
 
 
 def log(message):
@@ -34,7 +34,9 @@ class Fire:
         vertex = Vertex(vertex_id, VertexStatus.BURNING)
         # do we need to consider locks here?
         # the spread is on another thread
+        log("adding burning vertex " + str(vertex_id))
         self.burning_vertices.append(vertex)
+        log("added vertex")
 
     # execute math to determine what neighbors to burn
     def determine_burn_list(self, neighbors: List[Vertex]) -> List[Vertex]:
@@ -61,6 +63,7 @@ class Fire:
         # burning vertices list. This will maintain burning order until there
         # are no more vertices to burn on the assigned partition.
         while len(self.burning_vertices) > 0 and not self.received_stop_signal:
+            log("length(burning_vertices) = " + str(len(self.burning_vertices)))
             vertex = self.burning_vertices[0]
             self.graph.set_vertex_status(vertex, VertexStatus.BURNED)
             neighbors = self.graph.get_neighbors_to_burn(vertex)
@@ -84,6 +87,7 @@ class Fire:
             # to 0
             if len(self.burning_vertices) > 0:
                 self.burning_vertices.pop(0)
+            log("burned the vertex")
 
         if not self.received_stop_signal:
             # let the fire sleep for a while so that burn requests can come in from other nodes

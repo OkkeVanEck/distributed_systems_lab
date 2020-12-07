@@ -9,7 +9,7 @@ from Enums import MPI_TAG, VertexStatus, SLEEP_TIMES
 from mpi4py import MPI
 comm = MPI.COMM_WORLD
 
-DO_LOG=False
+DO_LOG=True
 
 
 def log(message):
@@ -113,15 +113,22 @@ class ComputeNode:
                 log("reset fire called")
                 self.reset_fire()
             else:
+                log("top of send heartbeat")
+
                 burned_vertices = self.partitioned_graph.get_burned_vertices()
+                log("burned vertices are " + str(burned_vertices))
                 burned_edges = self.partitioned_graph.get_burned_edges()
+                log("burned edges are " + str(burned_vertices))
                 heartbeat_nodes = set()
                 heartbeat_edges = set()
 
                 # find new nodes to send in a heartbeat
                 new_vertices = set(v for v in burned_vertices if v not in self.nodes_sent_in_heartbeat)
+                log("new vertices is " + str(new_vertices))
                 heartbeat_nodes.update(new_vertices)
+                log("updated heartbeat_nodes")
                 self.nodes_sent_in_heartbeat.update(zip(new_vertices, [True * len(new_vertices)]))
+                log("made it here 1")
 
                 # heartbeat nodes are new nodes burned.
                 # TODO https://github.com/OkkeVanEck/distributed_systems_lab/issues/16
