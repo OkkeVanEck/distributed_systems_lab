@@ -38,7 +38,7 @@ def load_dir_structure():
     sys.path.append(os.path.join(root))
     sys.path.append(os.path.join(root, "algorithms"))
     sys.path.append(os.path.join(root, "classes"))
-    sys.path.append(os.path.join(root, "helpers"))
+    sys.path.append(os.path.join(root, "scripts"))
     sys.path.append(os.path.join(root, "simulations"))
 
 

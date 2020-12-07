@@ -48,12 +48,9 @@ def run_sim(scale_factor, dataset, tmp_play, tmp_data, tmp_res):
         log(f"Starting HeadNode on {rank}..")
         out_v = f"{tmp_res}/scaled_graph.v"
         out_e = f"{tmp_res}/scaled_graph.e"
-        f = open(out_v, "w")
-        f.close()
-        f = open(out_e, "w")
-        f.close()
-        head_node = HeadNode(rank, size, float(scale_factor), num_vertices, out_v, out_e)
-        head_node.run()
+        hn = HeadNode(rank, size - 1, float(scale_factor), num_vertices, out_v,
+                      out_e)
+        hn.run()
     else:
         # Fetch the set of edges according to the rank of the process and the
         # number of partitions in use.
@@ -61,7 +58,7 @@ def run_sim(scale_factor, dataset, tmp_play, tmp_data, tmp_res):
 
         # Start a ComputeNode.
         log(f"Starting ComputeNode on {rank}..")
-        compute_node = ComputeNode(rank, False, size - 1, get_vertex_rank)
+        compute_node = ComputeNode(rank, True, size - 1, get_vertex_rank)
         compute_node.init_partition(e_file)
         compute_node.do_tasks()
         e_file.close()
