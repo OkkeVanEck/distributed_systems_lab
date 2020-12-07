@@ -251,7 +251,7 @@ SCALE=\"${4}\"
 
         # Run python locally.
         echo "Starting local job ${2}.."
-        mpirun -n "${NUMTASKS}" python3 "code/run_simulation.py" \
+        mpirun -n "${NUMTASKS}" --use-hwthread-cpus python3 "code/run_simulation.py" \
             "${SIMPATH}${SIMFILE}" "${SCALE}" "${DATASET}" "${TMP_PLAY}" \
             "${TMP_DATA}" "${TMP_RES}"
 
