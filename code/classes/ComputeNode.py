@@ -1,6 +1,5 @@
 import numpy as np
 import threading
-import gzip
 import time
 
 from Graph import Graph, GraphInterpreter
@@ -46,25 +45,20 @@ class ComputeNode:
         # for simulating without a HEAD NODE
         # self.hard_threshold = 10
 
+
     def is_local(self, vertex_id):
         """
         - for partitioning, return True if vertex_id
         - belongs to the compute node.
         """
-        if self.machine_with_vertex(vertex_id) == self.rank:
-            return True
-        return False
+        # partition file only contains neighbours on on the remote nodes
+        if vertex_id in self.machine_with_vertex.keys():
+            return False
+        return True
 
     def init_partition(self, file):
-        file_uncompressed = open(file, 'rt')
-        assigned_vertices = 0
-
-        # TODO: Issue https://github.com/OkkeVanEck/distributed_systems_lab/issues/14
-        for line in self.graph_reader.read_graph_file(file_uncompressed):
-            vertex, neighbor = map(int, line.split()[:2])
-            if self.is_local(vertex):
-                self.partitioned_graph.add_vertex_and_neighbor(vertex, neighbor)
-                assigned_vertices += 1
+        for vert_1, vert_2 in self.graph_reader.read_graph_file(file):
+            self.partitioned_graph.add_vertex_and_neighbor(vert_1, vert_2)
 
     def manage_fires(self):
         # init_fire returns when stop_fire is called
@@ -79,7 +73,6 @@ class ComputeNode:
         while not self.kill_received:
             self.partitioned_graph.init_fire()
 
-
     def do_tasks(self):
         self.listen_thread.start()
         self.heartbeat_thread.start()
@@ -87,12 +80,13 @@ class ComputeNode:
         self.listen_thread.join()
         self.heartbeat_thread.join()
         log("burned vertexes on this partition are")
+
         if DO_LOG:
             log("edges sent")
             for edge in self.edges_sent_in_heartbeat:
                 log(edge)
-            log("heartbeats nodes sent for machine " + str(self.rank) + " = " + str(len(self.nodes_sent_in_heartbeat)))
-
+            log(f"heartbeats nodes sent for machine {self.rank} = "
+                f"{len(self.nodes_sent_in_heartbeat)}")
 
     def send_burn_request(self, vertex_id):
         """
@@ -102,7 +96,7 @@ class ComputeNode:
         """
         # find dest machine based on the vertex rank
         if self.fires_wild:
-            dest = self.machine_with_vertex(vertex_id)
+            dest = self.machine_with_vertex[vertex_id]
             log("sending burn request to machine " + str(dest) + " from machine " + str(self.rank) + ". data is " + str(vertex_id))
             comm.send(vertex_id, dest=dest, tag=MPI_TAG.FROM_COMPUTE_TO_COMPUTE.value)
 
@@ -132,6 +126,9 @@ class ComputeNode:
                     if vertex not in self.nodes_sent_in_heartbeat:
                         heartbeat_nodes.append(vertex)
                         self.nodes_sent_in_heartbeat[vertex] = True
+                # new_vertices = set(v for v in burned_vertices if v not in self.nodes_sent_in_heartbeat)
+                # heartbeat_nodes.update(new_vertices)
+                # self.nodes_sent_in_heartbeat.update(zip(new_vertices, [True * len(new_vertices)]))
 
                 # heartbeat nodes are new nodes burned.
                 # TODO: https://github.com/OkkeVanEck/distributed_systems_lab/issues/16
