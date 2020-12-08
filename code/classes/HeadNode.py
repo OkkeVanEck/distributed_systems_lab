@@ -114,10 +114,10 @@ class HeadNode:
             status = MPI.Status()
             data = comm.recv(source=MPI.ANY_SOURCE, tag=MPI_TAG.HEARTBEAT.value, status=status)
             sender = status.Get_source() - 1 # only works if head is rank 0
-            log(f"{data}, sender: {sender}")
+            # log(f"{data}, sender: {sender}")
 
             # message is still received so computed node doesnt get into deadlock when sending message head doesnt want
-            if self.need_ack[sender]:
+            if len(self.need_ack) > sender and self.need_ack[sender]:
                 log("dont need this data from sender = " + str(sender))
                 return
 
@@ -133,6 +133,9 @@ class HeadNode:
                 if self.done_burning():
                     self.keep_burning = False
                     break
+
+            if len(data) > 0:
+                log("I am the head node and I  now have " + str(len(self.graph.edges)) + " edges and " + str(len(self.graph.vertices)) + " vertexes")
 
     def listen_for_ack(self):
         if comm.Iprobe(source=MPI.ANY_SOURCE,tag=MPI_TAG.RESET_ACK.value):

@@ -57,8 +57,14 @@ class ComputeNode:
         return True
 
     def init_partition(self, file):
+        i = 0
         for vert_1, vert_2 in self.graph_reader.read_graph_file(file):
+            if self.rank == 1 and i % 1000000 == 0:
+                log("still initing partition on computer 1")
             self.partitioned_graph.add_vertex_and_neighbor(vert_1, vert_2)
+            i += 1
+        if self.rank == 1:
+            log("machine 1 fone partitioning")
 
     def manage_fires(self):
         # init_fire returns when stop_fire is called
@@ -94,7 +100,9 @@ class ComputeNode:
         """
         # find dest machine based on the vertex rank
         if self.fires_wild:
+            # log("in send burn request")
             dest = self.machine_with_vertex[vertex_id]
+            # log("going to send a fire to " + str(dest) + ". data is " + str(vertex_id))
             comm.send(vertex_id, dest=dest, tag=MPI_TAG.FROM_COMPUTE_TO_COMPUTE.value)
 
     def reset_fire(self):
@@ -113,35 +121,51 @@ class ComputeNode:
                 log("reset fire called")
                 self.reset_fire()
             else:
-                log("top of send heartbeat")
+                # log("top of send heartbeat")
 
                 burned_vertices = self.partitioned_graph.get_burned_vertices()
-                log("burned vertices are " + str(burned_vertices))
+                # log("burned vertices are " + str(burned_vertices))
                 burned_edges = self.partitioned_graph.get_burned_edges()
-                log("burned edges are " + str(burned_vertices))
+                # log("burned edges are " + str(burned_edges))
                 heartbeat_nodes = set()
                 heartbeat_edges = set()
 
                 # find new nodes to send in a heartbeat
-                new_vertices = set(v for v in burned_vertices if v not in self.nodes_sent_in_heartbeat)
-                log("new vertices is " + str(new_vertices))
+                new_vertices = set()
+                for v in burned_vertices:
+                    if v not in self.nodes_sent_in_heartbeat:
+                        new_vertices.add(v)
+                # log("new vertices is " + str(new_vertices))
                 heartbeat_nodes.update(new_vertices)
-                log("updated heartbeat_nodes")
-                self.nodes_sent_in_heartbeat.update(zip(new_vertices, [True * len(new_vertices)]))
-                log("made it here 1")
+                # log("updated heartbeat_nodes")
+                for node in new_vertices:
+                    self.nodes_sent_in_heartbeat[node] = True
+                # log("made it here 1")
 
                 # heartbeat nodes are new nodes burned.
                 # TODO https://github.com/OkkeVanEck/distributed_systems_lab/issues/16
                 #   Find a way to empty the burned_edges after every heartbeat.
                 #   Okke: Also maybe consider using sets for self.partitioned_graph.burned_vertices and burned_edges.
-                heartbeat_edges.update(set(e for e in burned_edges if e[1] in heartbeat_nodes))
-                self.edges_sent_in_heartbeat.extend(heartbeat_edges)
+                # log("self.edges_sent_in_heartbeat = " + str(self.edges_sent_in_heartbeat))
+                # log("burned_edges = " + str(burned_edges))
+                # log("heartbeat_nodes = " + str(heartbeat_nodes))
+                # log("prints done")
+                for e in burned_edges:
+                    if e[1] in heartbeat_nodes:
+                        heartbeat_edges.add((e[0], e[1]))
+                        self.edges_sent_in_heartbeat.append(e)
+                # heartbeat_edges.update(set(e for e in burned_edges if e[1] in heartbeat_nodes))
 
-                log("sending heartbeat. sender is " + str(self.rank))
-                log("sent heartbeat. burned vertices are " + str(burned_vertices))
-                log("sent heartbeat. burned edges are " + str(burned_edges))
-                data = np.array(heartbeat_edges, dtype=np.int)
+
+                # log("sending heartbeat. sender is " + str(self.rank))
+                # log("sent heartbeat. burned vertices are " + str(burned_vertices))
+                # log("sent heartbeat. burned edges are " + str(burned_edges))
+                data = list(heartbeat_edges)
+                # log("made data 1. looks like, " + str(data))
+                data = np.array(data, dtype=np.int)
                 comm.send(data, dest=0, tag=MPI_TAG.HEARTBEAT.value)
+                if len(data) > 0:
+                    log("full send. " + str(data) + " from machine " + str(self.rank))
 
                 # for simulations without head node object
                 # if len(self.nodes_sent_in_heartbeat.keys()) >= self.hard_threshold:
@@ -178,6 +202,7 @@ class ComputeNode:
         if comm.Iprobe(source=MPI.ANY_SOURCE, tag=MPI_TAG.KILL_FROM_HEAD.value):
             # receive the message
             data = comm.recv(source=MPI.ANY_SOURCE, tag=MPI_TAG.KILL_FROM_HEAD.value)
+            log("received a burn request " + str(data))
             # join all threads. (listening threads at least)
             # put machine in a more idle state???
             self.kill_received = True

@@ -54,7 +54,7 @@ def run_sim(scale_factor, dataset, tmp_play, tmp_data, tmp_res):
         log(f"Starting HeadNode on {rank}..")
         out_v = f"{tmp_res}/scaled_graph.v"
         out_e = f"{tmp_res}/scaled_graph.e"
-        hn = HeadNode(rank, size - 1, float(scale_factor), num_vertices, out_v,
+        hn = HeadNode(rank, size, float(scale_factor), num_vertices, out_v,
                       out_e)
         hn.run()
     else:

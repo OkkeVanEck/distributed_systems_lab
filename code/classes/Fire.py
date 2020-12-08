@@ -24,6 +24,7 @@ class Fire:
         self.received_stop_signal = False
         self.graph = graph
         self.fwd_burning_prob = fwd_burning_prob
+        self.i = 0
 
     def start_burning(self):
         self.ignite_random_node()
@@ -63,7 +64,7 @@ class Fire:
         # burning vertices list. This will maintain burning order until there
         # are no more vertices to burn on the assigned partition.
         while len(self.burning_vertices) > 0 and not self.received_stop_signal:
-            log("length(burning_vertices) = " + str(len(self.burning_vertices)))
+            # log("length(burning_vertices) = " + str(len(self.burning_vertices)))
             vertex = self.burning_vertices[0]
             self.graph.set_vertex_status(vertex, VertexStatus.BURNED)
             neighbors = self.graph.get_neighbors_to_burn(vertex)
@@ -87,9 +88,12 @@ class Fire:
             # to 0
             if len(self.burning_vertices) > 0:
                 self.burning_vertices.pop(0)
-            log("burned the vertex")
+            # log("burned the vertex")
 
         if not self.received_stop_signal:
+            if self.i %30 == 0:
+                log("Fire is waiting on machine " + str(self.graph.compute_node.rank))
+            self.i += 1
             # let the fire sleep for a while so that burn requests can come in from other nodes
             time.sleep(0.1)
             self.spread()
