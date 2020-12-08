@@ -14,7 +14,7 @@ class VertexStatus(Enum):
 class MPI_TAG(Enum):
     FROM_COMPUTE_TO_COMPUTE = 1
     FROM_HEADNODE_TO_COMPUTE = 2
-    FROM_COMPUTE_TO_HEAD = 3
+    HEARTBEAT = 3
     RESET_FROM_HEAD_TAG = 4
     KILL_FROM_HEAD = 5
     RESET_ACK = 6

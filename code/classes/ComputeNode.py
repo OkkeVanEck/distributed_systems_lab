@@ -60,7 +60,6 @@ class ComputeNode:
         for vert_1, vert_2 in self.graph_reader.read_graph_file(file):
             self.partitioned_graph.add_vertex_and_neighbor(vert_1, vert_2)
 
-
     def manage_fires(self):
         # init_fire returns when stop_fire is called
         # stop fire is called in the listening thread when either
@@ -72,11 +71,7 @@ class ComputeNode:
         #       - same as above except self.kill_received remains false.
         #       - therefore, a new fire is started on the current thread.
         while not self.kill_received:
-            if self.num_fires < self.allowed_fires:
-                self.partitioned_graph.init_fire()
-                self.num_fires += 1
-            else:
-                time.sleep(SLEEP_TIMES.COMPUTE_NODE_MANAGE_FIRES.value)
+            self.partitioned_graph.init_fire()
 
     def do_tasks(self):
         self.listen_thread.start()
@@ -84,6 +79,7 @@ class ComputeNode:
         self.manage_fires()
         self.listen_thread.join()
         self.heartbeat_thread.join()
+        log("burned vertexes on this partition are")
 
         if DO_LOG:
             log("edges sent")
@@ -101,13 +97,15 @@ class ComputeNode:
         # find dest machine based on the vertex rank
         if self.fires_wild:
             dest = self.machine_with_vertex[vertex_id]
+            log("sending burn request to machine " + str(dest) + " from machine " + str(self.rank) + ". data is " + str(vertex_id))
             comm.send(vertex_id, dest=dest, tag=MPI_TAG.FROM_COMPUTE_TO_COMPUTE.value)
 
     def reset_fire(self):
         self.partitioned_graph.stop_fire()
         self.partitioned_graph.set_all_vertex_status(VertexStatus.NOT_BURNED)
-        self.num_fires = 0
-        comm.send("", dest=0, tag=MPI_TAG.RESET_ACK.value)
+        self.edges_sent_in_heartbeat = []
+        self.nodes_sent_in_heartbeat = {}
+        comm.send(None, dest=0, tag=MPI_TAG.RESET_ACK.value)
         self.reset_received = False
 
     def send_heartbeat(self):
@@ -115,6 +113,7 @@ class ComputeNode:
             if self.reset_received:
                 # manage reset in heartbeat thread so that we don't send an edge from fire 1
                 # in the heartbeats from fire #2
+                log("reset fire called")
                 self.reset_fire()
             else:
                 burned_vertices = self.partitioned_graph.get_burned_vertices()
@@ -139,8 +138,11 @@ class ComputeNode:
                             heartbeat_edges.append(edge)
                             self.edges_sent_in_heartbeat.append(edge)
 
+                log("sending heartbeat. sender is " + str(self.rank))
+                log("sent heartbeat. burned vertices are " + str(burned_vertices))
+                log("sent heartbeat. burned edges are " + str(burned_edges))
                 data = np.array(heartbeat_edges, dtype=np.int)
-                comm.send(data, dest=0, tag=MPI_TAG.FROM_HEADNODE_TO_COMPUTE.value)
+                comm.send(data, dest=0, tag=MPI_TAG.HEARTBEAT.value)
 
                 # for simulations without head node object
                 # if len(self.nodes_sent_in_heartbeat.keys()) >= self.hard_threshold:
@@ -171,6 +173,7 @@ class ComputeNode:
     def listen_to_head_node(self):
         if comm.Iprobe(source=MPI.ANY_SOURCE,tag=MPI_TAG.RESET_FROM_HEAD_TAG.value):
             # receive the message so it doesn't idle out there
+            log("receieved reset signal")
             data = comm.recv(source=0, tag=MPI_TAG.RESET_FROM_HEAD_TAG.value)
             self.reset_received = True
         if comm.Iprobe(source=MPI.ANY_SOURCE, tag=MPI_TAG.KILL_FROM_HEAD.value):
