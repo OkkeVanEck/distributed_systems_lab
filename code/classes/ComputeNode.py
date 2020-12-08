@@ -119,20 +119,25 @@ class ComputeNode:
             else:
                 burned_vertices = self.partitioned_graph.get_burned_vertices()
                 burned_edges = self.partitioned_graph.get_burned_edges()
-                heartbeat_nodes = set()
-                heartbeat_edges = set()
+                heartbeat_nodes = []
+                heartbeat_edges = []
 
                 # find new nodes to send in a heartbeat
-                new_vertices = set(v for v in burned_vertices if v not in self.nodes_sent_in_heartbeat)
-                heartbeat_nodes.update(new_vertices)
-                self.nodes_sent_in_heartbeat.update(zip(new_vertices, [True * len(new_vertices)]))
+                for vertex in burned_vertices:
+                    if vertex not in self.nodes_sent_in_heartbeat:
+                        heartbeat_nodes.append(vertex)
+                        self.nodes_sent_in_heartbeat[vertex] = True
+                # new_vertices = set(v for v in burned_vertices if v not in self.nodes_sent_in_heartbeat)
+                # heartbeat_nodes.update(new_vertices)
+                # self.nodes_sent_in_heartbeat.update(zip(new_vertices, [True * len(new_vertices)]))
 
                 # heartbeat nodes are new nodes burned.
-                # TODO https://github.com/OkkeVanEck/distributed_systems_lab/issues/16
-                #   Find a way to empty the burned_edges after every heartbeat.
-                #   Okke: Also maybe consider using sets for self.partitioned_graph.burned_vertices and burned_edges.
-                heartbeat_edges.update(set(e for e in burned_edges if e[1] in heartbeat_nodes))
-                self.edges_sent_in_heartbeat.extend(heartbeat_edges)
+                # TODO: https://github.com/OkkeVanEck/distributed_systems_lab/issues/16
+                for vertex in heartbeat_nodes:
+                    for edge in burned_edges:
+                        if edge[1] == vertex and edge not in heartbeat_edges:
+                            heartbeat_edges.append(edge)
+                            self.edges_sent_in_heartbeat.append(edge)
 
                 data = np.array(heartbeat_edges, dtype=np.int)
                 comm.send(data, dest=0, tag=MPI_TAG.FROM_HEADNODE_TO_COMPUTE.value)
