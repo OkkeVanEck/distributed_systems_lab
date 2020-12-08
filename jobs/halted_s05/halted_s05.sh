@@ -41,7 +41,7 @@ cp -r "${PWD}/data/${DATASET}/${DATASET}-${COMP_NODES}-partitions/" \
     -t "${TMP_DATA}/${DATASET}/"
 
 #  Copy existing results to TMP partition.
-cp -a "${PWD}/jobs/${JOBNAME}/results/" "${TMP_RES}"
+cp -r "${PWD}/jobs/${JOBNAME}/results/." -t "${TMP_RES}/."
 
 # Run simulation.
 srun -n "${SLURM_NTASKS}" --mpi=pmi2 python3 "code/run_simulation.py" \
@@ -49,7 +49,7 @@ srun -n "${SLURM_NTASKS}" --mpi=pmi2 python3 "code/run_simulation.py" \
     "${TMP_RES}"
 
 # Copy results to HOME partition.
-cp -a "${TMP_RES}/." "${PWD}/jobs/${JOBNAME}/results"
+cp -a "${TMP_RES}/." -t "${PWD}/jobs/${JOBNAME}/results/."
 
 # Clean TMP partition for reuse of job script.
 rm -rf "${RUNDIR:?}"
