@@ -10,9 +10,10 @@ module load python/3.6.0
 module load intel-mpi/64/5.1.2/150
 
 # Define paths for the job to work with.
-TMP_DATA="${TMPDIR}/${JOBNAME}/data"
-TMP_RES="${TMPDIR}/${JOBNAME}/results"
-TMP_PLAY="${TMPDIR}/${JOBNAME}/playground"
+RUNDIR="${PWD}/${JOBNAME}"
+TMP_DATA="${RUNDIR}/data"
+TMP_RES="${RUNDIR}/results"
+TMP_PLAY="${RUNDIR}/playground"
 
 # Create directories for the playground, data and results on the TMP partition.
 mkdir -p "${TMP_DATA}"
@@ -37,4 +38,4 @@ srun -n "${SLURM_NTASKS}" --mpi=pmi2 python3 "code/run_simulation.py" \
 cp -rf "${TMP_RES}/." "${PWD}/jobs/${JOBNAME}/results"
 
 # Clean TMP partition for reuse of job script.
-rm -rf "${TMPDIR:?}/${JOBNAME:?}"
+rm -rf "${RUNDIR:?}"
