@@ -22,7 +22,8 @@ mkdir -p "${TMP_PLAY}"
 # Copy Vertex and Partitions data to TMP partition.
 mkdir -p "${TMP_DATA}/${DATASET}/"
 cp "${PWD}/data/${DATASET}/${DATASET}.v" -t "${TMP_DATA}/${DATASET}/"
-cp -r "${PWD}/data/${DATASET}/${DATASET}-${COMP_NODES}-partitions/" -t "${TMP_DATA}/${DATASET}/"
+cp -r "${PWD}/data/${DATASET}/${DATASET}-${COMP_NODES}-partitions/" \
+    -t "${TMP_DATA}/${DATASET}/"
 
 #  Copy existing results to TMP partition.
 cp -a "${PWD}/jobs/${JOBNAME}/results/" "${TMP_RES}"
