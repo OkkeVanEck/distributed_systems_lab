@@ -10,12 +10,13 @@ module load python/3.6.0
 module load intel-mpi/64/5.1.2/150
 
 # Define paths for the job to work with.
-RUNDIR="${PWD}/${JOBNAME}"
+RUNDIR="${PWD}/runtime_tmps/${JOBNAME}"
 TMP_DATA="${RUNDIR}/data"
 TMP_RES="${RUNDIR}/results"
 TMP_PLAY="${RUNDIR}/playground"
 
 # Create directories for the playground, data and results on the TMP partition.
+mkdir -p "${RUNDIR}"
 mkdir -p "${TMP_DATA}"
 mkdir -p "${TMP_RES}"
 mkdir -p "${TMP_PLAY}"
