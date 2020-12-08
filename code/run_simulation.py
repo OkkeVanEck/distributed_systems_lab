@@ -36,7 +36,6 @@ def load_dir_structure():
     """Add structure of dirs to path for short imports."""
     root = os.path.dirname(os.path.realpath(__file__))
     sys.path.append(os.path.join(root))
-    sys.path.append(os.path.join(root, "algorithms"))
     sys.path.append(os.path.join(root, "classes"))
     sys.path.append(os.path.join(root, "scripts"))
     sys.path.append(os.path.join(root, "simulations"))

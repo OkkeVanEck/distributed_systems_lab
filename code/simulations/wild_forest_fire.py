@@ -1,4 +1,5 @@
 # Load packages.
+# import gzip
 from itertools import takewhile, repeat
 from mpi4py import MPI
 
@@ -30,9 +31,14 @@ def rawincount(filename):
     return sum(buf.count(b"\n") for buf in bufgen)
 
 
-def get_vertex_rank(vertex_id: int) -> int:
-    """Function used by ComputeNodes to propagate fires across nodes."""
-    return vertex_id % (size - 1) + 1
+def read_partition_file(path_to_partition_file):
+    vert_rank_mapping = dict()
+    with open(path_to_partition_file, "r") as fp:
+        for line in fp:
+            vert, machine = list(map(int, line.strip().split(" ")))
+            vert_rank_mapping[vert] = machine
+
+    return vert_rank_mapping
 
 
 def run_sim(scale_factor, dataset, tmp_play, tmp_data, tmp_res):
@@ -54,11 +60,12 @@ def run_sim(scale_factor, dataset, tmp_play, tmp_data, tmp_res):
     else:
         # Fetch the set of edges according to the rank of the process and the
         # number of partitions in use.
-        e_file = open(f"{tmp_data}/{dataset}/{dataset}-{size - 1}-partitions/node{rank}.e")
+        path_to_partition_file = f"{tmp_data}/{dataset}/{dataset}-{size - 1}-partitions/node{rank}.p.gz"
+        path_to_edge_file = f"{tmp_data}/{dataset}/{dataset}-{size - 1}-partitions/node{rank}.e.gz"
+        vert_rank_mapping = read_partition_file(path_to_partition_file)
 
         # Start a ComputeNode.
         log(f"Starting ComputeNode on {rank}..")
-        compute_node = ComputeNode(rank, True, size - 1, get_vertex_rank)
-        compute_node.init_partition(e_file)
+        compute_node = ComputeNode(rank, True, size - 1, vert_rank_mapping)
+        compute_node.init_partition(path_to_edge_file)
         compute_node.do_tasks()
-        e_file.close()
