@@ -11,7 +11,7 @@ Details:
         are not on the node but are neighbours of the vertices on this node.
 """
 
-import gzip
+# import gzip
 from argparse import ArgumentParser
 from contextlib import ExitStack
 
@@ -40,9 +40,9 @@ def split_partitions(graph_parser, n_part):
             [f"{graph_parser.path_to_graph}-{n_part}-partitions/node{i + WORKER_NODES_RANK_OFFSET}.p.gz" \
                 for i in range(n_part)]
         
-        edge_files_ptrs = [stack.enter_context(gzip.open(path_to_edge_file, 'wt')) \
+        edge_files_ptrs = [stack.enter_context(open(path_to_edge_file, 'w')) \
                             for path_to_edge_file in paths_to_edge_files_on_nodes]
-        part_files_ptrs = [stack.enter_context(gzip.open(path_to_partition_file, 'wt')) \
+        part_files_ptrs = [stack.enter_context(open(path_to_partition_file, 'w')) \
                             for path_to_partition_file in paths_to_partition_files_on_nodes]
 
         # partition data will be duplicate, so write to a set instead of files directly

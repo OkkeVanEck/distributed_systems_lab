@@ -1,5 +1,5 @@
 # Load packages.
-import gzip
+# import gzip
 from itertools import takewhile, repeat
 from mpi4py import MPI
 
@@ -33,7 +33,7 @@ def rawincount(filename):
 
 def read_partition_file(path_to_partition_file):
     vert_rank_mapping = dict()
-    with gzip.open(path_to_partition_file, "rt") as fp:
+    with open(path_to_partition_file, "r") as fp:
         for line in fp:
             vert, machine = list(map(int, line.strip().split(" ")))
             vert_rank_mapping[vert] = machine
