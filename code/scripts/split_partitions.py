@@ -34,10 +34,10 @@ def split_partitions(graph_parser, n_part):
 
     with ExitStack() as stack:
         paths_to_edge_files_on_nodes = \
-            [f"{graph_parser.path_to_graph}-{n_part}-partitions/node{i + WORKER_NODES_RANK_OFFSET}.e" \
+            [f"{graph_parser.path_to_graph}-{n_part}-partitions/node{i + WORKER_NODES_RANK_OFFSET}.e"
                 for i in range(n_part)]
         paths_to_partition_files_on_nodes = \
-            [f"{graph_parser.path_to_graph}-{n_part}-partitions/node{i + WORKER_NODES_RANK_OFFSET}.p" \
+            [f"{graph_parser.path_to_graph}-{n_part}-partitions/node{i + WORKER_NODES_RANK_OFFSET}.p"
                 for i in range(n_part)]
         
         edge_files_ptrs = [stack.enter_context(open(path_to_edge_file, 'w')) \

@@ -7,7 +7,7 @@
 #SBATCH -t 30
 SIMPATH="code/simulations/"
 SIMFILE="wild_forest_fire.py"
-DATASET="example-undirected"
+DATASET="kgs"
 JOBNAME="wild_s05"
 SCALE="0.5"
 
