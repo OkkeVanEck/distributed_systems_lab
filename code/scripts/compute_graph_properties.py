@@ -39,8 +39,8 @@ def load_graph(vertex_file, edge_file):
     G = nx.Graph()
 
     # Parse vertices.
-    with open(vertex_file, "r+") as vertexes:
-        for v in vertexes.readlines():
+    with open(vertex_file, "r") as vertices:
+        for v in vertices.readlines():
             v = v.strip()
             if v.isdigit():
                 G.add_node(int(v))
@@ -49,7 +49,7 @@ def load_graph(vertex_file, edge_file):
                                 f"vertices.\n{v.strip()} is not a digit.")
 
     # Parse edges.
-    with open(edge_file, "w+") as edges:
+    with open(edge_file, "r") as edges:
         for e in edges.readlines():
             v1, v2 = e.strip().split()
             G.add_edge(v1, v2)
@@ -113,7 +113,7 @@ if __name__ == "__main__":
     args = parse_args()
 
     # Load graph.
-    print("Compute graph from given files..")
+    print("Load graph from given files..")
     G = load_graph(args.v_path, args.e_path)
 
     # Compute properties of graph and store in dictionary.
