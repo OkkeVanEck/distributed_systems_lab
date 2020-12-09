@@ -11,7 +11,7 @@ from Enums import MPI_TAG, VertexStatus, SLEEP_TIMES
 from mpi4py import MPI
 comm = MPI.COMM_WORLD
 
-DO_LOG=True
+DO_LOG=False
 
 def log(message):
     if (DO_LOG):
@@ -44,36 +44,34 @@ class HeadNode:
         self.keep_burning = True
 
     def run(self):
-        log("top of headnode run")
         for cur_sample in range(self.num_sample):
             while self.keep_burning:
                 tag = MPI_TAG.CONTINUE.value
                 for i in range(1, self.num_compute_nodes+1):
-                    log("one headnode. receiving from compute nodes")
+                    log(f"one headnode. receiving from compute node {i}")
                     data = comm.recv(source=i, tag=MPI_TAG.HEARTBEAT.value)
+                    log(data)
                     if tag == MPI_TAG.CONTINUE.value:
+                        kl = 0 # debug
                         for [src, dest] in data:
                             self.graph.add_edge(src, dest, cur_sample)
-                            if self.done_burning():
+                            kl += 1 # debug
+                            if self.done_burning(cur_sample):
                                 self.keep_burning = False
-                                log("Head Node. cur_sample is " + str(cur_sample))
                                 if cur_sample < self.num_sample-1:
                                     tag = MPI_TAG.RESET.value
+                                    log(f"time to reset at compute={i} and element {kl}")
                                 else:
                                     tag = MPI_TAG.KILL.value
+                                    log(f"time to kill at compute={i} and element {kl}")
                                 break
-                log("Sending tags " + str(tag))
+                log("Sending tags " + str(tag) + " | RESET = 4 | KILL = 5 | CONTINUE = 6")
                 for i in range(1, self.num_compute_nodes+1):
                     comm.send(None, dest=i, tag=tag)
             self.graph.next_sample()
             self.keep_burning = True
-        log("cur sample is " + str(cur_sample))
-        log("num sample is " + str(self.num_sample))
-        log("exit head node")
         self.stitch()
-        log("write to file")
         self.graph.write2file()
-        log("done writing")
 
     def stitch(self):
         if not self.need_stitch:
@@ -108,5 +106,5 @@ class HeadNode:
                     self.graph.add_edge(src, dest, None, 0)
 
 
-    def done_burning(self):
-        return self.graph.get_num_sample_vertices() >= self.cutoff_vertices
+    def done_burning(self, cur_sample):
+        return self.graph.get_num_sample_vertices(cur_sample) >= self.cutoff_vertices

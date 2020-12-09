@@ -4,14 +4,13 @@ class HeadGraph:
     def __init__(self, total_vertices, num_sample, out_e, out_v):
         self.base_id = 0
         self.total_vertices = total_vertices;
-        self.vertices = [set()] * num_sample
-        self.current_sample = 0;
+        self.vertices = [set() for _ in range(num_sample)]
         self.edges = set()
         self.out_e = out_e
         self.out_v = out_v
 
-    def get_num_sample_vertices(self):
-        return len(self.vertices[self.current_sample])
+    def get_num_sample_vertices(self, sample):
+        return len(self.vertices[sample])
 
     def get_vertices(self):
         return self.vertices
@@ -22,13 +21,12 @@ class HeadGraph:
         src = vertex_from + base_id
         dest = vertex_to + base_id
         if sample != None:
-            self.vertices[self.current_sample].add(src)
-            self.vertices[self.current_sample].add(dest)
+            self.vertices[sample].add(src)
+            self.vertices[sample].add(dest)
         self.edges.add(f"{src} {dest}")
         self.edges.add(f"{dest} {src}")
 
     def next_sample(self):
-        self.current_sample += 1
         self.base_id += self.total_vertices
 
     def write2file(self):
