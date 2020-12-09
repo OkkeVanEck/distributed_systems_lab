@@ -117,15 +117,16 @@ case "$1" in
     N_PROCS=$(( $3 * 16 ))
     echo "Creating ${3} partitions for ${2} with ${N_PROCS} processes.."
     module load openmpi/gcc/64
-    srun -n "${N_PROCS}" --mpi=pmi2 KaHIP/deploy/parhip "data/${2}/${2}.m" \
-        --k "${3}" --preconfiguration=fastsocial --save_partition
+    $MPI_RUN --mca btl ^usnic -n "${N_PROCS}" KaHIP/deploy/parhip \
+        "data/${2}/${2}.m" --k "${3}" --preconfiguration=fastsocial \
+        --save_partition
     module unload openmpi/gcc/64
 
     # Split the newly created partitions across the number of nodes.
     echo "Splitting ${2} with ${3} partitions across new node folders.."
     module load python/3.6.0
     mkdir -p "data/${2}/${2}-${3}-partitions"
-    srun -n 16 python3 code/scripts/split_partitions.py "${2}" "${3}"
+    srun python3 code/scripts/split_partitions.py "${2}" "${3}"
     module unload python/3.6.0
     ;;
 # Create new job.

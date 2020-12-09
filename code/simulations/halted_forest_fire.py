@@ -11,7 +11,7 @@ from HeadNode import HeadNode
 comm = MPI.COMM_WORLD
 size = comm.Get_size()
 rank = comm.Get_rank()
-DO_LOG = True
+DO_LOG = False
 
 
 def log(message):
@@ -54,17 +54,13 @@ def run_sim(scale_factor, dataset, tmp_play, tmp_data, tmp_res):
         log(f"Starting HeadNode on {rank}..")
         out_v = f"{tmp_res}/scaled_graph.v"
         out_e = f"{tmp_res}/scaled_graph.e"
-        f = open(out_v, "w")
-        f.close()
-        f = open(out_e, "w")
-        f.close()
         head_node = HeadNode(rank, size, float(scale_factor), num_vertices, out_v, out_e)
         head_node.run()
     else:
         # Fetch the set of edges according to the rank of the process and the
         # number of partitions in use.
-        path_to_partition_file = f"{tmp_data}/{dataset}/{dataset}-{size - 1}-partitions/node{rank}.p.gz"
-        path_to_edge_file = f"{tmp_data}/{dataset}/{dataset}-{size - 1}-partitions/node{rank}.e.gz"
+        path_to_partition_file = f"{tmp_data}/{dataset}/{dataset}-{size - 1}-partitions/node{rank}.p"
+        path_to_edge_file = f"{tmp_data}/{dataset}/{dataset}-{size - 1}-partitions/node{rank}.e"
         vert_rank_mapping = read_partition_file(path_to_partition_file)
 
         # Start a ComputeNode.

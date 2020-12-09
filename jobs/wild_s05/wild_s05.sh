@@ -7,7 +7,7 @@
 #SBATCH -t 30
 SIMPATH="code/simulations/"
 SIMFILE="wild_forest_fire.py"
-DATASET="example-undirected"
+DATASET="kgs"
 JOBNAME="wild_s05"
 SCALE="0.5"
 
@@ -16,11 +16,13 @@ module load python/3.6.0
 module load intel-mpi/64/5.1.2/150
 
 # Define paths for the job to work with.
-TMP_DATA="${TMPDIR}/${JOBNAME}/data"
-TMP_RES="${TMPDIR}/${JOBNAME}/results"
-TMP_PLAY="${TMPDIR}/${JOBNAME}/playground"
+RUNDIR="${PWD}/runtime_tmps/${JOBNAME}"
+TMP_DATA="${RUNDIR}/data"
+TMP_RES="${RUNDIR}/results"
+TMP_PLAY="${RUNDIR}/playground"
 
 # Create directories for the playground, data and results on the TMP partition.
+mkdir -p "${RUNDIR}"
 mkdir -p "${TMP_DATA}"
 mkdir -p "${TMP_RES}"
 mkdir -p "${TMP_PLAY}"
@@ -28,7 +30,8 @@ mkdir -p "${TMP_PLAY}"
 # Copy Vertex and Partitions data to TMP partition.
 mkdir -p "${TMP_DATA}/${DATASET}/"
 cp "${PWD}/data/${DATASET}/${DATASET}.v" -t "${TMP_DATA}/${DATASET}/"
-cp -r "${PWD}/data/${DATASET}/${DATASET}-${COMP_NODES}-partitions/" -t "${TMP_DATA}/${DATASET}/"
+cp -r "${PWD}/data/${DATASET}/${DATASET}-${COMP_NODES}-partitions/" \
+    -t "${TMP_DATA}/${DATASET}/"
 
 #  Copy existing results to TMP partition.
 cp -a "${PWD}/jobs/${JOBNAME}/results/." "${TMP_RES}"
@@ -42,4 +45,4 @@ srun -n "${SLURM_NTASKS}" --mpi=pmi2 python3 "code/run_simulation.py" \
 cp -a "${TMP_RES}/." "${PWD}/jobs/${JOBNAME}/results"
 
 # Clean TMP partition for reuse of job script.
-rm -rf "${TMPDIR:?}/${JOBNAME:?}"
+rm -rf "${RUNDIR:?}"
