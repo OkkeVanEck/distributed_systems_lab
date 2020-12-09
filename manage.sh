@@ -296,9 +296,19 @@ SCALE=\"${4}\"
         exit 1
     fi
 
-    # Run the propertie measuring script.
-    python3 code/scripts/compute_graph_properties.py \
-        "jobs/${2}/results/scaled_graph.v" "jobs/${2}/results/scaled_graph.e"
+    # Check if local is given as an argument.
+    if [ -z "$3" ] && [ "${3}" == "local" ]; then
+        python3 code/scripts/compute_graph_properties.py \
+            "jobs/${2}/results/scaled_graph.v" \
+            "jobs/${2}/results/scaled_graph.e"
+    else
+       # Load modules and run the properties measuring script.
+        module load python/3.6.0
+        srun python3 code/scripts/compute_graph_properties.py \
+            "jobs/${2}/results/scaled_graph.v" \
+            "jobs/${2}/results/scaled_graph.e"
+        module unload python/3.6.0
+    fi
     ;;
 # Catch all for parse errors.
 *)
