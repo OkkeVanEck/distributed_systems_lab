@@ -1,6 +1,8 @@
 # Load packages.
 # import gzip
 import logging
+import sys
+
 from TimeIt import timeit
 from itertools import takewhile, repeat
 from mpi4py import MPI
@@ -43,6 +45,7 @@ def run_sim(scale_factor, dataset, tmp_play, tmp_data, tmp_res):
     """
     # Setup logging
     logging.basicConfig(filename=f'{tmp_res}/node-{rank}.log', filemode="w+", format='%(message)s', level=logging.INFO)
+    logging.getLogger().addHandler(logging.StreamHandler(sys.stdout)) # also output to stdout
 
     if rank == 0:
         # Fetch the total number of vertices in the dataset.
