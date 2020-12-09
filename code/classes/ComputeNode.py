@@ -63,6 +63,7 @@ class ComputeNode:
 
 
     def send_heartbeat(self, new_edges):
+        # this send is non-blocking
         log("sending heartbeat")
         comm.send(np.array(new_edges.list_rep()), dest=0, tag=MPI_TAG.HEARTBEAT.value)
         log("heartbeat sent")
@@ -99,9 +100,10 @@ class ComputeNode:
 
     def receive_from_headnode(self):
         # blocking receive from headnode.
-        data = comm.recv(source=0, tag=MPI_TAG.HEAD_NODE_RECV)
+        log("about to receive from headnode")
+        data = comm.recv(source=0, tag=MPI_TAG.HEAD_NODE_RECV.value)
         if data == "continue":
-            return
+            log("continuing")
         elif data == "stop":
             self.fire.stop_burning()
             self.killed = True
@@ -126,11 +128,12 @@ class ComputeNode:
             for edge in new_edges.edges:
                 all_edges_sent.add_edge(edge[0], edge[1])
             
-            # self.send_heartbeat(new_edges)
-            # self.receive_from_headnode()
+            self.send_heartbeat(new_edges)
+            self.receive_from_headnode()
 
-            if iterations > 3:
-                self.killed = True
-            iterations += 1
+            # if iterations > 3:
+            #     self.killed = True
+            # iterations += 1
+
         log("num edges sent total = " + str(len(all_edges_sent.list_rep())))
 
