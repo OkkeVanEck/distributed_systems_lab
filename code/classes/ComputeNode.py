@@ -1,6 +1,7 @@
+import logging
 import numpy as np
-import time
 
+from TimeIt import timeit
 from Graph import Graph, GraphInterpreter
 from Fire import Fire
 from EdgeSet import EdgeSet
@@ -10,12 +11,7 @@ from Enums import MPI_TAG, VertexStatus, SLEEP_TIMES
 from mpi4py import MPI
 comm = MPI.COMM_WORLD
 
-DO_LOG=False
-
-
-def log(message):
-    if DO_LOG:
-        print(message)
+# DO_LOG=False
 
 
 class ComputeNode:
@@ -36,14 +32,14 @@ class ComputeNode:
     def get_machine_log(self):
         return "On Machine " + str(self.rank) + "."
 
-
+    @timeit
     def send_fire_to_remotes(self, machine_vertexes_to_receive):
         nodes_to_burn_locally = []
-        log(self.get_machine_log() + " sending data")
+        logging.debug(self.get_machine_log() + " sending data")
 
         for i in range(1, self.num_compute_nodes+1):
             if i != self.rank:
-                # log(self.get_machine_log() + " machine_vertexes_to_receive[" + str(i) + "] = " + str(len(machine_vertexes_to_receive[i])))
+                # logging.debug(self.get_machine_log() + " machine_vertexes_to_receive[" + str(i) + "] = " + str(len(machine_vertexes_to_receive[i])))
                 data = comm.sendrecv(machine_vertexes_to_receive[i],
                     dest=i ,
                     sendtag=MPI_TAG.FROM_COMPUTE_TO_COMPUTE.value,
@@ -51,23 +47,24 @@ class ComputeNode:
                     source=i,
                     recvtag=MPI_TAG.FROM_COMPUTE_TO_COMPUTE.value,
                     status=None)
-                # log("On machine " + str(self.rank) + ". Sent data " + str(machine_vertexes_to_receive[i]))
-                # log("On machine " + str(self.rank) + ". Received data " + str(list(data)))
+                # logging.debug("On machine " + str(self.rank) + ". Sent data " + str(machine_vertexes_to_receive[i]))
+                # logging.debug("On machine " + str(self.rank) + ". Received data " + str(list(data)))
                 if len(data) > 0:
-                    # log(self.get_machine_log() + " recieved data with length " + str(len(data)))
+                    # logging.debug(self.get_machine_log() + " recieved data with length " + str(len(data)))
                     nodes_to_burn_locally.extend(data)
 
-        # log("done sending/receiving on machine " + str(self.rank))
+        # logging.debug("done sending/receiving on machine " + str(self.rank))
 
         self.fire.merge(nodes_to_burn_locally)
 
-
+    @timeit
     def send_heartbeat(self, new_edges):
         # this send is non-blocking
-        log("sending heartbeat")
+        logging.debug("sending heartbeat")
         comm.send(np.array(new_edges.list_rep()), dest=0, tag=MPI_TAG.HEARTBEAT.value)
-        log("heartbeat sent")
+        logging.debug("heartbeat sent")
 
+    @timeit
     def send_burn_requests(self):
         # log("in send burn requests")
         remote_vertices = self.fire.remote_vertices_to_burn
@@ -79,20 +76,21 @@ class ComputeNode:
             machine_owning_vertex = self.machine_with_vertex[vert]
             machine_vertexes_to_receive[machine_owning_vertex].append(vert)
 
-        # log("machine_vertexes_to_receive = ")
+        # logging.debug("machine_vertexes_to_receive = ")
         # for i in machine_vertexes_to_receive.keys():
-        #     log(str(i) + " : " + str(machine_vertexes_to_receive[i]))
+        #     logging.debug(str(i) + " : " + str(machine_vertexes_to_receive[i]))
 
         self.send_fire_to_remotes(machine_vertexes_to_receive)
         self.fire.reset_remote_vertices_to_burn()
 
-
+    @timeit
     def do_spread_steps(self, new_edges):
         # do 10 spread steps,
         # new_edges are updated every spread step by the fire
         for i in range(10):
             self.fire.spread(new_edges)
 
+    @timeit
     def init_partition(self, path_to_edge_file):
         for vert_1, vert_2 in self.graph_reader.read_graph_file(path_to_edge_file):
             self.partitioned_graph.add_vertex_and_neighbor(vert_1, vert_2)
@@ -102,42 +100,42 @@ class ComputeNode:
         self.partitioned_graph.set_all_vertex_status(VertexStatus.NOT_BURNED)
         self.fire.ignite_random_node()
 
-
+    @timeit
     def receive_from_headnode(self):
         # blocking receive from headnode.
-        log("about to receive from headnode")
+        logging.debug("about to receive from headnode")
         status = MPI.Status()
         data = comm.recv(source=0, tag=MPI.ANY_TAG, status=status)
         if status.Get_tag() == MPI_TAG.CONTINUE.value:
-            log("continuing")
+            logging.debug("continuing")
         elif status.Get_tag() == MPI_TAG.KILL.value:
-            log(self.get_machine_log() + ".. reveived kill")
+            logging.debug(self.get_machine_log() + ".. reveived kill")
             self.fire.stop_burning()
             self.killed = True
         elif status.Get_tag() == MPI_TAG.RESET.value:
             self.reset_fire()
-        log("received from headnode")
+        logging.debug("received from headnode")
 
+    @timeit
     def do_tasks(self):
         # only ignites, has not started spreading
-        # log(self.partitioned_graph.v_id_to_neighbors)
+        # logging.debug(self.partitioned_graph.v_id_to_neighbors)
         self.fire.ignite_random_node()
         iterations = 0
         all_edges_sent = EdgeSet()
         while not self.killed:
 
             new_edges = EdgeSet()
-            log(self.get_machine_log() + ".. num_burning vertex ids = " + str(len(self.fire.get_burning_vertex_ids())))
+            logging.debug(self.get_machine_log() + ".. num_burning vertex ids = " + str(len(self.fire.get_burning_vertex_ids())))
             self.do_spread_steps(new_edges)
 
             self.send_burn_requests()
 
-            log(self.get_machine_log() + ".. num edges sent = " + str(len(new_edges.list_rep())))
+            logging.debug(self.get_machine_log() + ".. num edges sent = " + str(len(new_edges.list_rep())))
             for edge in new_edges.edges:
                 all_edges_sent.add_edge(edge[0], edge[1])
 
             self.send_heartbeat(new_edges)
             self.receive_from_headnode()
 
-
-        log("num edges sent total = " + str(len(all_edges_sent.list_rep())))
+        logging.debug("num edges sent total = " + str(len(all_edges_sent.list_rep())))

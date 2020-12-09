@@ -1,5 +1,7 @@
 # Load packages.
 # import gzip
+import logging
+from TimeIt import timeit
 from itertools import takewhile, repeat
 from mpi4py import MPI
 
@@ -11,14 +13,7 @@ from HeadNode import HeadNode
 comm = MPI.COMM_WORLD
 size = comm.Get_size()
 rank = comm.Get_rank()
-DO_LOG = True
-
-
-def log(message):
-    """General function for logging actions if global variable is set."""
-    if DO_LOG:
-        print(message)
-
+# DO_LOG = True
 
 def rawincount(filename):
     """
@@ -30,7 +25,7 @@ def rawincount(filename):
                                      for _ in repeat(None)))
     return sum(buf.count(b"\n") for buf in bufgen)
 
-
+@timeit
 def read_partition_file(path_to_partition_file):
     vert_rank_mapping = dict()
     with open(path_to_partition_file, "r") as fp:
@@ -40,18 +35,21 @@ def read_partition_file(path_to_partition_file):
 
     return vert_rank_mapping
 
-
+@timeit
 def run_sim(scale_factor, dataset, tmp_play, tmp_data, tmp_res):
     """
     Entrypoint for starting a halted forest fire simulation.
     Starts up a single HeadNode and multiple compute nodes.
     """
+    # Setup logging
+    logging.basicConfig(filename=f'{tmp_res}/node-{rank}.log', filemode="w+", format='%(message)s', level=logging.INFO)
+
     if rank == 0:
         # Fetch the total number of vertices in the dataset.
         num_vertices = rawincount(f"{tmp_data}/{dataset}/{dataset}.v")
 
         # Start a HeadNode.
-        log(f"Starting HeadNode on {rank}..")
+        logging.debug(f"Starting HeadNode on {rank}..")
         out_v = f"{tmp_res}/scaled_graph.v"
         out_e = f"{tmp_res}/scaled_graph.e"
         hn = HeadNode(rank, size, float(scale_factor), num_vertices, out_v, out_e)
@@ -64,8 +62,8 @@ def run_sim(scale_factor, dataset, tmp_play, tmp_data, tmp_res):
         vert_rank_mapping = read_partition_file(path_to_partition_file)
 
         # Start a ComputeNode.
-        log(f"Starting ComputeNode on {rank}..")
+        logging.debug(f"Starting ComputeNode on {rank}..")
         compute_node = ComputeNode(rank, True, size - 1, vert_rank_mapping)
         compute_node.init_partition(path_to_edge_file)
-        log("init partitions done on machine " + str(rank))
+        logging.debug("init partitions done on machine " + str(rank))
         compute_node.do_tasks()
