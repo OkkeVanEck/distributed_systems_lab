@@ -3,6 +3,7 @@ import itertools
 import threading
 import gzip
 import time
+import random
 
 from HeadGraph import HeadGraph
 from Enums import MPI_TAG, VertexStatus, SLEEP_TIMES
@@ -11,7 +12,7 @@ from Enums import MPI_TAG, VertexStatus, SLEEP_TIMES
 from mpi4py import MPI
 comm = MPI.COMM_WORLD
 
-DO_LOG=False
+DO_LOG=True
 
 def log(message):
     if (DO_LOG):
@@ -70,7 +71,9 @@ class HeadNode:
                     comm.send(None, dest=i, tag=tag)
             self.graph.next_sample()
             self.keep_burning = True
+        log("start stitch")
         self.stitch()
+        log("end stitch")
         self.graph.write2file()
 
     def stitch(self):
@@ -98,13 +101,11 @@ class HeadNode:
                     self.graph.add_edge(src, dest, None, 0)
         else:
             for sample in self.graph.get_vertices():
-                tmp = list(itertools.product(list(sample), list(sample)))
-                edges = list(filter(lambda x: x[0] != x[1], tmp))
-                ind_edges = np.random.choice(len(edges), size=np.int(np.ceil(len(sample)*0.5)), replace=False)
-                for j in ind_edges:
-                    src, dest = edges[j]
-                    self.graph.add_edge(src, dest, None, 0)
-
+                len_sample = len(sample)
+                for _ in range(np.int(np.ceil(len(sample)*self.connectivity))):
+                    src, dest = random.sample(sample,2)
+                    if src != dest:
+                        self.graph.add_edge(src, dest, None, 0)
 
     def done_burning(self, cur_sample):
         return self.graph.get_num_sample_vertices(cur_sample) >= self.cutoff_vertices
