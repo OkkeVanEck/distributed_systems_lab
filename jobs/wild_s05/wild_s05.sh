@@ -1,9 +1,15 @@
-# Check if the dataset is partitioned correctly for the requested job.
-COMP_NODES=$(( SLURM_NTASKS - 1 ))
-if [ ! -d "${PWD}/data/${DATASET}/${DATASET}-${COMP_NODES}-partitions" ]; then
-    echo "Dataset '${DATASET}' is not partitioned for ${COMP_NODES} Compute Nodes."
-    exit 1
-fi
+#!/usr/bin/env bash
+#SBATCH -J wild_s05
+#SBATCH -o jobs/wild_s05/wild_s05.out
+#SBATCH --partition=defq
+#SBATCH -n 4
+#SBATCH -N 4
+#SBATCH -t 30
+SIMPATH="code/simulations/"
+SIMFILE="wild_forest_fire.py"
+DATASET="kgs"
+JOBNAME="wild_s05"
+SCALE="0.5"
 
 # Load modules.
 module load python/3.6.0
@@ -28,7 +34,7 @@ cp -r "${PWD}/data/${DATASET}/${DATASET}-${COMP_NODES}-partitions/" \
     -t "${TMP_DATA}/${DATASET}/"
 
 #  Copy existing results to TMP partition.
-cp -a "${PWD}/jobs/${JOBNAME}/results/" "${TMP_RES}"
+cp -a "${PWD}/jobs/${JOBNAME}/results/." "${TMP_RES}"
 
 # Run simulation.
 srun -n "${SLURM_NTASKS}" --mpi=pmi2 python3 "code/run_simulation.py" \
@@ -36,7 +42,7 @@ srun -n "${SLURM_NTASKS}" --mpi=pmi2 python3 "code/run_simulation.py" \
     "${TMP_RES}"
 
 # Copy results to HOME partition.
-cp -rf "${TMP_RES}/." "${PWD}/jobs/${JOBNAME}/results"
+cp -a "${TMP_RES}/." "${PWD}/jobs/${JOBNAME}/results"
 
 # Clean TMP partition for reuse of job script.
 rm -rf "${RUNDIR:?}"

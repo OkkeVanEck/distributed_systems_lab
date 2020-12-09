@@ -1,3 +1,16 @@
+#!/usr/bin/env bash
+#SBATCH -J halted_s05
+#SBATCH -o jobs/halted_s05/halted_s05.out
+#SBATCH --partition=defq
+#SBATCH -n 4
+#SBATCH -N 4
+#SBATCH -t 30
+SIMPATH="code/simulations/"
+SIMFILE="halted_forest_fire.py"
+DATASET="kgs"
+JOBNAME="halted_s05"
+SCALE="0.5"
+
 # Check if the dataset is partitioned correctly for the requested job.
 COMP_NODES=$(( SLURM_NTASKS - 1 ))
 if [ ! -d "${PWD}/data/${DATASET}/${DATASET}-${COMP_NODES}-partitions" ]; then
@@ -28,7 +41,7 @@ cp -r "${PWD}/data/${DATASET}/${DATASET}-${COMP_NODES}-partitions/" \
     -t "${TMP_DATA}/${DATASET}/"
 
 #  Copy existing results to TMP partition.
-cp -a "${PWD}/jobs/${JOBNAME}/results/" "${TMP_RES}"
+cp -r "${PWD}/jobs/${JOBNAME}/results/." -t "${TMP_RES}/."
 
 # Run simulation.
 srun -n "${SLURM_NTASKS}" --mpi=pmi2 python3 "code/run_simulation.py" \
@@ -36,7 +49,7 @@ srun -n "${SLURM_NTASKS}" --mpi=pmi2 python3 "code/run_simulation.py" \
     "${TMP_RES}"
 
 # Copy results to HOME partition.
-cp -rf "${TMP_RES}/." "${PWD}/jobs/${JOBNAME}/results"
+cp -a "${TMP_RES}/." -t "${PWD}/jobs/${JOBNAME}/results/."
 
 # Clean TMP partition for reuse of job script.
 rm -rf "${RUNDIR:?}"
