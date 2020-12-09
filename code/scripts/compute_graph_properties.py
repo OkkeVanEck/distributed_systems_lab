@@ -6,6 +6,7 @@ edge file.
 import networkx as nx
 import argparse
 import json
+import math
 import os
 
 
@@ -67,20 +68,35 @@ def comp_average_vertex_degree(G):
 def compute_properties(G):
     """ Compute properties of the given graph G. """
     properties = {}
-    properties["vertex_count"] = nx.number_of_vertices(G)
+
+    # First compute all functions that cannot give errors.
+    properties["vertex_count"] = nx.number_of_nodes(G)
     properties["edge_count"] = nx.number_of_edges(G)
     properties["density"] = nx.density(G)
-    properties["diameter"] = nx.diameter(G)
     properties["component_count"] = nx.number_connected_components(G)
     properties["planar"] = nx.check_planarity(G)[0]
     properties["node_connectivity"] = nx.node_connectivity(G)
     properties["avg_node_degree"] = comp_average_vertex_degree(G)
     properties["avg_clustering_coefficient"] = nx.average_clustering(G)
-    properties["shortest_path"] = nx.shortest_path_length(G)
-    properties["avg_shortest_path"] = nx.average_shortest_path_length(G)
-    properties["min_edge_cover"] = nx.min_edge_cover(G)
-    properties["min_node_cover"] = nx.min_node_cover(G)
     properties["influential_node_count"] = len(nx.voterank(G))
+
+    # Unconnected graph might give infinite path length exception.
+    try:
+        properties["diameter"] = nx.diameter(G)
+    except nx.exception.NetworkXError:
+        properties["diameter"] = math.inf
+
+    # Unconnected graph has no average shortest path.
+    try:
+        properties["avg_shortest_path"] = nx.average_shortest_path_length(G)
+    except nx.exception.NetworkXError:
+        properties["avg_shortest_path"] = -math.inf
+
+    # Graph has a node with no edge incident on it, so no edge cover exists.
+    try:
+        properties["min_edge_cover"] = nx.min_edge_cover(G)
+    except nx.exception.NetworkXException:
+        properties["min_edge_cover"] = -math.inf
 
     return properties
 
