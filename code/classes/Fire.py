@@ -45,7 +45,7 @@ class Fire:
     def ignite_random_node(self):
         nb_filter = lambda x: self.graph.v_id_to_status[x].status == VertexStatus.NOT_BURNED
         not_burned_vertex_ids = filter(nb_filter, self.graph.v_id_to_status.keys())
-        random_vertex_id = random.sample(list(not_burned_vertex_ids), 1)[0]
+        random_vertex_id = np.random.choice(list(not_burned_vertex_ids), size=1)[0]
         self.burning_vertex_ids = [random_vertex_id]
         self.graph.set_vertex_status(random_vertex_id, VertexStatus.BURNED)
 

@@ -32,11 +32,11 @@ class HeadGraph:
         self.base_id += self.total_vertices
 
     def write2file(self):
-        with open(self.out_e, 'a') as f:
+        with open(self.out_e, 'w') as f:
             for e in self.edges:
                 f.write(f"{e}\n")
 
-        with open(self.out_v, 'a') as f:
-            for sample in vertices:
+        with open(self.out_v, 'w') as f:
+            for sample in self.vertices:
                 for v in sample:
                     f.write(f"{v}\n")

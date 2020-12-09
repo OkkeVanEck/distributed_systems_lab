@@ -10,7 +10,7 @@ from Enums import MPI_TAG, VertexStatus, SLEEP_TIMES
 from mpi4py import MPI
 comm = MPI.COMM_WORLD
 
-DO_LOG=False
+DO_LOG=True
 
 
 def log(message):
@@ -43,7 +43,7 @@ class ComputeNode:
 
         for i in range(1, self.num_compute_nodes+1):
             if i != self.rank:
-                log(self.get_machine_log() + " machine_vertexes_to_receive[" + str(i) + "] = " + str(len(machine_vertexes_to_receive[i])))
+                # log(self.get_machine_log() + " machine_vertexes_to_receive[" + str(i) + "] = " + str(len(machine_vertexes_to_receive[i])))
                 data = comm.sendrecv(machine_vertexes_to_receive[i],
                     dest=i ,
                     sendtag=MPI_TAG.FROM_COMPUTE_TO_COMPUTE.value,
@@ -54,10 +54,10 @@ class ComputeNode:
                 # log("On machine " + str(self.rank) + ". Sent data " + str(machine_vertexes_to_receive[i]))
                 # log("On machine " + str(self.rank) + ". Received data " + str(list(data)))
                 if len(data) > 0:
-                    log(self.get_machine_log() + " recieved data with length " + str(len(data)))
+                    # log(self.get_machine_log() + " recieved data with length " + str(len(data)))
                     nodes_to_burn_locally.extend(data)
 
-        log("done sending/receiving on machine " + str(self.rank))
+        # log("done sending/receiving on machine " + str(self.rank))
 
         self.fire.merge(nodes_to_burn_locally)
 
@@ -98,19 +98,25 @@ class ComputeNode:
             self.partitioned_graph.add_vertex_and_neighbor(vert_1, vert_2)
 
 
+    def reset_fire(self):
+        self.partitioned_graph.set_all_vertex_status(VertexStatus.NOT_BURNED)
+        self.fire.ignite_random_node()
+
 
     def receive_from_headnode(self):
         # blocking receive from headnode.
         log("about to receive from headnode")
         status = MPI.Status()
-        data = comm.recv(source=0, tag=MPI.ANY_TAG)
+        data = comm.recv(source=0, tag=MPI.ANY_TAG, status=status)
         if status.Get_tag() == MPI_TAG.CONTINUE.value:
             log("continuing")
         elif status.Get_tag() == MPI_TAG.KILL.value:
+            log(self.get_machine_log() + ".. reveived kill")
             self.fire.stop_burning()
             self.killed = True
         elif status.Get_tag() == MPI_TAG.RESET.value:
-            self.fire.ignite_random_node()
+            self.reset_fire()
+        log("received from headnode")
 
     def do_tasks(self):
         # only ignites, has not started spreading

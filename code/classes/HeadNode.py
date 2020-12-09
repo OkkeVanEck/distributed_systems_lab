@@ -1,4 +1,5 @@
 import numpy as np
+import itertools
 import threading
 import gzip
 import time
@@ -10,7 +11,7 @@ from Enums import MPI_TAG, VertexStatus, SLEEP_TIMES
 from mpi4py import MPI
 comm = MPI.COMM_WORLD
 
-DO_LOG=False
+DO_LOG=True
 
 def log(message):
     if (DO_LOG):
@@ -25,47 +26,59 @@ class HeadNode:
         self.num_compute_nodes = n_nodes - 1
         self.total_vertices = total_vertices
         self.need_stitch = stitch
-        self.self.connectivity = 0.1
+        self.connectivity = 0.1
 
         # scale factor 1 will be upscale sample that stays the same size
         if scale_factor < 1:
             self.num_sample = 1
             self.cutoff_vertices = total_vertices * scale_factor
+            log("collecting " + str(self.cutoff_vertices) + " vertices")
             self.upscale = False
         else:
-            self.num_sample = np.floor(scale_factor * 2)
+            self.num_sample = np.int(np.floor(scale_factor * 2))
             self.cutoff_vertices = total_vertices * (scale_factor / self.num_sample)
             self.upscale = True
+        log("num samples is " + str(self.num_sample))
 
         self.graph = HeadGraph(total_vertices, self.num_sample, out_e, out_v)
         self.keep_burning = True
 
     def run(self):
+        log("top of headnode run")
         for cur_sample in range(self.num_sample):
-            while(self.keep_burning):
+            while self.keep_burning:
                 tag = MPI_TAG.CONTINUE.value
-                for i in range(1, num_compute_nodes+1):
+                for i in range(1, self.num_compute_nodes+1):
+                    log("one headnode. receiving from compute nodes")
                     data = comm.recv(source=i, tag=MPI_TAG.HEARTBEAT.value)
                     if tag == MPI_TAG.CONTINUE.value:
                         for [src, dest] in data:
-                            self.graph.add_edge(src, dest, cur_sample, 0)
+                            self.graph.add_edge(src, dest, cur_sample)
                             if self.done_burning():
                                 self.keep_burning = False
+                                log("Head Node. cur_sample is " + str(cur_sample))
                                 if cur_sample < self.num_sample-1:
                                     tag = MPI_TAG.RESET.value
                                 else:
                                     tag = MPI_TAG.KILL.value
                                 break
-                for i in range(1, num_compute_nodes+1):
+                log("Sending tags " + str(tag))
+                for i in range(1, self.num_compute_nodes+1):
                     comm.send(None, dest=i, tag=tag)
             self.graph.next_sample()
+            self.keep_burning = True
+        log("cur sample is " + str(cur_sample))
+        log("num sample is " + str(self.num_sample))
+        log("exit head node")
         self.stitch()
+        log("write to file")
         self.graph.write2file()
+        log("done writing")
 
     def stitch(self):
-        if not need_stitch:
+        if not self.need_stitch:
             return
-        if upscale:
+        if self.upscale:
             stitch_nodes = list()
             for sample in self.graph.get_vertices():
                 stitch_nodes.append(
