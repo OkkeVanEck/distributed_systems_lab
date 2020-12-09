@@ -12,12 +12,12 @@ import os
 def valid_extension(path, extension):
     """ Checks whether a given path argument ends on the provided extension. """
     if not isinstance(path, str):
-        raise argparse.ArgumentTypeError(f"Given file path is not a string")
+        raise argparse.ArgumentTypeError("Given file path is not a string")
 
     base, ext = os.path.splitext(path)
     if ext.lower() != extension:
-        raise argparse.ArgumentTypeError(f"Extension of given file is not "
-                                         f"{extension}")
+        raise argparse.ArgumentTypeError("Extension of given file is not " +
+                                         str(extension))
     return path
 
 
@@ -44,8 +44,9 @@ def load_graph(vertex_file, edge_file):
             if v.isdigit():
                 G.add_node(int(v))
             else:
-                raise Exception(f"Please pass a vertex file with only integer "
-                                f"vertices.\n{v.strip()} is not a digit.")
+                raise Exception("Please pass a vertex file with only integer " +
+                                "vertices.\n\t'" + str(v.strip()) +
+                                "' is not a digit.")
 
     # Parse edges.
     with open(edge_file, "w+") as edges:
