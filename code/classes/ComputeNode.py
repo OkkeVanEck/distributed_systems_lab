@@ -10,7 +10,7 @@ from Enums import MPI_TAG, VertexStatus, SLEEP_TIMES
 from mpi4py import MPI
 comm = MPI.COMM_WORLD
 
-DO_LOG=True
+DO_LOG=False
 
 
 def log(message):
@@ -98,6 +98,7 @@ class ComputeNode:
             self.partitioned_graph.add_vertex_and_neighbor(vert_1, vert_2)
         
 
+
     def receive_from_headnode(self):
         # blocking receive from headnode.
         log("about to receive from headnode")
@@ -108,7 +109,7 @@ class ComputeNode:
             self.fire.stop_burning()
             self.killed = True
         elif data == "restart":
-            self.do_restart_process()
+            self.fire.ignite_random_node()
 
     def do_tasks(self):
         # only ignites, has not started spreading
@@ -131,9 +132,6 @@ class ComputeNode:
             self.send_heartbeat(new_edges)
             self.receive_from_headnode()
 
-            # if iterations > 3:
-            #     self.killed = True
-            # iterations += 1
 
         log("num edges sent total = " + str(len(all_edges_sent.list_rep())))
 

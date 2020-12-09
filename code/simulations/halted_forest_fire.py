@@ -11,7 +11,7 @@ from HeadNode import HeadNode
 comm = MPI.COMM_WORLD
 size = comm.Get_size()
 rank = comm.Get_rank()
-DO_LOG = True
+DO_LOG = False
 
 
 def log(message):

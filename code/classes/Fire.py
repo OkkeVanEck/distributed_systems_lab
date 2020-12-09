@@ -9,7 +9,7 @@ from Enums import VertexStatus
 from Vertex import Vertex
 
 
-DO_LOG_FIRE_CLASS=True
+DO_LOG_FIRE_CLASS=False
 
 
 def log(message):
@@ -43,12 +43,11 @@ class Fire:
         return neighbors_to_burn
 
     def ignite_random_node(self):
-        if len(self.burning_vertex_ids) == 0:
-            nb_filter = lambda x: self.graph.v_id_to_status[x].status == VertexStatus.NOT_BURNED
-            not_burned_vertex_ids = filter(nb_filter, self.graph.v_id_to_status.keys())
-            random_vertex_id = random.sample(list(not_burned_vertex_ids), 1)[0]
-            self.burning_vertex_ids = [random_vertex_id]
-            self.graph.set_vertex_status(random_vertex_id, VertexStatus.BURNED)
+        nb_filter = lambda x: self.graph.v_id_to_status[x].status == VertexStatus.NOT_BURNED
+        not_burned_vertex_ids = filter(nb_filter, self.graph.v_id_to_status.keys())
+        random_vertex_id = random.sample(list(not_burned_vertex_ids), 1)[0]
+        self.burning_vertex_ids = [random_vertex_id]
+        self.graph.set_vertex_status(random_vertex_id, VertexStatus.BURNED)
 
 
     def spread(self, new_edges: EdgeSet):
