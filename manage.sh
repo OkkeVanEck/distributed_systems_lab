@@ -297,7 +297,7 @@ SCALE=\"${4}\"
     fi
 
     # Check if local is given as an argument.
-    if [ -z "$3" ] && [ "${3}" == "local" ]; then
+    if [ -n "$3" ] && [ "${3}" == "local" ]; then
         python3 code/scripts/compute_graph_properties.py \
             "jobs/${2}/results/scaled_graph.v" \
             "jobs/${2}/results/scaled_graph.e"
