@@ -9,13 +9,27 @@ import json
 import os
 
 
+def valid_extension(path, extension):
+    """ Checks whether a given path argument ends on the provided extension. """
+    if not isinstance(path, str):
+        raise argparse.ArgumentTypeError(f"Given file path is not a string")
+
+    base, ext = os.path.splitext(path)
+    if ext.lower() != extension:
+        raise argparse.ArgumentTypeError(f"Extension of given file is not "
+                                         f"{extension}")
+    return path
+
+
 def parse_args():
     """ Parse arguments for running graph analysis. """
     parser = argparse. \
         ArgumentParser(description="Process vertex and edge file and analyse "
                                    "resulting graph.")
-    parser.add_argument("v_path", type=str, help="Path to the vertex file")
-    parser.add_argument("e_path", type=str, help="Path to the edge file")
+    parser.add_argument("v_path", type=lambda a: valid_extension(a, ".v"),
+                        help="Path to the vertex file")
+    parser.add_argument("e_path", type=lambda a: valid_extension(a, ".e"),
+                        help="Path to the edge file")
     return parser.parse_args()
 
 

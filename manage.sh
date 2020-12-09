@@ -270,6 +270,36 @@ SCALE=\"${4}\"
         exit 1
     fi
     ;;
+# Compute properties of the resulting vertex and edges files of a job.
+"compute_properties")
+    # Check if job name is given.
+    if [ -z "$2" ]; then
+        echo "No name of job specified."
+        exit 1
+    fi
+
+    # Check if given job name exists.
+    if [ ! -d "jobs/${2}" ]; then
+        echo "Job '${2}' does not exist."
+        exit 1
+    fi
+
+    # Check if the vertex file is in results.
+    if [ ! -f "jobs/${2}/results/scaled_graph.v" ]; then
+        echo "Vertex file is missing in results."
+        exit 1
+    fi
+
+    # Check if the edge file is in results.
+    if [ ! -f "jobs/${2}/results/scaled_graph.e" ]; then
+        echo "Edge file is missing in results."
+        exit 1
+    fi
+
+    # Run the propertie measuring script.
+    python3 code/scripts/compute_graph_properties.py \
+        "jobs/${2}/results/scaled_graph.v" "jobs/${2}/results/scaled_graph.e"
+    ;;
 # Catch all for parse errors.
 *)
     echo "No command detected from first argument.."
