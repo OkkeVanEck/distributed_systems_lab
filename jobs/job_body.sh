@@ -28,7 +28,7 @@ cp -r "${PWD}/data/${DATASET}/${DATASET}-${COMP_NODES}-partitions/" \
     -t "${TMP_DATA}/${DATASET}/"
 
 #  Copy existing results to TMP partition.
-cp -a "${PWD}/jobs/${JOBNAME}/results/" "${TMP_RES}"
+cp -r "${PWD}/jobs/${JOBNAME}/results/." -t "${TMP_RES}/."
 
 # Run simulation.
 srun -n "${SLURM_NTASKS}" --mpi=pmi2 python3 "code/run_simulation.py" \
