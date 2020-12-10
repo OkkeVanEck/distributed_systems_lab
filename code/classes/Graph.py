@@ -36,14 +36,6 @@ class Graph:
             return self.v_id_to_neighbors[vertex_id]
         return []
 
-    def get_all_vertives_with_status(self, status: VertexStatus):
-        ret = []
-        for vert_id in self.v_id_to_status.keys():
-            if self.v_id_to_status[vert_id].status == status:
-                ret.append(vert_id)
-        return ret
-
-
     def get_neighbors_with_status(self, vertex_id: int, status: VertexStatus) -> [int]:
         neighbors = self.get_neighbors(vertex_id)
         ret = []
