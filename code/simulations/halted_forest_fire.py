@@ -60,8 +60,14 @@ def run_sim(scale_factor, dataset, do_stitch, ring_stitch, connectivity,
         # hn = HeadNode(rank, size, float(scale_factor), num_vertices, out_v,
         #               out_e, do_stitch, ring_stitch, connectivity)
         # hn.run()
-        open(out_v, "w").close()
-        open(out_e, "w").close()
+
+        f_v = open(out_v, "w")
+        f_e = open(out_e, "w")
+        f_v.writelines(["1", "2", "3", "4", "5", "6"])
+        f_e.writelines(["1 2", "2 3", "3 4", "4 5", "5 6", "6 1"])
+        f_v.close()
+        f_e.close()
+
         logging.debug(f"Done on headnode")
     else:
         # Fetch the set of edges according to the rank of the process and the
