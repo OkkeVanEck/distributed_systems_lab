@@ -32,6 +32,14 @@ case "$1" in
         if [ -f "data/zips/${dset}.zip" ]; then
             echo "Extracting ${dset}.."
             unzip -uq "data/zips/${dset}.zip" -d "data/"
+
+            # Remove not needed files.
+            rm "data/${dset}/${dset}-BFS"
+            rm "data/${dset}/${dset}-CDLP"
+            rm "data/${dset}/${dset}-LCC"
+            rm "data/${dset}/${dset}-PR"
+            rm "data/${dset}/${dset}-SSSP"
+            rm "data/${dset}/${dset}-WCC"
         else
             echo "Dataset ${dset} not found."
         fi

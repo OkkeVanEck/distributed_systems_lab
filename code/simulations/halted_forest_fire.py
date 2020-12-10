@@ -57,17 +57,9 @@ def run_sim(scale_factor, dataset, do_stitch, ring_stitch, connectivity,
         logging.debug(f"Starting HeadNode on {rank}..")
         out_v = f"{tmp_res}/scaled_graph.v"
         out_e = f"{tmp_res}/scaled_graph.e"
-        # hn = HeadNode(rank, size, float(scale_factor), num_vertices, out_v,
-        #               out_e, do_stitch, ring_stitch, connectivity)
-        # hn.run()
-
-        f_v = open(out_v, "w")
-        f_e = open(out_e, "w")
-        f_v.writelines(["1", "2", "3", "4", "5", "6"])
-        f_e.writelines(["1 2", "2 3", "3 4", "4 5", "5 6", "6 1"])
-        f_v.close()
-        f_e.close()
-
+        hn = HeadNode(rank, size, float(scale_factor), num_vertices, out_v,
+                      out_e, do_stitch, ring_stitch, connectivity)
+        hn.run()
         logging.debug(f"Done on headnode")
     else:
         # Fetch the set of edges according to the rank of the process and the
@@ -78,7 +70,7 @@ def run_sim(scale_factor, dataset, do_stitch, ring_stitch, connectivity,
 
         # Start a ComputeNode.
         logging.debug(f"Starting ComputeNode on {rank}..")
-        # compute_node = ComputeNode(rank, False, size - 1, vert_rank_mapping)
-        # compute_node.init_partition(path_to_edge_file)
-        # compute_node.do_tasks()
+        compute_node = ComputeNode(rank, False, size - 1, vert_rank_mapping)
+        compute_node.init_partition(path_to_edge_file)
+        compute_node.do_tasks()
         logging.debug(f"Compute node {rank} done")

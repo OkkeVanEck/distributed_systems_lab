@@ -2,8 +2,8 @@
 #SBATCH -J halted_s05
 #SBATCH -o jobs/halted_s05/halted_s05.out
 #SBATCH --partition=defq
-#SBATCH -n 4
-#SBATCH -N 4
+#SBATCH -n 5
+#SBATCH -N 5
 #SBATCH -t 30
 SIMPATH="code/simulations/"
 SIMFILE="halted_forest_fire.py"
@@ -54,6 +54,3 @@ srun -n "${SLURM_NTASKS}" --mpi=pmi2 python3 "code/run_simulation.py" \
 # Compute properties of the resulting graph and copy those to HOME partition.
 ./manage.sh compute_properties "${JOBNAME}"
 cp "${TMP_RES}/scaled_graph_properties.json" -t "${PWD}/jobs/${JOBNAME}/results/."
-
-# Clean TMP partition for reuse of job script.
-#rm -rf "${RUNDIR:?}"
