@@ -1,4 +1,9 @@
+import logging
+from TimeIt import timeit
 
+func_to_time = ["edges2file", "write2file"]
+timer = {func:0 for func in func_to_time}
+counter = {func:0 for func in func_to_time}
 
 class HeadGraph:
     def __init__(self, total_vertices, num_sample, out_e, out_v):
@@ -12,6 +17,13 @@ class HeadGraph:
             pass
         with open(self.out_v, 'w') as f:
             pass
+
+    def __del__(self):
+        for k, v in timer.items():
+            logging.info(f"timer {k} {v:.2f}")
+
+        for k, v in counter.items():
+            logging.info(f"counter {k} {v}")
 
     def get_num_sample_vertices(self, sample):
         return len(self.vertices[sample])
@@ -38,11 +50,13 @@ class HeadGraph:
         self.edges2file()
         self.edges = set()
 
+    @timeit(timer=timer, counter=counter)
     def edges2file(self):
         with open(self.out_e, 'a') as f:
             for e in self.edges:
                 f.write(f"{e}\n")
 
+    @timeit(timer=timer, counter=counter)
     def write2file(self):
         with open(self.out_e, 'a') as f:
             for e in self.edges:
