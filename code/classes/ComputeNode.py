@@ -91,7 +91,7 @@ class ComputeNode:
 
 
     def set_fire_step(self, new_fire_step):
-        self.fire_step = max(min(new_fire_step, 64), 10)
+        self.fire_step = max(min(new_fire_step, 32), 10)
         log(f"setting fire step to {self.fire_step}")
 
     def do_spread_steps(self, new_edges):
