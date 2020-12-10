@@ -113,13 +113,13 @@ if __name__ == "__main__":
     args = parse_args()
 
     # Load graph.
-    print("Load graph from given files..")
+    print("\tLoad graph from given files..")
     G = load_graph(args.v_path, args.e_path)
 
     # Compute properties of graph and store in dictionary.
-    print("Compute properties of graph..")
+    print("\tCompute properties of graph..")
     properties = compute_properties(G)
 
     # Store properties in an properties file.
-    print("Storing properties in file..")
+    print("\tStoring properties in file..")
     write_properties(properties, args.v_path)
