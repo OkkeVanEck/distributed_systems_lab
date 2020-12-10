@@ -128,7 +128,7 @@ case "$1" in
     N_PROCS=$(($3 * 16))
     echo "Creating ${3} partitions for ${2} with ${N_PROCS} processes.."
     module load openmpi/gcc/64
-    $MPI_RUN --mca btl ^usnic -n "${N_PROCS}" KaHIP/deploy/parhip \
+    srun --mpi=pmi2 -n "${N_PROCS}" KaHIP/deploy/parhip \
         "data/${2}/${2}.m" --k "${3}" --preconfiguration=fastsocial \
         --save_partition
     module unload openmpi/gcc/64
