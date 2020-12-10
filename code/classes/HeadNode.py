@@ -39,7 +39,7 @@ class HeadNode:
             self.num_sample = 2
             self.cutoff_vertices = total_vertices * (scale_factor / self.num_sample)
             self.upscale = True
-        elif scale_factor > 1:
+        else:
             self.num_sample = np.int(np.floor(scale_factor * 2))
             self.cutoff_vertices = total_vertices * (scale_factor / self.num_sample)
             self.upscale = True
@@ -62,9 +62,6 @@ class HeadNode:
                     #log(data)
                     if tag == MPI_TAG.CONTINUE.value:
                         kl = 0 # debug
-                        if receive_cycle%20 == 0:
-                            log(f"20 receives. received {self.graph.get_num_sample_vertices(cur_sample)} vertices, {len(self.graph.edges)} edges")
-                        receive_cycle += 1
                         for [src, dest] in data:
                             self.graph.add_edge(src, dest, cur_sample)
                             kl += 1 # debug
