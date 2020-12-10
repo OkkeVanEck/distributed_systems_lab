@@ -57,7 +57,8 @@ A job can easily be created via the `manage.sh` script. This is done with the
 `create_job` command, which needs the job name as the second argument:
 ```shell script
 ./manage.sh create_job <job_name> <simulation_name> <scale_factor> \
-    <dataset_name> <number_of_tasks> <number_of_nodes> <time_in_minutes>
+    <dataset_name> <number_of_nodes> <time_in_minutes> <do_stitch> \
+    <ring_stitch> <connectivity>
 ```
 
 What the given variables exactly mean for a SLURM job is described below after 
@@ -74,7 +75,7 @@ header contains:
 #SBATCH -J <job_name>
 #SBATCH -o jobs/<job_name>/<job_name>.out
 #SBATCH --partition=defq
-#SBATCH -n <number_of_tasks>
+#SBATCH -n <number_of_nodes>
 #SBATCH -N <number_of_nodes>
 #SBATCH -t <time_in_minutes>
 SIMPATH="code/simulations/"
@@ -82,6 +83,9 @@ SIMFILE="<simulation_name>"
 DATASET="<dataset_name>"
 JOBNAME="<job_name>"
 SCALE="<scale_factor>"
+DO_STITCH="<do_stitch>"
+RING_STITCH="<ring_stitch>"
+CONN="<connectivity>"
 ```
 
 As you can see, the default script header contains placeholder lines for
