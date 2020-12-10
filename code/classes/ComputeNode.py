@@ -39,7 +39,7 @@ class ComputeNode:
             logging.info(f"timer {k} {v}")
 
         for k, v in counter.items():
-            logging.info(f"counter {k}{v}")
+            logging.info(f"counter {k} {v}")
 
     def get_machine_log(self):
         return "On Machine " + str(self.rank) + "."

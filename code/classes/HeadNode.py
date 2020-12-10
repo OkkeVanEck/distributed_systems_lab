@@ -50,7 +50,7 @@ class HeadNode:
             logging.info(f"timer {k} {v}")
 
         for k, v in counter.items():
-            logging.info(f"counter {k}{v}")
+            logging.info(f"counter {k} {v}")
 
     @timeit(timer=timer, counter=counter)
     def run(self):

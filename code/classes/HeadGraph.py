@@ -23,7 +23,7 @@ class HeadGraph:
             logging.info(f"timer {k} {v}")
 
         for k, v in counter.items():
-            logging.info(f"counter {k}{v}")
+            logging.info(f"counter {k} {v}")
 
     def get_num_sample_vertices(self, sample):
         return len(self.vertices[sample])
