@@ -35,36 +35,36 @@ case "$1" in
     # Halted down 0.4 kgs 5 stitch=True, Conn=0.1, Ring=True
     ./manage.sh create_job scala_halted_04_5_true_true_01 halted_forest_fire.py 0.4 kgs 5 60 True True 0.1
     # Halted down 0.4 kgs 9 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh create_job scala_halted_04_9_true_true_01 halted_forest_fire.py 0.4 kgs 9 60 True True 0.1
+    ./manage.sh create_job scala_halted_04_9_true_true_01 halted_forest_fire.py 0.4 kgs 9 120 True True 0.1
     # Halted down 0.4 kgs 17 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh create_job scala_halted_04_17_true_true_01 halted_forest_fire.py 0.4 kgs 17 60 True True 0.1
+    ./manage.sh create_job scala_halted_04_17_true_true_01 halted_forest_fire.py 0.4 kgs 17 120 True True 0.1
 
     # Wild down 0.4 kgs 3 stitch=True, Conn=0.1, Ring=True
     ./manage.sh create_job scala_wild_04_3_true_true_01 wild_forest_fire.py 0.4 kgs 3 60 True True 0.1
     # Wild down 0.4 kgs 5 stitch=True, Conn=0.1, Ring=True
     ./manage.sh create_job scala_wild_04_5_true_true_01 wild_forest_fire.py 0.4 kgs 5 60 True True 0.1
     # Wild down 0.4kgs 9 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh create_job scala_wild_04_9_true_true_01 wild_forest_fire.py 0.4 kgs 9 60 True True 0.1
+    ./manage.sh create_job scala_wild_04_9_true_true_01 wild_forest_fire.py 0.4 kgs 9 120 True True 0.1
     # Wild down 0.4 kgs 17 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh create_job scala_wild_04_17_true_true_01 wild_forest_fire.py 0.4 kgs 17 60 True True 0.1
+    ./manage.sh create_job scala_wild_04_17_true_true_01 wild_forest_fire.py 0.4 kgs 17 120 True True 0.1
 
     # Halted up 2 kgs 3 stitch=True, Conn=0.1, Ring=True
     ./manage.sh create_job scala_halted_2_3_true_true_01 halted_forest_fire.py 2 kgs 3 60 True True 0.1
     # Halted up 2 kgs 5 stitch=True, Conn=0.1, Ring=True
     ./manage.sh create_job scala_halted_2_5_true_true_01 halted_forest_fire.py 2 kgs 5 60 True True 0.1
     # Halted up 2 kgs 9 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh create_job scala_halted_2_9_true_true_01 halted_forest_fire.py 2 kgs 9 60 True True 0.1
+    ./manage.sh create_job scala_halted_2_9_true_true_01 halted_forest_fire.py 2 kgs 9 120 True True 0.1
     # Halted up 2 kgs 17 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh create_job scala_halted_2_17_true_true_01 halted_forest_fire.py 2 kgs 17 60 True True 0.1
+    ./manage.sh create_job scala_halted_2_17_true_true_01 halted_forest_fire.py 2 kgs 17 120 True True 0.1
 
     # Wild up 2 kgs 3 stitch=True, Conn=0.1, Ring=True
     ./manage.sh create_job wild_halted_2_3_true_true_01 wild_forest_fire.py 2 kgs 3 60 True True 0.1
     # Wild up 2 kgs 5 stitch=True, Conn=0.1, Ring=True
     ./manage.sh create_job wild_halted_2_5_true_true_01 wild_forest_fire.py 2 kgs 5 60 True True 0.1
     # Wild up 2 kgs 9 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh create_job wild_halted_2_9_true_true_01 wild_forest_fire.py 2 kgs 9 60 True True 0.1
+    ./manage.sh create_job wild_halted_2_9_true_true_01 wild_forest_fire.py 2 kgs 9 120 True True 0.1
     # Wild up 2 kgs 17 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh create_job wild_halted_2_17_true_true_01 wild_forest_fire.py 2 kgs 17 60 True True 0.1
+    ./manage.sh create_job wild_halted_2_17_true_true_01 wild_forest_fire.py 2 kgs 17 120 True True 0.1
     ;;
 # Create jobs.
 "run_jobs")
@@ -129,8 +129,8 @@ case "$1" in
     # Halted up 3 kgs 4 stitch=False, Conn=def, Ring=def
     ./manage.sh run_job sc_halted_3_4_false_false_0
     ;;
-# Dennis Jobs.
-"run_dennis")
+# Okke Jobs.
+"run_okke")
     # Scalability
     # Halted down 0.4 kgs 3 stitch=True, Conn=0.1, Ring=True
     ./manage.sh run_job scala_halted_04_3_true_true_01
@@ -193,7 +193,7 @@ case "$1" in
     ./manage.sh run_job sc_halted_3_4_false_false_0
     ;;
 # Dennis Jobs.
-"run_tom")
+"run_dennis")
     # Scalability
     # Halted down 0.4 kgs 17 stitch=True, Conn=0.1, Ring=True
     ./manage.sh run_job scala_halted_04_17_true_true_01
