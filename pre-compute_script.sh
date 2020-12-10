@@ -12,7 +12,7 @@ case "$1" in
     ;;
 # Get data and setup KaHIP.
 "create_partitions")
-    sizes=(3 5 9 17)
+    sizes=(2 4 8 16)
 
     for i in "${sizes[@]}"; do
         ./manage.sh create_partitions kgs "${i}" &
