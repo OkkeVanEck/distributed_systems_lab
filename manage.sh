@@ -179,9 +179,15 @@ case "$1" in
     fi
 
     # Check if the ring_stitch variable is set. Default to true.
-    if [ -z "${9}" ] || [ "${9}" == "True" ] || [ "${9}" == "True" ]; then
+    if [ -z "${9}" ] || [ "${DO_STITCH}" == false ]; then
+        if [ "${DO_STITCH}" == true ]; then
+            RING_STITCH=true
+        else
+            RING_STITCH=false
+        fi
+    elif [ "${9}" == "True" ] || [ "${9}" == "true" ]; then
         RING_STITCH=true
-    elif [ "${9}" == "False" ] || [ "${9}" == "False" ]; then
+    elif [ "${9}" == "False" ] || [ "${9}" == "false" ]; then
         RING_STITCH=false
     else
         echo "Given ring_stitch value is not true or false."
@@ -190,7 +196,11 @@ case "$1" in
 
     # Check if the connectivity variable is set. Default to 0.1.
     if [ -z "${10}" ]; then
-        CONN="0.1"
+        if [ "${DO_STITCH}" == true ]; then
+            CONN="0.1"
+        else
+            CONN="0.0"
+        fi
     elif [[ ${10} =~ ^[0-9]+([.][0-9]+)?$ ]]; then
         CONN="${10}"
     else
