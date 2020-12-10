@@ -17,106 +17,62 @@ def log(message):
 class Graph:
     def __init__(self, compute_node):
         # mapping Vertex -> [Vertex]
-        self.graph = {}
-        self.fire = Fire(self)
+        self.v_id_to_status = {}
+        self.v_id_to_neighbors = {}
         self.compute_node = compute_node
-        # dict of vertex_id's
-        self.burned_vertices = {}
-        self.burned_edges = []
 
-    def init_fire(self):
-        self.fire.start_burning()
+    def set_vertex_status(self, vertex_id: int, status: VertexStatus):
+        if vertex_id in self.v_id_to_status:
+            self.v_id_to_status[vertex_id].status = status
 
-    def stop_fire(self):
-        self.fire.stop_burning()
+    def get_vertex_status(self, vertex_id: int):
+        return self.v_id_to_status[vertex_id].status
 
-    def get_vertex_status(self, vertex: Vertex):
-        for vert in self.graph.keys():
-            if vert.vertex_id == vertex.vertex_id:
-                return vert.status
-        return VertexStatus.DOESNT_EXIST
+    def vert_exists_here(self, vertex_id):
+        return vertex_id in self.v_id_to_status
 
-    def set_vertex_status(self, vertex: Vertex, status: VertexStatus):
-        # TODO: Issue/Enhancement https://github.com/OkkeVanEck/distributed_systems_lab/issues/13
+    def get_neighbors(self, vertex_id: int) -> [int]:
+        if vertex_id in self.v_id_to_neighbors:
+            return self.v_id_to_neighbors[vertex_id]
+        return []
 
-        for vert in self.graph.keys():
-            if vert.vertex_id == vertex.vertex_id:
-                # log("set vertex burned. vertex_id = " + str(vertex.vertex_id) + " machine rank = " + str(self.compute_node.rank))
-                vert.status = status
-                if status == VertexStatus.BURNED or status == VertexStatus.BURNING:
-                    self.burned_vertices[vertex.vertex_id] = True
-                    return
-        # possible setting a remote vertex status from the fire
-        # if that's the case, add burned_vertex here so that the 
-        # edge can be sent
-        self.burned_vertices[vertex.vertex_id] = True
-
-
-    def add_burned_edge(self, vertex_from: Vertex, vertex_to: Vertex):
-        self.burned_edges.append([vertex_from.vertex_id, vertex_to.vertex_id])
-
-    def get_burned_vertices(self):
-        return self.burned_vertices
-
-    def get_burned_edges(self):
-        return self.burned_edges
-
-    def get_neighbors(self, vertex: Vertex) -> [Vertex]:
-        return self.graph[vertex]
+    def get_neighbors_with_status(self, vertex_id: int, status: VertexStatus) -> [int]:
+        neighbors = self.get_neighbors(vertex_id)
+        ret = []
+        for vert_id in neighbors:
+            # if the neighbor vertex is local check the burn status
+            if vert_id in self.v_id_to_status:
+                if self.v_id_to_status[vert_id].status == status:
+                    ret.append(vert_id)
+            # if the neighbor is not local, add it to the burn
+            # list anyway the fire will determine if it should
+            # send a burn request
+            else:
+                ret.append(vert_id)
+        return ret
 
     def add_vertex_and_neighbor(self, vertex_from: int, vertex_to: int):
+        # first add vertex to status mapping
         vertex = Vertex(vertex_from, VertexStatus.NOT_BURNED)
-        neighbor = Vertex(vertex_to, VertexStatus.NOT_BURNED)
-        if vertex in self.graph:
-            self.graph[vertex].append(neighbor)
+        if vertex_from not in self.v_id_to_status:
+            self.v_id_to_status[vertex_from] = vertex
+
+        # then add vertex to adjacency list
+        if vertex_from in self.v_id_to_neighbors:
+            self.v_id_to_neighbors[vertex_from].add(vertex_to)
         else:
-            self.graph[vertex] = [neighbor]
-
-    def get_neighbors_to_burn(self, vertex):
-        # if a vertex isn't in the graph, it means it is on another partition
-        # dont attempt to get its neighbors, just return an empty list
-        if vertex in self.graph:
-            all_neighbors = self.graph[vertex]
-        else:
-            return []
-        neighbors_to_burn = list(filter(lambda vert: vert.status == VertexStatus.NOT_BURNED,
-            all_neighbors))
-        if len(neighbors_to_burn) == 0:
-            return []
-        return neighbors_to_burn
-
-    def spread_fire_to_other_nodes(self, burning_vertices: List[Vertex]) -> List[Vertex]:
-        local_neighbors_to_burn = []
-        remote_neighbors_to_burn = []
-        for vertex in burning_vertices:
-            # if the vertex is not in the graph, then it belongs to another partition
-            # tell the compute node to handle the communication
-            # if vertex not in self.graph.keys()
-            if not self.compute_node.is_local(vertex.vertex_id):  
-                # can be optimised that smaller msgs can be combined
-                self.compute_node.send_burn_request(vertex.vertex_id)
-                remote_neighbors_to_burn.append(vertex)
-            else:
-                local_neighbors_to_burn.append(vertex)
-        return local_neighbors_to_burn, remote_neighbors_to_burn
-
-    def check_vertex_status(self):
-        all_burned = True
-        for vertex in self.graph.keys():
-            for neighbor in self.graph[vertex]:
-                if neighbor.status != VertexStatus.NOT_BURNED:
-                    all_burned = False
-            if vertex.status != VertexStatus.NOT_BURNED:
-                all_burned = False
-        return all_burned
+            self.v_id_to_neighbors[vertex_from] = set([vertex_to])
 
     def set_all_vertex_status(self, vertex_status):
-        self.burned_vertices = {}
-        self.burned_edges = []
-        for vertex in self.graph.keys():
-            for neighbor in self.graph[vertex]:
-                neighbor.status = vertex_status
-            vertex.status = vertex_status
+        for v_id in self.v_id_to_status.keys():
+            self.v_id_to_status[v_id].status = vertex_status
+
+    def get_v_id_status_string(self):
+        ret = ""
+        for v_id in self.v_id_to_status:
+            ret += str(v_id) + ": " + str(self.v_id_to_status[v_id].status) + "\n"
+        return ret
+
 
 class GraphInterpreter:
     """

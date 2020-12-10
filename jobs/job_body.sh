@@ -32,8 +32,8 @@ cp -a "${PWD}/jobs/${JOBNAME}/results/" "${TMP_RES}"
 
 # Run simulation.
 srun -n "${SLURM_NTASKS}" --mpi=pmi2 python3 "code/run_simulation.py" \
-    "${SIMPATH}${SIMFILE}" "${SCALE}" "${DATASET}" "${TMP_PLAY}" "${TMP_DATA}" \
-    "${TMP_RES}"
+    "${SIMPATH}${SIMFILE}" "${SCALE}" "${DATASET}" "${DO_STITCH}" \
+    "${RING_STITCH}" "${CONN}" "${TMP_PLAY}" "${TMP_DATA}" "${TMP_RES}"
 
 # Copy results to HOME partition.
 cp -rf "${TMP_RES}/." "${PWD}/jobs/${JOBNAME}/results"

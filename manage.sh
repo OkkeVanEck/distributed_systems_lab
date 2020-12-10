@@ -65,7 +65,8 @@ case "$1" in
     module load cmake
 
     # Build KaHIP.
-    cd KaHIP; sh ./compile_withcmake.sh
+    cd KaHIP
+    sh ./compile_withcmake.sh
 
     # Unload modules.
     module unload openmpi/gcc/64
@@ -116,7 +117,7 @@ case "$1" in
     fi
 
     # Compute the total number of processes and run ParHIP.
-    N_PROCS=$(( $3 * 16 ))
+    N_PROCS=$(($3 * 16))
     echo "Creating ${3} partitions for ${2} with ${N_PROCS} processes.."
     module load openmpi/gcc/64
     $MPI_RUN --mca btl ^usnic -n "${N_PROCS}" KaHIP/deploy/parhip \
@@ -146,7 +147,7 @@ case "$1" in
     fi
 
     # Check if simulation name is given.
-    if [[ -z "${3}" ]]; then
+    if [ -z "${3}" ]; then
         echo "No simulation name specified."
         exit 1
     fi
@@ -164,8 +165,48 @@ case "$1" in
     fi
 
     # Check if dataset name is given.
-    if [[ -z "${5}" ]]; then
+    if [ -z "${5}" ]; then
         echo "No dataset specified."
+        exit 1
+    fi
+
+    # Check if the do_stitch variable is set. Default to true.
+    if [ -z "${8}" ] || [ "${8}" == "True" ] || [ "${8}" == "true" ]; then
+        DO_STITCH=true
+    elif [ "${8}" == "False" ] || [ "${8}" == "false" ]; then
+        DO_STITCH=false
+    else
+        echo "Given do_stitch value is not true or false."
+        exit 1
+    fi
+
+    # Check if the ring_stitch variable is set. Default to true.
+    if [ -z "${9}" ] || [ "${DO_STITCH}" == false ]; then
+        if [ "${DO_STITCH}" == true ]; then
+            RING_STITCH=true
+        else
+            RING_STITCH=false
+        fi
+    elif [ "${9}" == "True" ] || [ "${9}" == "true" ]; then
+        RING_STITCH=true
+    elif [ "${9}" == "False" ] || [ "${9}" == "false" ]; then
+        RING_STITCH=false
+    else
+        echo "Given ring_stitch value is not true or false."
+        exit 1
+    fi
+
+    # Check if the connectivity variable is set. Default to 0.1.
+    if [ -z "${10}" ]; then
+        if [ "${DO_STITCH}" == true ]; then
+            CONN="0.1"
+        else
+            CONN="0.0"
+        fi
+    elif [[ ${10} =~ ^[0-9]+([.][0-9]+)?$ ]]; then
+        CONN="${10}"
+    else
+        echo "Given connectivity is invalid. Provide a positive float."
         exit 1
     fi
 
@@ -179,13 +220,16 @@ case "$1" in
 #SBATCH -o jobs/${2}/${2}.out
 #SBATCH --partition=defq
 #SBATCH -n ${6:-16}
-#SBATCH -N ${7:-4}
-#SBATCH -t ${8:-30}
+#SBATCH -N ${6:-16}
+#SBATCH -t ${7:-30}
 SIMPATH=\"${SIMPATH}\"
 SIMFILE=\"${3}\"
 DATASET=\"${5}\"
 JOBNAME=\"${2}\"
 SCALE=\"${4}\"
+DO_STITCH=\"${DO_STITCH}\"
+RING_STITCH=\"${RING_STITCH}\"
+CONN=\"${CONN}\"
 " >>"jobs/${2}/${2}.sh"
     cat jobs/job_body.sh >>"jobs/${2}/${2}.sh"
     ;;
@@ -241,9 +285,12 @@ SCALE=\"${4}\"
         SIMFILE=$(sed -n 9p "jobs/${2}/${2}.sh" | cut -c 10- | sed 's/.$//')
         DATASET=$(sed -n 10p "jobs/${2}/${2}.sh" | cut -c 10- | sed 's/.$//')
         SCALE=$(sed -n 12p "jobs/${2}/${2}.sh" | cut -c 8- | sed 's/.$//')
+        DO_STITCH=$(sed -n 13p "jobs/${2}/${2}.sh" | cut -c 12- | sed 's/.$//')
+        RING_STITCH=$(sed -n 14p "jobs/${2}/${2}.sh" | cut -c 14- | sed 's/.$//')
+        CONN=$(sed -n 15p "jobs/${2}/${2}.sh" | cut -c 7- | sed 's/.$//')
 
         # Check if the dataset is partitioned correctly for the requested job.
-        COMP_NODES=$(( NUMTASKS - 1 ))
+        COMP_NODES=$((NUMTASKS - 1))
         if [ ! -d "${PWD}/data/${DATASET}/${DATASET}-${COMP_NODES}-partitions" ]; then
             echo "Dataset '${DATASET}' is not partitioned for ${COMP_NODES} Compute Nodes."
             exit 1
@@ -254,9 +301,10 @@ SCALE=\"${4}\"
 
         # Run python locally.
         echo "Starting local job ${2}.."
-        mpirun -n "${NUMTASKS}" --use-hwthread-cpus python3 "code/run_simulation.py" \
-            "${SIMPATH}${SIMFILE}" "${SCALE}" "${DATASET}" "${TMP_PLAY}" \
-            "${TMP_DATA}" "${TMP_RES}"
+        mpirun -n "${NUMTASKS}" --use-hwthread-cpus python3 \
+            "code/run_simulation.py" "${SIMPATH}${SIMFILE}" "${SCALE}" \
+            "${DATASET}" "${DO_STITCH}" "${RING_STITCH}" "${CONN}" \
+            "${TMP_PLAY}" "${TMP_DATA}" "${TMP_RES}"
 
         # Copy results to jobs directory.
         cp -rf "${TMP_RES}/." "jobs/${2}/results"
