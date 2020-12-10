@@ -65,9 +65,6 @@ class ComputeNode:
     def send_heartbeat(self, new_edges):
         # this send is non-blocking
         # log("sending heartbeat")
-        if self.rank == 2 or self.rank == 3:
-            if self.fire.relight_counter > 3:
-                log(self.get_machine_log() + f"sent {len(new_edges.list_rep())} edges in heartbeat")
         comm.send(np.array(new_edges.list_rep()), dest=0, tag=MPI_TAG.HEARTBEAT.value)
         # log("heartbeat sent")
 
