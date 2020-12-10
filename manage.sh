@@ -4,6 +4,7 @@ set -e
 DATASETS=("kgs") # Undirected graphs
 SIMPATH="code/simulations/"
 
+
 case "$1" in
 # Fetch datasets from online source if not in /data/zips folder.
 "get_data")
@@ -50,6 +51,7 @@ case "$1" in
 
     echo "Cloning new version of KaHIP.."
     git clone git@github.com:estsaon/KaHIP.git
+    rm -rf /KaHIP/.git
     ;;
 # Build the KaHIP code on the DAS5.
 "build_KaHIP")
@@ -269,6 +271,65 @@ SCALE=\"${4}\"
         echo "Job name does not exist."
         exit 1
     fi
+    ;;
+# Compute properties of the resulting vertex and edges files of a job.
+"compute_properties")
+    # Check if job name is given.
+    if [ -z "$2" ]; then
+        echo "No name of job specified."
+        exit 1
+    fi
+
+    # Check if given job name exists.
+    if [ ! -d "jobs/${2}" ]; then
+        echo "Job '${2}' does not exist."
+        exit 1
+    fi
+
+    # Check if the vertex file is in results.
+    if [ ! -f "jobs/${2}/results/scaled_graph.v" ]; then
+        echo "Vertex file is missing in results of '${2}'."
+        exit 1
+    fi
+
+    # Check if the edge file is in results.
+    if [ ! -f "jobs/${2}/results/scaled_graph.e" ]; then
+        echo "Edge file is missing in results of '${2}'."
+        exit 1
+    fi
+
+    echo "Start processing '${2}'.."
+    # Check if local is given as an argument.
+    if [ -n "$3" ] && [ "${3}" == "local" ]; then
+        python3 code/scripts/compute_graph_properties.py \
+            "jobs/${2}/results/scaled_graph.v" \
+            "jobs/${2}/results/scaled_graph.e"
+    else
+       # Load modules and run the properties measuring script.
+        module load python/3.6.0
+        srun python3 code/scripts/compute_graph_properties.py \
+            "jobs/${2}/results/scaled_graph.v" \
+            "jobs/${2}/results/scaled_graph.e"
+        module unload python/3.6.0
+    fi
+    ;;
+# Compute properties of all results in parallel.
+"compute_all_properties")
+    # Fetch all jobs.
+    cd jobs
+    JOBS=( $(ls -d */) )
+    cd ..
+
+    # Start up a process per job that computes the resulting properties.
+    for j in "${JOBS[@]}"; do
+        # Check if local is given as an argument.
+        if [ -n "$2" ] && [ "${2}" == "local" ]; then
+            ./manage.sh compute_properties "${j::-1}" "local" &
+        else
+            ./manage.sh compute_properties "${j::-1}" &
+        fi
+    done
+    wait
     ;;
 # Catch all for parse errors.
 *)
