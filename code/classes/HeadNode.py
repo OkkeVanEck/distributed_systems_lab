@@ -30,30 +30,39 @@ class HeadNode:
         self.connectivity = 0.1
 
         # scale factor 1 will be upscale sample that stays the same size
-        if scale_factor < 1:
+        if scale_factor <= 0.5:
             self.num_sample = 1
             self.cutoff_vertices = total_vertices * scale_factor
-            log("collecting " + str(self.cutoff_vertices) + " vertices")
             self.upscale = False
-        else:
+        elif scale_factor > 0.5 and scale_factor < 1:
+            self.num_sample = 2
+            self.cutoff_vertices = total_vertices * (scale_factor / self.num_sample)
+            self.upscale = True
+        elif scale_factor > 1:
             self.num_sample = np.int(np.floor(scale_factor * 2))
             self.cutoff_vertices = total_vertices * (scale_factor / self.num_sample)
             self.upscale = True
+        log("collecting " + str(self.cutoff_vertices) + " vertices")
         log("num samples is " + str(self.num_sample))
 
         self.graph = HeadGraph(total_vertices, self.num_sample, out_e, out_v)
         self.keep_burning = True
 
     def run(self):
+        receive_cycle = 0
         for cur_sample in range(self.num_sample):
+            log(f"entered sampling cur_sample = {cur_sample}")
             while self.keep_burning:
                 tag = MPI_TAG.CONTINUE.value
                 for i in range(1, self.num_compute_nodes+1):
-                    log(f"one headnode. receiving from compute node {i}")
+                    # log(f"one headnode. receiving from compute node {i}")
                     data = comm.recv(source=i, tag=MPI_TAG.HEARTBEAT.value)
-                    log(data)
+                    #log(data)
                     if tag == MPI_TAG.CONTINUE.value:
                         kl = 0 # debug
+                        if receive_cycle%20 == 0:
+                            log(f"20 receives. received {self.graph.get_num_sample_vertices(cur_sample)} vertices, {len(self.graph.edges)} edges")
+                        receive_cycle += 1
                         for [src, dest] in data:
                             self.graph.add_edge(src, dest, cur_sample)
                             kl += 1 # debug
@@ -66,7 +75,7 @@ class HeadNode:
                                     tag = MPI_TAG.KILL.value
                                     log(f"time to kill at compute={i} and element {kl}")
                                 break
-                log("Sending tags " + str(tag) + " | RESET = 4 | KILL = 5 | CONTINUE = 6")
+                #log("Sending tags " + str(tag) + " | RESET = 4 | KILL = 5 | CONTINUE = 6")
                 for i in range(1, self.num_compute_nodes+1):
                     comm.send(None, dest=i, tag=tag)
             self.graph.next_sample()
@@ -75,6 +84,7 @@ class HeadNode:
         self.stitch()
         log("end stitch")
         self.graph.write2file()
+        log("done writing")
 
     def stitch(self):
         if not self.need_stitch:
