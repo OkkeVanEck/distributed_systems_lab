@@ -27,9 +27,6 @@ def rawincount(filename):
                                      for _ in repeat(None)))
     return sum(buf.count(b"\n") for buf in bufgen)
 
-func_to_time = ["read_partition_file", "run_sim"]
-timer = {func:0 for func in func_to_time}
-
 @timeit
 def read_partition_file(path_to_partition_file):
     vert_rank_mapping = dict()
