@@ -123,13 +123,13 @@ case "$1" in
 
     # Stitching & Connectivity
     # Halted up 3 kgs 4 stitch=True, Conn=0.1, Ring=False
-    ./manage.sh run_job sc_halted_3_4_true_false_01
+    ./manage.sh run_job sc_halted_3_5_true_false_01
     # Halted up 3 kgs 4 stitch=True, Conn=0.01, Ring=False
-    ./manage.sh run_job sc_halted_3_4_true_false_001
+    ./manage.sh run_job sc_halted_3_5_true_false_001
     # Halted up 3 kgs 4 stitch=False, Conn=def, Ring=def
-    ./manage.sh run_job sc_halted_3_4_false_false_0
+    ./manage.sh run_job sc_halted_3_5_false_false_0
     ;;
-# Okke Jobs.
+# Okke's Jobs.
 "run_okke")
     # Scalability
     # Halted down 0.4 kgs 3 stitch=True, Conn=0.1, Ring=True
@@ -186,14 +186,14 @@ case "$1" in
 
     # Stitching & Connectivity
     # Halted up 3 kgs 4 stitch=True, Conn=0.1, Ring=False
-    ./manage.sh run_job sc_halted_3_4_true_false_01
+    ./manage.sh run_job sc_halted_3_5_true_false_01
     # Halted up 3 kgs 4 stitch=True, Conn=0.01, Ring=False
-    ./manage.sh run_job sc_halted_3_4_true_false_001
+    ./manage.sh run_job sc_halted_3_5_true_false_001
     # Halted up 3 kgs 4 stitch=False, Conn=def, Ring=def
-    ./manage.sh run_job sc_halted_3_4_false_false_0
+    ./manage.sh run_job sc_halted_3_5_false_false_0
     ;;
-# Dennis Jobs.
-"run_dennis")
+# Tom's Jobs.
+"run_tom")
     # Scalability
     # Halted down 0.4 kgs 17 stitch=True, Conn=0.1, Ring=True
     ./manage.sh run_job scala_halted_04_17_true_true_01
@@ -249,11 +249,11 @@ case "$1" in
 
     # Stitching & Connectivity
     # Halted up 3 kgs 4 stitch=True, Conn=0.1, Ring=False
-    ./manage.sh run_job sc_halted_3_4_true_false_01
+    ./manage.sh run_job sc_halted_3_5_true_false_01
     # Halted up 3 kgs 4 stitch=True, Conn=0.01, Ring=False
-    ./manage.sh run_job sc_halted_3_4_true_false_001
+    ./manage.sh run_job sc_halted_3_5_true_false_001
     # Halted up 3 kgs 4 stitch=False, Conn=def, Ring=def
-    ./manage.sh run_job sc_halted_3_4_false_false_0
+    ./manage.sh run_job sc_halted_3_5_false_false_0
     ;;
 # Catch all for parse errors.
 *)
