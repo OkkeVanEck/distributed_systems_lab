@@ -16,7 +16,8 @@ comm = MPI.COMM_WORLD
 func_to_time = ["send_fire_to_remotes", "send_heartbeat", "send_burn_requests",  
                 "do_spread_steps", "init_partition", "receive_from_headnode", "do_tasks"]
 timer = {func:0 for func in func_to_time}
-
+counter = {func:0 for func in func_to_time}
+counter["n_edge_in_send_heartbeat"] = 0
 
 class ComputeNode:
     def __init__(self, rank, fires_wild, n_comp_nodes, machine_with_vertex):
@@ -35,12 +36,15 @@ class ComputeNode:
 
     def __del__(self):
         for k, v in timer.items():
-            logging.info(f"{k} takes {v}s")
+            logging.info(f"timer {k} {v}")
+
+        for k, v in counter.items():
+            logging.info(f"counter {k}{v}")
 
     def get_machine_log(self):
         return "On Machine " + str(self.rank) + "."
 
-    @timeit(timer=timer)
+    @timeit(timer=timer, counter=counter)
     def send_fire_to_remotes(self, machine_vertexes_to_receive):
         nodes_to_burn_locally = []
         logging.debug(self.get_machine_log() + " sending data")
@@ -65,14 +69,17 @@ class ComputeNode:
 
         self.fire.merge(nodes_to_burn_locally)
 
-    @timeit(timer=timer)
+    @timeit(timer=timer, counter=counter)
     def send_heartbeat(self, new_edges):
         # this send is non-blocking
         logging.debug("sending heartbeat")
-        comm.send(np.array(new_edges.list_rep()), dest=0, tag=MPI_TAG.HEARTBEAT.value)
+        data = np.array(new_edges.list_rep())
+        # record how many edges are sent
+        counter["n_edge_in_send_heartbeat"] += data.shape[0] 
+        comm.send(data, dest=0, tag=MPI_TAG.HEARTBEAT.value)
         logging.debug("heartbeat sent")
 
-    @timeit(timer=timer)
+    @timeit(timer=timer, counter=counter)
     def send_burn_requests(self):
         # log("in send burn requests")
         remote_vertices = self.fire.remote_vertices_to_burn
@@ -91,14 +98,14 @@ class ComputeNode:
         self.send_fire_to_remotes(machine_vertexes_to_receive)
         self.fire.reset_remote_vertices_to_burn()
 
-    @timeit(timer=timer)
+    @timeit(timer=timer, counter=counter)
     def do_spread_steps(self, new_edges):
         # do 10 spread steps,
         # new_edges are updated every spread step by the fire
         for i in range(10):
             self.fire.spread(new_edges)
 
-    @timeit(timer=timer)
+    @timeit(timer=timer, counter=counter)
     def init_partition(self, path_to_edge_file):
         for vert_1, vert_2 in self.graph_reader.read_graph_file(path_to_edge_file):
             self.partitioned_graph.add_vertex_and_neighbor(vert_1, vert_2)
@@ -108,7 +115,7 @@ class ComputeNode:
         self.partitioned_graph.set_all_vertex_status(VertexStatus.NOT_BURNED)
         self.fire.ignite_random_node()
 
-    @timeit(timer=timer)
+    @timeit(timer=timer, counter=counter)
     def receive_from_headnode(self):
         # blocking receive from headnode.
         logging.debug("about to receive from headnode")
@@ -124,7 +131,7 @@ class ComputeNode:
             self.reset_fire()
         logging.debug("received from headnode")
 
-    @timeit(timer=timer)
+    @timeit(timer=timer, counter=counter)
     def do_tasks(self):
         # only ignites, has not started spreading
         # logging.debug(self.partitioned_graph.v_id_to_neighbors)

@@ -17,6 +17,7 @@ comm = MPI.COMM_WORLD
 # add function names here that needs timing
 func_to_time = ["run", "stitch"]
 timer = {func:0 for func in func_to_time}
+counter = {func:0 for func in func_to_time}
 
 class HeadNode:
     def __init__(self, rank, n_nodes, scale_factor, total_vertices, out_v, out_e, stitch=True, ring_stitch=True, connectivity=0.1):
@@ -44,12 +45,14 @@ class HeadNode:
         self.graph = HeadGraph(total_vertices, self.num_sample, out_e, out_v)
         self.keep_burning = True
 
-
     def __del__(self):
         for k, v in timer.items():
-            logging.info(f"{k} takes {v}s")
+            logging.info(f"timer {k} {v}")
 
-    @timeit(timer=timer)
+        for k, v in counter.items():
+            logging.info(f"counter {k}{v}")
+
+    @timeit(timer=timer, counter=counter)
     def run(self):
         for cur_sample in range(self.num_sample):
             while self.keep_burning:
@@ -83,7 +86,7 @@ class HeadNode:
         self.graph.write2file()
 
 
-    @timeit(timer=timer)
+    @timeit(timer=timer, counter=counter)
     def stitch(self):
         if not self.need_stitch:
             return
