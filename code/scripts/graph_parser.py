@@ -37,10 +37,6 @@ class GraphParser:
                 if "meta.edges" in line:
                     self.n_edges = get_value_from_line(-1, line)
 
-        # get offset (nse starts from n; metis input file starts from 1, outputs file starts from 0)
-        # with open(f"{self.path_to_graph}.v", 'r') as fp:
-        #     self.offset = get_value_from_line(0, fp.readline())
-
     def lines_in_edge_file(self):
         with open(f"{self.path_to_graph}.e", 'r') as fp:
             for line in fp:
@@ -73,20 +69,3 @@ class GraphParser:
         for metis_id, ldbc_id in self.lines_in_vert_file():
             ldbc_by_metis.append(ldbc_id)
         return ldbc_by_metis
-
-    # deprecated
-    def paths_to_partition_files(self):
-        p = Path(".")
-        for path_to_partition_file in p.glob(f"{self.path_to_graph}.m.*p"):
-            path_to_partition_file = str(path_to_partition_file)
-            m = re.match(rf'{self.path_to_graph}\.m\.([0-9]+)p', path_to_partition_file)
-            n_partitions = int(m.group(1))
-            yield path_to_partition_file, n_partitions
-
-    # deprecated
-    def vertice_ranks_mappings(self):
-        for path_to_partition_file, n_partitions in self.paths_to_partition_files():
-            # os.mkdir(f"{self.path_to_graph}-{n_partitions}-partitions")
-            with open(path_to_partition_file, 'r') as fp:
-                vertice_ranks_mapping = self.get_vertice_ranks_mapping(fp)
-                yield vertice_ranks_mapping, n_partitions
