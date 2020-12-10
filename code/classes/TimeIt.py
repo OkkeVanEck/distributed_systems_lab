@@ -14,7 +14,7 @@ def timeit(func=None, timer=None, counter=None):
                 if counter:
                     counter[f"{f.__name__}"] += 1
             else:
-                logging.info(f"timer {func.__name__} {round(end - start, 2)}")
+                logging.info(f"timer {func.__name__} {end - start:.2f}")
             return result
         return wrapper
     if func:

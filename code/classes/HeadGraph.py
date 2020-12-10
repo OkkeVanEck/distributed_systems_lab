@@ -20,7 +20,7 @@ class HeadGraph:
 
     def __del__(self):
         for k, v in timer.items():
-            logging.info(f"timer {k} {v}")
+            logging.info(f"timer {k} {v:.2f}")
 
         for k, v in counter.items():
             logging.info(f"counter {k} {v}")
