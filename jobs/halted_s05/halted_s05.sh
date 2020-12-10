@@ -10,6 +10,9 @@ SIMFILE="halted_forest_fire.py"
 DATASET="kgs"
 JOBNAME="halted_s05"
 SCALE="0.5"
+DO_STITCH="true"
+RING_STITCH="true"
+CONN="0.1"
 
 # Check if the dataset is partitioned correctly for the requested job.
 COMP_NODES=$(( SLURM_NTASKS - 1 ))
@@ -45,8 +48,8 @@ cp -r "${PWD}/jobs/${JOBNAME}/results/." -t "${TMP_RES}/."
 
 # Run simulation.
 srun -n "${SLURM_NTASKS}" --mpi=pmi2 python3 "code/run_simulation.py" \
-    "${SIMPATH}${SIMFILE}" "${SCALE}" "${DATASET}" "${TMP_PLAY}" "${TMP_DATA}" \
-    "${TMP_RES}"
+    "${SIMPATH}${SIMFILE}" "${SCALE}" "${DATASET}" "${DO_STITCH}" \
+    "${RING_STITCH}" "${CONN}" "${TMP_PLAY}" "${TMP_DATA}" "${TMP_RES}"
 
 # Copy results to HOME partition.
 cp -a "${TMP_RES}/." -t "${PWD}/jobs/${JOBNAME}/results/."

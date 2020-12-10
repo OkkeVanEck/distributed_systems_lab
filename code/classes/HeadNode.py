@@ -20,14 +20,15 @@ def log(message):
 
 
 class HeadNode:
-    def __init__(self, rank, n_nodes, scale_factor, total_vertices, out_v, out_e, stitch=True):
+    def __init__(self, rank, n_nodes, scale_factor, total_vertices, out_v, out_e, stitch=True, ring_stitch=True, connectivity=0.1):
         """
         """
         self.rank = rank
         self.num_compute_nodes = n_nodes - 1
         self.total_vertices = total_vertices
         self.need_stitch = stitch
-        self.connectivity = 0.1
+        self.connectivity = connectivity
+        self.ring_stitch = ring_stitch
 
         # scale factor 1 will be upscale sample that stays the same size
         if scale_factor <= 0.5:
@@ -90,25 +91,13 @@ class HeadNode:
         if not self.need_stitch:
             return
         if self.upscale:
-            stitch_nodes = list()
-            for sample in self.graph.get_vertices():
-                stitch_nodes.append(
-                    np.random.choice(list(sample),
-                        size=np.int(np.ceil(len(sample)*self.connectivity)),
-                        replace=False
-                    )
-                )
+            vertices = self.graph.get_vertices()
             for i in range(self.num_sample):
-                if stitch_nodes[i].shape[0] < stitch_nodes[(i+1) % self.num_sample].shape[0]:
-                    total = stitch_nodes[i].shape[0]
-                else:
-                    total = stitch_nodes[(i+1) % self.num_sample].shape[0]
-
-                edges = list(itertools.product(stitch_nodes[i], stitch_nodes[(i+1) % self.num_sample]))
-                index_edges = np.random.choice(len(edges), size=total, replace=False)
-                for j in index_edges:
-                    src, dest = edges[j]
-                    self.graph.add_edge(src, dest, None, 0)
+                for _ in range(np.int(np.ceil(len(vertices[i])*self.connectivity))):
+                    src = random.sample(vertices[i], 1)[0]
+                    dest = random.sample(vertices[(i+1) % self.num_sample], 1)[0]
+                    if src != dest:
+                        self.graph.add_edge(src, dest, None, 0)
         else:
             for sample in self.graph.get_vertices():
                 len_sample = len(sample)

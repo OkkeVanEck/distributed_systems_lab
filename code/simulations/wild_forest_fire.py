@@ -41,7 +41,8 @@ def read_partition_file(path_to_partition_file):
     return vert_rank_mapping
 
 
-def run_sim(scale_factor, dataset, tmp_play, tmp_data, tmp_res):
+def run_sim(scale_factor, dataset, do_stitch, ring_stitch, connectivity,
+            tmp_play, tmp_data, tmp_res):
     """
     Entrypoint for starting a halted forest fire simulation.
     Starts up a single HeadNode and multiple compute nodes.

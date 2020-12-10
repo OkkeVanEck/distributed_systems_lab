@@ -8,6 +8,10 @@ class HeadGraph:
         self.edges = set()
         self.out_e = out_e
         self.out_v = out_v
+        with open(self.out_e, 'w') as f:
+            pass
+        with open(self.out_v, 'w') as f:
+            pass
 
     def get_num_sample_vertices(self, sample):
         return len(self.vertices[sample])
@@ -28,13 +32,20 @@ class HeadGraph:
 
     def next_sample(self):
         self.base_id += self.total_vertices
+        self.edges2file()
+        self.edges = set()
 
-    def write2file(self):
-        with open(self.out_e, 'w') as f:
+    def edges2file(self):
+        with open(self.out_e, 'a') as f:
             for e in self.edges:
                 f.write(f"{e}\n")
 
-        with open(self.out_v, 'w') as f:
+    def write2file(self):
+        with open(self.out_e, 'a') as f:
+            for e in self.edges:
+                f.write(f"{e}\n")
+
+        with open(self.out_v, 'a') as f:
             for sample in self.vertices:
                 for v in sample:
                     f.write(f"{v}\n")
