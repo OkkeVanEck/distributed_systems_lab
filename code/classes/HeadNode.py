@@ -14,6 +14,10 @@ from Enums import MPI_TAG, VertexStatus, SLEEP_TIMES
 from mpi4py import MPI
 comm = MPI.COMM_WORLD
 
+# add function names here that needs timing
+func_to_time = ["run", "stitch"]
+timer = {func:0 for func in func_to_time}
+
 class HeadNode:
     def __init__(self, rank, n_nodes, scale_factor, total_vertices, out_v, out_e, stitch=True):
         """
@@ -39,15 +43,12 @@ class HeadNode:
         self.graph = HeadGraph(total_vertices, self.num_sample, out_e, out_v)
         self.keep_burning = True
 
-        # add function names here that needs timing
-        func_to_time = ["run", "stitch"]
-        self.timer = {func:0 for func in func_to_time}
 
     def __del__(self):
-        for k, v in self.timer.items():
+        for k, v in timer.items():
             logging.info(f"{k} takes {v}s")
 
-    @timeit(timer=self.timer)
+    @timeit(timer=timer)
     def run(self):
         for cur_sample in range(self.num_sample):
             while self.keep_burning:
@@ -81,7 +82,7 @@ class HeadNode:
         self.graph.write2file()
 
 
-    @timeit(timer=self.timer)
+    @timeit(timer=timer)
     def stitch(self):
         if not self.need_stitch:
             return
