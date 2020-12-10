@@ -19,6 +19,9 @@ class HeadGraph:
     def get_vertices(self):
         return self.vertices
 
+    def get_random_stitch_list(self):
+        return set().union(*(self.vertices))
+
     def add_edge(self, vertex_from, vertex_to, sample, base_id=None):
         if base_id == None:
             base_id = self.base_id
