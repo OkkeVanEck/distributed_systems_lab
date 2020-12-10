@@ -10,7 +10,7 @@ from Enums import MPI_TAG, VertexStatus, SLEEP_TIMES
 from mpi4py import MPI
 comm = MPI.COMM_WORLD
 
-DO_LOG=False
+DO_LOG=True
 
 
 def log(message):
@@ -30,6 +30,7 @@ class ComputeNode:
         self.num_compute_nodes = n_comp_nodes
         self.graph_reader = GraphInterpreter()
         self.partitioned_graph = Graph(self)
+        self.fire_step = 10
         self.fire = Fire(self, self.partitioned_graph)
         self.machine_with_vertex = machine_with_vertex
 
@@ -39,7 +40,7 @@ class ComputeNode:
 
     def send_fire_to_remotes(self, machine_vertexes_to_receive):
         nodes_to_burn_locally = []
-        log(self.get_machine_log() + " sending data")
+        # log(self.get_machine_log() + " sending data")
 
         for i in range(1, self.num_compute_nodes+1):
             if i != self.rank:
@@ -58,15 +59,17 @@ class ComputeNode:
                     nodes_to_burn_locally.extend(data)
 
         # log("done sending/receiving on machine " + str(self.rank))
-
         self.fire.merge(nodes_to_burn_locally)
 
 
     def send_heartbeat(self, new_edges):
         # this send is non-blocking
-        log("sending heartbeat")
+        # log("sending heartbeat")
+        if self.rank == 2 or self.rank == 3:
+            if self.fire.relight_counter > 3:
+                log(self.get_machine_log() + f"sent {len(new_edges.list_rep())} edges in heartbeat")
         comm.send(np.array(new_edges.list_rep()), dest=0, tag=MPI_TAG.HEARTBEAT.value)
-        log("heartbeat sent")
+        # log("heartbeat sent")
 
     def send_burn_requests(self):
         # log("in send burn requests")
@@ -87,10 +90,14 @@ class ComputeNode:
         self.fire.reset_remote_vertices_to_burn()
 
 
+    def set_fire_step(self, new_fire_step):
+        self.fire_step = max(min(new_fire_step, 64), 10)
+        log(f"setting fire step to {self.fire_step}")
+
     def do_spread_steps(self, new_edges):
         # do 10 spread steps,
         # new_edges are updated every spread step by the fire
-        for i in range(10):
+        for i in range(self.fire_step):
             self.fire.spread(new_edges)
 
     def init_partition(self, path_to_edge_file):
@@ -105,18 +112,19 @@ class ComputeNode:
 
     def receive_from_headnode(self):
         # blocking receive from headnode.
-        log("about to receive from headnode")
+        # log("about to receive from headnode")
         status = MPI.Status()
         data = comm.recv(source=0, tag=MPI.ANY_TAG, status=status)
         if status.Get_tag() == MPI_TAG.CONTINUE.value:
-            log("continuing")
+            pass
+            # log("continuing")
         elif status.Get_tag() == MPI_TAG.KILL.value:
-            log(self.get_machine_log() + ".. reveived kill")
+            # log(self.get_machine_log() + ".. reveived kill")
             self.fire.stop_burning()
             self.killed = True
         elif status.Get_tag() == MPI_TAG.RESET.value:
             self.reset_fire()
-        log("received from headnode")
+        # log("received from headnode")
 
     def do_tasks(self):
         # only ignites, has not started spreading
@@ -127,12 +135,13 @@ class ComputeNode:
         while not self.killed:
 
             new_edges = EdgeSet()
-            log(self.get_machine_log() + ".. num_burning vertex ids = " + str(len(self.fire.get_burning_vertex_ids())))
+            # log(self.get_machine_log() + ".. num_burning vertex ids = " + str(len(self.fire.get_burning_vertex_ids())))
             self.do_spread_steps(new_edges)
 
-            self.send_burn_requests()
+            if self.fires_wild:
+                self.send_burn_requests()
 
-            log(self.get_machine_log() + ".. num edges sent = " + str(len(new_edges.list_rep())))
+            # log(self.get_machine_log() + ".. num edges sent = " + str(len(new_edges.list_rep())))
             for edge in new_edges.edges:
                 all_edges_sent.add_edge(edge[0], edge[1])
 
