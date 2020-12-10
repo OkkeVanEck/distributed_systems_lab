@@ -17,6 +17,7 @@ from graph_parser import GraphParser
 
 METIS_N_LINES_OF_METADATA = 1
 
+
 def parse_args():
     parser = ArgumentParser()
     parser.add_argument("name")
@@ -26,7 +27,7 @@ def parse_args():
 
 def convert_ldbc_to_metis(graph_parser):
     # initialize metis graph data structure
-    metis_data = [[] for i in range(graph_parser.n_vertices + METIS_N_LINES_OF_METADATA)]
+    metis_data = [[] for _ in range(graph_parser.n_vertices + METIS_N_LINES_OF_METADATA)]
     metis_data[0] = [graph_parser.n_vertices, graph_parser.n_edges]
 
     metis_by_ldbc = graph_parser.get_metis_by_ldbc()
