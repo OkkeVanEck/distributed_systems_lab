@@ -20,14 +20,15 @@ def log(message):
 
 
 class HeadNode:
-    def __init__(self, rank, n_nodes, scale_factor, total_vertices, out_v, out_e, stitch=True):
+    def __init__(self, rank, n_nodes, scale_factor, total_vertices, out_v, out_e, stitch=True, ring_stitch=True, connectivity=0.1):
         """
         """
         self.rank = rank
         self.num_compute_nodes = n_nodes - 1
         self.total_vertices = total_vertices
         self.need_stitch = stitch
-        self.connectivity = 0.1
+        self.connectivity = connectivity
+        self.ring_stitch = ring_stitch
 
         # scale factor 1 will be upscale sample that stays the same size
         if scale_factor < 1:
