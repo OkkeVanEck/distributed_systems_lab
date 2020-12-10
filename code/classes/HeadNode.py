@@ -12,7 +12,7 @@ from Enums import MPI_TAG, VertexStatus, SLEEP_TIMES
 from mpi4py import MPI
 comm = MPI.COMM_WORLD
 
-DO_LOG=True
+DO_LOG=False
 
 def log(message):
     if (DO_LOG):
@@ -48,6 +48,7 @@ class HeadNode:
     def run(self):
         for cur_sample in range(self.num_sample):
             while self.keep_burning:
+                log(f"sample {cur_sample}/{self.num_sample}, prog: {self.graph.get_num_sample_vertices(cur_sample)/self.cutoff_vertices}")
                 tag = MPI_TAG.CONTINUE.value
                 for i in range(1, self.num_compute_nodes+1):
                     log(f"one headnode. receiving from compute node {i}")
@@ -81,20 +82,37 @@ class HeadNode:
         if not self.need_stitch:
             return
         if self.upscale:
-            vertices = self.graph.get_vertices()
-            for i in range(self.num_sample):
-                for _ in range(np.int(np.ceil(len(vertices[i])*self.connectivity))):
-                    src = random.sample(vertices[i], 1)[0]
-                    dest = random.sample(vertices[(i+1) % self.num_sample], 1)[0]
-                    if src != dest:
-                        self.graph.add_edge(src, dest, None, 0)
+            if self.ring_stitch:
+                vertices = self.graph.get_vertices()
+                for i in range(self.num_sample):
+                    end = np.int(np.ceil(len(vertices[i])*self.connectivity))
+                    while (end > 10000):
+                        self.stitch_sample(vertices[i], vertices[(i+1) % self.num_sample], 10000)
+                        end -= 10000
+                    self.stitch_sample(vertices[i], vertices[(i+1) % self.num_sample], end)
+            else:
+                sample = self.graph.get_random_stitch_list()
+                end = np.int(np.ceil(len(sample)*self.connectivity))
+                while (end > 10000):
+                    self.stitch_sample(sample, sample, 10000)
+                    end -= 10000
+                self.stitch_sample(sample, sample, end)
         else:
-            for sample in self.graph.get_vertices():
-                len_sample = len(sample)
-                for _ in range(np.int(np.ceil(len(sample)*self.connectivity))):
-                    src, dest = random.sample(sample,2)
-                    if src != dest:
-                        self.graph.add_edge(src, dest, None, 0)
+            sample = self.graph.get_vertices()[0]
+            end = np.int(np.ceil(len(sample)*self.connectivity))
+            for i in range(self.num_sample):
+                end = np.int(np.ceil(len(vertices[i])*self.connectivity))
+                while (end > 10000):
+                    self.stitch_sample(sample, sample, 10000)
+                    end -= 10000
+                self.stitch_sample(sample, sample, end)
+
+    def stitch_sample(self, src_sample, dest_sample, end):
+        source = random.sample(src_sample, end)
+        destination = random.sample(dest_sample, end)
+        for (src, dest) in zip(source, destination):
+            if src != dest:
+                self.graph.add_edge(src, dest, None, 0)
 
     def done_burning(self, cur_sample):
         return self.graph.get_num_sample_vertices(cur_sample) >= self.cutoff_vertices
