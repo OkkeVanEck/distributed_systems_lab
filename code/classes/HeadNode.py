@@ -50,7 +50,6 @@ class HeadNode:
         self.keep_burning = True
 
     def run(self):
-        receive_cycle = 0
         for cur_sample in range(self.num_sample):
             log(f"entered sampling cur_sample = {cur_sample}")
             while self.keep_burning:
@@ -61,18 +60,14 @@ class HeadNode:
                     data = comm.recv(source=i, tag=MPI_TAG.HEARTBEAT.value)
                     #log(data)
                     if tag == MPI_TAG.CONTINUE.value:
-                        kl = 0 # debug
                         for [src, dest] in data:
                             self.graph.add_edge(src, dest, cur_sample)
-                            kl += 1 # debug
                             if self.done_burning(cur_sample):
                                 self.keep_burning = False
                                 if cur_sample < self.num_sample-1:
                                     tag = MPI_TAG.RESET.value
-                                    log(f"time to reset at compute={i} and element {kl}")
                                 else:
                                     tag = MPI_TAG.KILL.value
-                                    log(f"time to kill at compute={i} and element {kl}")
                                 break
                 #log("Sending tags " + str(tag) + " | RESET = 4 | KILL = 5 | CONTINUE = 6")
                 for i in range(1, self.num_compute_nodes+1):
