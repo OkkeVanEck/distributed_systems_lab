@@ -26,7 +26,7 @@ module load python/3.6.0
 module load intel-mpi/64/5.1.2/150
 
 # Define paths for the job to work with.
-RUNDIR="${PWD}/runtime_tmps/${JOBNAME}"
+RUNDIR="/var/scratch/${USER}/${JOBNAME}"
 TMP_DATA="${RUNDIR}/data"
 TMP_RES="${RUNDIR}/results"
 TMP_PLAY="${RUNDIR}/playground"
@@ -51,8 +51,9 @@ srun -n "${SLURM_NTASKS}" --mpi=pmi2 python3 "code/run_simulation.py" \
     "${SIMPATH}${SIMFILE}" "${SCALE}" "${DATASET}" "${DO_STITCH}" \
     "${RING_STITCH}" "${CONN}" "${TMP_PLAY}" "${TMP_DATA}" "${TMP_RES}"
 
-# Copy results to HOME partition.
-cp -a "${TMP_RES}/." -t "${PWD}/jobs/${JOBNAME}/results/."
+# Compute properties of the resulting graph and copy those to HOME partition.
+./manage.sh compute_properties "${JOBNAME}"
+cp "${TMP_RES}/scaled_graph_properties.json" -t "${PWD}/jobs/${JOBNAME}/results/."
 
 # Clean TMP partition for reuse of job script.
-rm -rf "${RUNDIR:?}"
+#rm -rf "${RUNDIR:?}"
