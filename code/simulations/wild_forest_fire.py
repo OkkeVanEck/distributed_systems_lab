@@ -57,6 +57,7 @@ def run_sim(scale_factor, dataset, do_stitch, ring_stitch, connectivity,
         out_e = f"{tmp_res}/scaled_graph.e"
         hn = HeadNode(rank, size, float(scale_factor), num_vertices, out_v, out_e)
         hn.run()
+        log(f"Done on headnode")
     else:
         # Fetch the set of edges according to the rank of the process and the
         # number of partitions in use.
@@ -70,3 +71,4 @@ def run_sim(scale_factor, dataset, do_stitch, ring_stitch, connectivity,
         compute_node.init_partition(path_to_edge_file)
         log("init partitions done on machine " + str(rank))
         compute_node.do_tasks()
+        log(f"Compute node {rank} done")
