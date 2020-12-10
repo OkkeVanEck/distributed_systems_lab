@@ -21,6 +21,13 @@ def parse_args():
                         help="Scale factor for algorithm")
     parser.add_argument("dataset", type=str,
                         help="Name of the dataset to use during runtime")
+    parser.add_argument("do_stitch", type=bool,
+                        help="Boolean for enabling stitching")
+    parser.add_argument("ring_stitch", type=bool,
+                        help="Boolean for selecting the ring topology for "
+                             "stitching")
+    parser.add_argument("connectivity", type=float,
+                        help="Connectivity to create during stitching.")
     parser.add_argument("tmp_play", type=str,
                         help="Path to the runtime playground folder")
     parser.add_argument("tmp_data", type=str,
@@ -64,5 +71,6 @@ if __name__ == '__main__':
 
     # Sync all processes, and run the simulation.
     comm.Barrier()
-    sim_module.run_sim(args.scale_factor, args.dataset, args.tmp_play,
+    sim_module.run_sim(args.scale_factor, args.dataset, args.do_stitch,
+                       args.ring_stitch, args.connectivity, args.tmp_play,
                        args.tmp_data, args.tmp_res)
