@@ -1,5 +1,7 @@
 import logging
 import numpy as np
+import mpi4py
+mpi4py.rc.recv_mprobe = False
 from mpi4py import MPI
 
 from TimeIt import timeit
@@ -11,7 +13,7 @@ from Enums import MPI_TAG, VertexStatus, SLEEP_TIMES
 comm = MPI.COMM_WORLD
 
 # add function names here that needs timing
-func_to_time = ["send_fire_to_remotes", "send_heartbeat", "send_burn_requests",  
+func_to_time = ["send_fire_to_remotes", "send_heartbeat", "send_burn_requests",
                 "do_spread_steps", "init_partition", "receive_from_headnode", "do_tasks"]
 timer = {func:0 for func in func_to_time}
 counter = {func:0 for func in func_to_time}
@@ -69,7 +71,7 @@ class ComputeNode:
         logging.debug("sending heartbeat")
         data = np.array(new_edges.list_rep())
         # record how many edges are sent
-        counter["n_edge_in_send_heartbeat"] += data.shape[0] 
+        counter["n_edge_in_send_heartbeat"] += data.shape[0]
         comm.send(data, dest=0, tag=MPI_TAG.HEARTBEAT.value)
         logging.debug("heartbeat sent")
 
