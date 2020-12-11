@@ -255,6 +255,20 @@ case "$1" in
     # Halted up 3 kgs 4 stitch=False, Conn=def, Ring=def
     ./manage.sh run_job sc_halted_3_5_false_false_0
     ;;
+    # run failed jobs
+"run_failed_jobs")
+
+    ./manage.sh run_job scala_halted_04_3_true_true_01
+    ./manage.sh run_job scala_halted_2_3_true_true_01
+    sleep 10m
+    ./manage.sh run_job scala_halted_2_5_true_true_01
+    ./manage.sh run_job sc_halted_3_5_false_false_0
+    sleep 10m
+    ./manage.sh run_job sc_halted_3_5_true_false_001
+    ./manage.sh run_job sc_halted_3_5_true_false_01
+    sleep 10m
+    ./manage.sh run_job wild_halted_2_5_true_true_01
+;;
 # Catch all for parse errors.
 *)
     echo "No command detected from first argument.."
