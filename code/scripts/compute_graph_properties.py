@@ -89,8 +89,8 @@ def compute_properties(G):
     print(f"Avg node degree: {time() - start}")
     # properties["avg_clustering_coefficient"] = nx.average_clustering(G)
     # print(f"Avg clustering coefficient: {time() - start}")
-    properties["influential_node_count"] = len(nx.voterank(G))
-    print(f"Influential node count: {time() - start}")
+    # properties["influential_node_count"] = len(nx.voterank(G))
+    # print(f"Influential node count: {time() - start}")
 
     # Unconnected graph might give infinite path length exception.
     try:
