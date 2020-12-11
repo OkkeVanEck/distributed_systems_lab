@@ -89,16 +89,25 @@ class ComputeNode:
         self.send_fire_to_remotes(machine_vertexes_to_receive)
         self.fire.reset_remote_vertices_to_burn()
 
-    def set_fire_step(self, new_fire_step):
-        self.fire_step = max(min(new_fire_step, 32), 10)
+    def increase_fire_step(self):
+        self.fire_step = min(40, self.fire_step*2)
         logging.debug(f"setting fire step to {self.fire_step}")
+
+    def lower_fire_step(self):
+        self.fire_step = max(10, self.fire_step/2)
 
     @timeit(timer=timer, counter=counter)
     def do_spread_steps(self, new_edges):
         # do 10 spread steps,
         # new_edges are updated every spread step by the fire
+        fire_relight_exponent_old = self.fire.relight_exponent
         for i in range(self.fire_step):
             self.fire.spread(new_edges)
+        
+        if self.fire_relight_exponent > fire_relight_exponent_old:
+            self.increase_fire_step()
+        else:
+            self.lower_fire_step()
 
     @timeit(timer=timer, counter=counter)
     def init_partition(self, path_to_edge_file):
