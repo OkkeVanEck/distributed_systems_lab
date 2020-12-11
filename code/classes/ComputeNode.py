@@ -104,7 +104,7 @@ class ComputeNode:
         for i in range(self.fire_step):
             self.fire.spread(new_edges)
         
-        if self.fire_relight_exponent > fire_relight_exponent_old:
+        if self.fire.relight_exponent > fire_relight_exponent_old:
             self.increase_fire_step()
         else:
             self.lower_fire_step()
