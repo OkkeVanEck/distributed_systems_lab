@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-DATASETS=("kgs") # Undirected graphs
+DATASETS=("kgs" "wiki-Talk" "cit-Patents")
 SIMPATH="code/simulations/"
 
 
@@ -34,12 +34,12 @@ case "$1" in
             unzip -uq "data/zips/${dset}.zip" -d "data/"
 
             # Remove not needed files.
-            rm "data/${dset}/${dset}-BFS"
-            rm "data/${dset}/${dset}-CDLP"
-            rm "data/${dset}/${dset}-LCC"
-            rm "data/${dset}/${dset}-PR"
-            rm "data/${dset}/${dset}-SSSP"
-            rm "data/${dset}/${dset}-WCC"
+            rm -f "data/${dset}/${dset}-BFS"
+            rm -f "data/${dset}/${dset}-CDLP"
+            rm -f "data/${dset}/${dset}-LCC"
+            rm -f "data/${dset}/${dset}-PR"
+            rm -f "data/${dset}/${dset}-SSSP"
+            rm -f "data/${dset}/${dset}-WCC"
         else
             echo "Dataset ${dset} not found."
         fi
@@ -346,8 +346,8 @@ CONN=\"${CONN}\"
         V_FILE="runtime_tmps/${2}/results/scaled_graph.v"
         E_FILE="runtime_tmps/${2}/results/scaled_graph.e"
     else
-        V_FILE="/var/scratch/${USER}/${2}/results/scaled_graph.v"
-        E_FILE="/var/scratch/${USER}/${2}/results/scaled_graph.e"
+        V_FILE="jobs/${2}/results/scaled_graph.v"
+        E_FILE="jobs/${2}/results/scaled_graph.e"
     fi
 
     # Check if the vertex file is in results.
