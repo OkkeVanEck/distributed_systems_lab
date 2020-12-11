@@ -36,11 +36,11 @@ class HeadNode:
             logging.debug("collecting " + str(self.cutoff_vertices) + " vertices")
             self.upscale = False
         elif 0.5 < scale_factor < 1:
-            self.num_sample = 2
+            self.num_sample = 4
             self.cutoff_vertices = total_vertices * (scale_factor / self.num_sample)
             self.upscale = True
         else:
-            self.num_sample = np.int(np.floor(scale_factor * 2))
+            self.num_sample = np.int(np.floor(scale_factor * 4))
             self.cutoff_vertices = total_vertices * (scale_factor / self.num_sample)
             self.upscale = True
 
@@ -68,19 +68,23 @@ class HeadNode:
 
                 for i in range(1, self.num_compute_nodes+1):
                     logging.debug(f"one headnode. receiving from compute node {i}")
-                    data = comm.recv(source=i, tag=MPI_TAG.HEARTBEAT.value)
-                    logging.debug(data)
+                    try:
+                        data = comm.recv(source=i, tag=MPI_TAG.HEARTBEAT.value)
+                        logging.debug(data)
 
-                    if tag == MPI_TAG.CONTINUE.value:
-                        for [src, dest] in data:
-                            self.graph.add_edge(src, dest, cur_sample)
-                            if self.done_burning(cur_sample):
-                                self.keep_burning = False
-                                if cur_sample < self.num_sample - 1:
-                                    tag = MPI_TAG.RESET.value
-                                else:
-                                    tag = MPI_TAG.KILL.value
-                                break
+                        if tag == MPI_TAG.CONTINUE.value:
+                            for [src, dest] in data:
+                                self.graph.add_edge(src, dest, cur_sample)
+                                if self.done_burning(cur_sample):
+                                    self.keep_burning = False
+                                    if cur_sample < self.num_sample - 1:
+                                        tag = MPI_TAG.RESET.value
+                                    else:
+                                        tag = MPI_TAG.KILL.value
+                                    break
+                    except Exception as e:
+                        logging.info(f"dropping data. exception reported")
+                        logging.info(f"{e}")
                 logging.debug("Sending tags " + str(tag) + " | RESET = 4 | KILL = 5 | CONTINUE = 6")
 
                 for i in range(1, self.num_compute_nodes+1):
