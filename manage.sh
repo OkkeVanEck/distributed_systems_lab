@@ -282,7 +282,6 @@ CONN=\"${CONN}\"
         TMP_PLAY="${TMPDIR}/playground"
 
         # Create runtime folders to work with.
-        mkdir -p "runtime_tmps"
         mkdir -p "${TMPDIR}"
         mkdir -p "${TMPDIR}/results"
         mkdir -p "${TMPDIR}/playground"
@@ -342,14 +341,23 @@ CONN=\"${CONN}\"
         exit 1
     fi
 
+    # Determine where the results are stored based on local execution.
+    if [ -n "$3" ] && [ "${3}" == "local" ]; then
+        V_FILE="runtime_tmps/${2}/results/scaled_graph.v"
+        E_FILE="runtime_tmps/${2}/results/scaled_graph.e"
+    else
+        V_FILE="/var/scratch/${USER}/${2}/scaled_graph.v"
+        E_FILE="/var/scratch/${USER}/${2}/scaled_graph.e"
+    fi
+
     # Check if the vertex file is in results.
-    if [ ! -f "jobs/${2}/results/scaled_graph.v" ]; then
+    if [ ! -f "${V_FILE}" ]; then
         echo "Vertex file is missing in results of '${2}'."
         exit 1
     fi
 
     # Check if the edge file is in results.
-    if [ ! -f "jobs/${2}/results/scaled_graph.e" ]; then
+    if [ ! -f "${E_FILE}" ]; then
         echo "Edge file is missing in results of '${2}'."
         exit 1
     fi
@@ -357,15 +365,12 @@ CONN=\"${CONN}\"
     echo "Start processing '${2}'.."
     # Check if local is given as an argument.
     if [ -n "$3" ] && [ "${3}" == "local" ]; then
-        python3 code/scripts/compute_graph_properties.py \
-            "jobs/${2}/results/scaled_graph.v" \
-            "jobs/${2}/results/scaled_graph.e"
+        python3 code/scripts/compute_graph_properties.py "${V_FILE}" "${E_FILE}"
     else
        # Load modules and run the properties measuring script.
         module load python/3.6.0
-        srun python3 code/scripts/compute_graph_properties.py \
-            "jobs/${2}/results/scaled_graph.v" \
-            "jobs/${2}/results/scaled_graph.e"
+        srun python3 code/scripts/compute_graph_properties.py "${V_FILE}" \
+            "${E_FILE}"
         module unload python/3.6.0
     fi
     ;;
