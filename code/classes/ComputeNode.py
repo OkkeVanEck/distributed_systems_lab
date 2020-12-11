@@ -130,7 +130,6 @@ class ComputeNode:
     def do_tasks(self):
         # only ignites, has not started spreading
         self.fire.ignite_random_node()
-        all_edges_sent = EdgeSet()
         while not self.killed:
             new_edges = EdgeSet()
             logging.debug(self.get_machine_log() + ".. num_burning vertex ids = " +
@@ -143,10 +142,7 @@ class ComputeNode:
             logging.debug(self.get_machine_log() + ".. num edges sent = " +
                           str(len(new_edges.list_rep())))
 
-            for edge in new_edges.edges:
-                all_edges_sent.add_edge(edge[0], edge[1])
-
             self.send_heartbeat(new_edges)
             self.receive_from_headnode()
 
-        logging.debug("num edges sent total = " + str(len(all_edges_sent.list_rep())))
+        # logging.debug("num edges sent total = " + str(len(all_edges_sent.list_rep())))

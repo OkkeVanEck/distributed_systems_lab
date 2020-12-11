@@ -86,6 +86,9 @@ class HeadNode:
                 for i in range(1, self.num_compute_nodes+1):
                     comm.send(None, dest=i, tag=tag)
 
+                if self.graph.get_num_edges() > 10000:
+                    self.graph.edges2file()
+
             self.graph.next_sample()
             self.keep_burning = True
 

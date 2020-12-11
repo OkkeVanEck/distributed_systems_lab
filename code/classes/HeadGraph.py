@@ -31,6 +31,10 @@ class HeadGraph:
     def get_vertices(self):
         return self.vertices
 
+
+    def get_num_edges(self):
+        return len(list(self.edges))
+
     def get_random_stitch_list(self):
         return set().union(*(self.vertices))
 
