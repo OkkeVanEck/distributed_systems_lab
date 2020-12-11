@@ -40,7 +40,7 @@ class HeadNode:
             self.cutoff_vertices = total_vertices * (scale_factor / self.num_sample)
             self.upscale = True
         else:
-            self.num_sample = np.int(np.floor(scale_factor * 2))
+            self.num_sample = np.int(np.floor(scale_factor * 4))
             self.cutoff_vertices = total_vertices * (scale_factor / self.num_sample)
             self.upscale = True
 
