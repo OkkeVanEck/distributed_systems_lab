@@ -255,9 +255,8 @@ case "$1" in
     # Halted up 3 kgs 4 stitch=False, Conn=def, Ring=def
     ./manage.sh run_job sc_halted_3_5_false_false_0
     ;;
-    # run failed jobs
+# run failed jobs
 "run_failed_jobs")
-
     ./manage.sh run_job scala_halted_04_3_true_true_01
     ./manage.sh run_job scala_halted_2_3_true_true_01
     sleep 10m
@@ -268,7 +267,61 @@ case "$1" in
     ./manage.sh run_job sc_halted_3_5_true_false_01
     sleep 10m
     ./manage.sh run_job wild_halted_2_5_true_true_01
-;;
+    ;;
+# Compute all properties.
+"compute_properties")
+    ./manage.sh compute_properties scala_halted_04_3_true_true_01 &
+    ./manage.sh compute_properties scala_halted_04_5_true_true_01 &
+    ./manage.sh compute_properties scala_halted_04_9_true_true_01 &
+    ./manage.sh compute_properties scala_halted_04_17_true_true_01 &
+
+    ./manage.sh compute_properties scala_wild_04_3_true_true_01 &
+    ./manage.sh compute_properties scala_wild_04_5_true_true_01 &
+    ./manage.sh compute_properties scala_wild_04_9_true_true_01 &
+    ./manage.sh compute_properties scala_wild_04_17_true_true_01 &
+
+    ./manage.sh compute_properties scala_halted_2_3_true_true_01 &
+    ./manage.sh compute_properties scala_halted_2_5_true_true_01 &
+    ./manage.sh compute_properties scala_halted_2_9_true_true_01 &
+    ./manage.sh compute_properties scala_halted_2_17_true_true_01 &
+
+    ./manage.sh compute_properties wild_halted_2_3_true_true_01 &
+    ./manage.sh compute_properties wild_halted_2_5_true_true_01 &
+    ./manage.sh compute_properties wild_halted_2_9_true_true_01 &
+    ./manage.sh compute_properties wild_halted_2_17_true_true_01 &
+
+    ./manage.sh compute_properties sc_halted_3_5_true_false_01 &
+    ./manage.sh compute_properties sc_halted_3_5_true_false_001 &
+    ./manage.sh compute_properties sc_halted_3_5_false_false_0 &
+    wait
+
+    PREFIX="/var/scratch/"
+    POSTFIX="/results/scaled_graph_properties.json"
+
+    cp "${PREFIX}scala_halted_04_3_true_true_01${POSTFIX}" -t "${PWD}/jobs/scala_halted_04_3_true_true_01/results/."
+    cp "${PREFIX}scala_halted_04_5_true_true_01${POSTFIX}" -t "${PWD}/jobs/scala_halted_04_5_true_true_01/results/."
+    cp "${PREFIX}scala_halted_04_9_true_true_01${POSTFIX}" -t "${PWD}/jobs/scala_halted_04_9_true_true_01/results/."
+    cp "${PREFIX}scala_halted_04_17_true_true_01${POSTFIX}" -t "${PWD}/jobs/scala_halted_04_17_true_true_01/results/."
+
+    cp "${PREFIX}scala_wild_04_3_true_true_01${POSTFIX}" -t "${PWD}/jobs/scala_wild_04_3_true_true_01/results/."
+    cp "${PREFIX}scala_wild_04_5_true_true_01${POSTFIX}" -t "${PWD}/jobs/scala_wild_04_5_true_true_01/results/."
+    cp "${PREFIX}scala_wild_04_9_true_true_01${POSTFIX}" -t "${PWD}/jobs/scala_wild_04_9_true_true_01/results/."
+    cp "${PREFIX}scala_wild_04_17_true_true_01${POSTFIX}" -t "${PWD}/jobs/scala_wild_04_17_true_true_01/results/."
+
+    cp "${PREFIX}scala_halted_2_3_true_true_01${POSTFIX}" -t "${PWD}/jobs/scala_halted_2_3_true_true_01/results/."
+    cp "${PREFIX}scala_halted_2_5_true_true_01${POSTFIX}" -t "${PWD}/jobs/scala_halted_2_5_true_true_01/results/."
+    cp "${PREFIX}scala_halted_2_9_true_true_01${POSTFIX}" -t "${PWD}/jobs/scala_halted_2_9_true_true_01/results/."
+    cp "${PREFIX}scala_halted_2_17_true_true_01${POSTFIX}" -t "${PWD}/jobs/scala_halted_2_17_true_true_01/results/."
+
+    cp "${PREFIX}wild_halted_2_3_true_true_01${POSTFIX}" -t "${PWD}/jobs/wild_halted_2_3_true_true_01/results/."
+    cp "${PREFIX}wild_halted_2_5_true_true_01${POSTFIX}" -t "${PWD}/jobs/wild_halted_2_5_true_true_01/results/."
+    cp "${PREFIX}wild_halted_2_9_true_true_01${POSTFIX}" -t "${PWD}/jobs/wild_halted_2_9_true_true_01/results/."
+    cp "${PREFIX}wild_halted_2_17_true_true_01${POSTFIX}" -t "${PWD}/jobs/wild_halted_2_17_true_true_01/results/."
+
+    cp "${PREFIX}sc_halted_3_5_true_false_01${POSTFIX}" -t "${PWD}/jobs/sc_halted_3_5_true_false_01/results/."
+    cp "${PREFIX}sc_halted_3_5_true_false_001${POSTFIX}" -t "${PWD}/jobs/sc_halted_3_5_true_false_001/results/."
+    cp "${PREFIX}sc_halted_3_5_false_false_0${POSTFIX}" -t "${PWD}/jobs/sc_halted_3_5_false_false_0/results/."
+    ;;
 # Catch all for parse errors.
 *)
     echo "No command detected from first argument.."
