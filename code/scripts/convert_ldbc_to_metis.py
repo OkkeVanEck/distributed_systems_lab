@@ -27,7 +27,7 @@ def parse_args():
 
 def convert_ldbc_to_metis(graph_parser):
     # initialize metis graph data structure
-    metis_data = [[] for _ in range(graph_parser.n_vertices + METIS_N_LINES_OF_METADATA)]
+    metis_data = [set() for _ in range(graph_parser.n_vertices + METIS_N_LINES_OF_METADATA)]
     metis_data[0] = [graph_parser.n_vertices, graph_parser.n_edges]
 
     metis_by_ldbc = graph_parser.get_metis_by_ldbc()
@@ -37,8 +37,8 @@ def convert_ldbc_to_metis(graph_parser):
         metis_vert_1 = metis_by_ldbc[ldbc_vert_1] + METIS_N_LINES_OF_METADATA
         metis_vert_2 = metis_by_ldbc[ldbc_vert_2] + METIS_N_LINES_OF_METADATA
 
-        metis_data[metis_vert_1].append(metis_vert_2)
-        metis_data[metis_vert_2].append(metis_vert_1)
+        metis_data[metis_vert_1].add(metis_vert_2)
+        metis_data[metis_vert_2].add(metis_vert_1)
 
     # save data on disk
     with open(f"{graph_parser.path_to_graph}.m", "w") as f:
