@@ -3,7 +3,8 @@
 ## Structure of the project
 The project is composed of multiple folders to separate code, data and jobs.
 Each of the folders can contain sub-folders to categorize internal files from
-each other. The main structure of the project is divided into:
+each other.  
+The main structure of the project is divided into:
 
 | Folder | Description |
 |:------:| ----------- |

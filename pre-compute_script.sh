@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
+DATASETS=("kgs" "wiki-Talk" "cit-Patents")
+
 
 case "$1" in
 # Get data and setup KaHIP.
@@ -9,6 +11,11 @@ case "$1" in
     ./manage.sh extract_data
     ./manage.sh get_KaHIP
     ./manage.sh build_KaHIP
+    ;;
+# Get data.
+"get_data")
+    ./manage.sh get_data
+    ./manage.sh extract_data
     ;;
 # Get data and setup KaHIP.
 "create_partitions")
@@ -21,306 +28,107 @@ case "$1" in
     ;;
 # Create jobs.
 "create_jobs")
-    # Scalability
-    # Halted down 0.4 kgs 3 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh create_job scala_halted_04_3_true_true_01 halted_forest_fire.py 0.4 kgs 3 60 True True 0.1
-    # Halted down 0.4 kgs 5 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh create_job scala_halted_04_5_true_true_01 halted_forest_fire.py 0.4 kgs 5 60 True True 0.1
-    # Halted down 0.4 kgs 9 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh create_job scala_halted_04_9_true_true_01 halted_forest_fire.py 0.4 kgs 9 120 True True 0.1
-    # Halted down 0.4 kgs 17 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh create_job scala_halted_04_17_true_true_01 halted_forest_fire.py 0.4 kgs 17 120 True True 0.1
+    for ds in "${DATASETS[@]}"; do
+        echo "Creating jobs for ${ds}.."
 
-    # Wild down 0.4 kgs 3 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh create_job scala_wild_04_3_true_true_01 wild_forest_fire.py 0.4 kgs 3 60 True True 0.1
-    # Wild down 0.4 kgs 5 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh create_job scala_wild_04_5_true_true_01 wild_forest_fire.py 0.4 kgs 5 60 True True 0.1
-    # Wild down 0.4kgs 9 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh create_job scala_wild_04_9_true_true_01 wild_forest_fire.py 0.4 kgs 9 120 True True 0.1
-    # Wild down 0.4 kgs 17 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh create_job scala_wild_04_17_true_true_01 wild_forest_fire.py 0.4 kgs 17 120 True True 0.1
+        # Scalability jobs.
+        # Halted down 0.4
+        ./manage.sh create_job "${ds}_scala_halted_04_3_true_true_01" halted_forest_fire.py 0.4 kgs 3 180 True True 0.1
+        ./manage.sh create_job "${ds}_scala_halted_04_5_true_true_01" halted_forest_fire.py 0.4 kgs 5 180 True True 0.1
+        ./manage.sh create_job "${ds}_scala_halted_04_9_true_true_01" halted_forest_fire.py 0.4 kgs 9 180 True True 0.1
+        ./manage.sh create_job "${ds}_scala_halted_04_17_true_true_01" halted_forest_fire.py 0.4 kgs 17 180 True True 0.1
 
-    # Halted up 2 kgs 3 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh create_job scala_halted_2_3_true_true_01 halted_forest_fire.py 2 kgs 3 60 True True 0.1
-    # Halted up 2 kgs 5 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh create_job scala_halted_2_5_true_true_01 halted_forest_fire.py 2 kgs 5 60 True True 0.1
-    # Halted up 2 kgs 9 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh create_job scala_halted_2_9_true_true_01 halted_forest_fire.py 2 kgs 9 120 True True 0.1
-    # Halted up 2 kgs 17 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh create_job scala_halted_2_17_true_true_01 halted_forest_fire.py 2 kgs 17 120 True True 0.1
+        # Wild down 0.4
+        ./manage.sh create_job "${ds}_scala_wild_04_3_true_true_01" wild_forest_fire.py 0.4 kgs 3 180 True True 0.1
+        ./manage.sh create_job "${ds}_scala_wild_04_5_true_true_01" wild_forest_fire.py 0.4 kgs 5 180 True True 0.1
+        ./manage.sh create_job "${ds}_scala_wild_04_9_true_true_01" wild_forest_fire.py 0.4 kgs 9 180 True True 0.1
+        ./manage.sh create_job "${ds}_scala_wild_04_17_true_true_01" wild_forest_fire.py 0.4 kgs 17 180 True True 0.1
 
-    # Wild up 2 kgs 3 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh create_job wild_halted_2_3_true_true_01 wild_forest_fire.py 2 kgs 3 60 True True 0.1
-    # Wild up 2 kgs 5 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh create_job wild_halted_2_5_true_true_01 wild_forest_fire.py 2 kgs 5 60 True True 0.1
-    # Wild up 2 kgs 9 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh create_job wild_halted_2_9_true_true_01 wild_forest_fire.py 2 kgs 9 120 True True 0.1
-    # Wild up 2 kgs 17 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh create_job wild_halted_2_17_true_true_01 wild_forest_fire.py 2 kgs 17 120 True True 0.1
+        # Halted up 2
+        ./manage.sh create_job "${ds}_scala_halted_2_3_true_true_01" halted_forest_fire.py 2 kgs 3 180 True True 0.1
+        ./manage.sh create_job "${ds}_scala_halted_2_5_true_true_01" halted_forest_fire.py 2 kgs 5 180 True True 0.1
+        ./manage.sh create_job "${ds}_scala_halted_2_9_true_true_01" halted_forest_fire.py 2 kgs 9 180 True True 0.1
+        ./manage.sh create_job "${ds}_scala_halted_2_17_true_true_01" halted_forest_fire.py 2 kgs 17 180 True True 0.1
 
-    # Stitching & Connectivity
-    # Halted up 3 kgs 5 stitch=True, Conn=0.1, Ring=False
-    ./manage.sh create_job sc_halted_3_5_true_false_01 halted_forest_fire.py 3 kgs 5 60 True False 0.1
-    # Halted up 3 kgs 5 stitch=True, Conn=0.01, Ring=False
-    ./manage.sh create_job sc_halted_3_5_true_false_001 halted_forest_fire.py 3 kgs 5 60 True False 0.01
-    # Halted up 3 kgs 5 stitch=False, Conn=def, Ring=def
-    ./manage.sh create_job sc_halted_3_5_false_false_0 halted_forest_fire.py 3 kgs 5 60
+        # Wild up 2
+        ./manage.sh create_job "${ds}_scala_wild_2_3_true_true_01" wild_forest_fire.py 2 kgs 3 180 True True 0.1
+        ./manage.sh create_job "${ds}_scala_wild_2_5_true_true_01" wild_forest_fire.py 2 kgs 5 180 True True 0.1
+        ./manage.sh create_job "${ds}_scala_wild_2_9_true_true_01" wild_forest_fire.py 2 kgs 9 180 True True 0.1
+        ./manage.sh create_job "${ds}_scala_wild_2_17_true_true_01" wild_forest_fire.py 2 kgs 17 180 True True 0.1
+
+        # Stitching & Connectivity
+        # Connectivity changes.
+        ./manage.sh create_job "${ds}_sc_halted_3_5_true_false_01" halted_forest_fire.py 3 kgs 5 180 True False 0.1
+        ./manage.sh create_job "${ds}_sc_halted_3_5_true_false_001" halted_forest_fire.py 3 kgs 5 180 True False 0.01
+        ./manage.sh create_job "${ds}_sc_halted_3_5_false_false_0" halted_forest_fire.py 3 kgs 5 180
+
+        # Stitching topology changes.
+        ./manage.sh create_job "${ds}_sc_halted_3_5_true_true_01" halted_forest_fire.py 3 kgs 5 180 True True 0.1
+        ./manage.sh create_job "${ds}_sc_halted_3_5_true_false_01" halted_forest_fire.py 3 kgs 5 180 True False 0.1
+        ./manage.sh create_job "${ds}_sc_wild_3_5_false_false_0" wild_forest_fire.py 3 kgs 5 180 False False 0.0
+        ./manage.sh create_job "${ds}_sc_wild_3_5_true_true_01" wild_forest_fire.py 3 kgs 5 180 True True 0.1
+        ./manage.sh create_job "${ds}_sc_wild_3_5_true_false_01" wild_forest_fire.py 3 kgs 5 180 True False 0.1
+    done
     ;;
-# Create jobs.
+# Run all jobs.
 "run_jobs")
-    # Scalability
-    # Halted down 0.4 kgs 3 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_halted_04_3_true_true_01
-    # Halted down 0.4 kgs 5 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_halted_04_5_true_true_01
-    sleep 10m
-    # Halted down 0.4 kgs 9 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_halted_04_9_true_true_01
-    sleep 10m
-    # Halted down 0.4 kgs 17 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_halted_04_17_true_true_01
+    for ds in "${DATASETS[@]}"; do
+        echo "Creating jobs for ${ds}.."
 
-    sleep 10m
+        # Scalability jobs.
+        # Halted down 0.4
+        ./manage.sh run_job "${ds}_scala_halted_04_3_true_true_01"
+        sleep 10m
+        ./manage.sh run_job "${ds}_scala_halted_04_5_true_true_01"
+        sleep 10m
+        ./manage.sh run_job "${ds}_scala_halted_04_9_true_true_01"
+        ./manage.sh run_job "${ds}_scala_halted_04_17_true_true_01"
 
-    # Wild down 0.4 kgs 3 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_wild_04_3_true_true_01
-    # Wild down 0.4 kgs 5 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_wild_04_5_true_true_01
-    sleep 10m
-    # Wild down 0.4kgs 9 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_wild_04_9_true_true_01
-    sleep 10m
-    # Wild down 0.4 kgs 17 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_wild_04_17_true_true_01
+        # Wild down 0.4
+        ./manage.sh run_job "${ds}_scala_wild_04_3_true_true_01"
+        sleep 10m
+        ./manage.sh run_job "${ds}_scala_wild_04_5_true_true_01"
+        sleep 10m
+        ./manage.sh run_job "${ds}_scala_wild_04_9_true_true_01"
+        ./manage.sh run_job "${ds}_scala_wild_04_17_true_true_01"
 
-    sleep 10m
+        # Halted up 2
+        ./manage.sh run_job "${ds}_scala_halted_2_3_true_true_01"
+        sleep 10m
+        ./manage.sh run_job "${ds}_scala_halted_2_5_true_true_01"
+        sleep 10m
+        ./manage.sh run_job "${ds}_scala_halted_2_9_true_true_01"
+        ./manage.sh run_job "${ds}_scala_halted_2_17_true_true_01"
 
-    # Halted up 2 kgs 3 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_halted_2_3_true_true_01
-    # Halted up 2 kgs 5 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_halted_2_5_true_true_01
-    sleep 10m
-    # Halted up 2 kgs 9 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_halted_2_9_true_true_01
-    sleep 10m
-    # Halted up 2 kgs 17 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_halted_2_17_true_true_01
+        # Wild up 2
+        ./manage.sh run_job "${ds}_scala_wild_2_3_true_true_01"
+        sleep 10m
+        ./manage.sh run_job "${ds}_scala_wild_2_5_true_true_01"
+        sleep 10m
+        ./manage.sh run_job "${ds}_scala_wild_2_9_true_true_01"
+        ./manage.sh run_job "${ds}_scala_wild_2_17_true_true_01"
 
-    sleep 10m
+        # Stitching & Connectivity
+        # Connectivity changes.
+        ./manage.sh run_job "${ds}_sc_halted_3_5_true_false_01"
+        sleep 10m
+        ./manage.sh run_job "${ds}_sc_halted_3_5_true_false_001"
+        sleep 10m
+        ./manage.sh run_job "${ds}_sc_halted_3_5_false_false_0"
+        sleep 10m
 
-    # Wild up 2 kgs 3 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job wild_halted_2_3_true_true_01
-    # Wild up 2 kgs 5 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job wild_halted_2_5_true_true_01
-    sleep 10m
-    # Wild up 2 kgs 9 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job wild_halted_2_9_true_true_01
-    sleep 10m
-    # Wild up 2 kgs 17 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job wild_halted_2_17_true_true_01
-
-    sleep 10m
-
-    # Stitching & Connectivity
-    # Halted up 3 kgs 4 stitch=True, Conn=0.1, Ring=False
-    ./manage.sh run_job sc_halted_3_5_true_false_01
-    # Halted up 3 kgs 4 stitch=True, Conn=0.01, Ring=False
-    ./manage.sh run_job sc_halted_3_5_true_false_001
-    # Halted up 3 kgs 4 stitch=False, Conn=def, Ring=def
-    ./manage.sh run_job sc_halted_3_5_false_false_0
-    ;;
-# Okke's Jobs.
-"run_okke")
-    # Scalability
-    # Halted down 0.4 kgs 3 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_halted_04_3_true_true_01
-    # Halted down 0.4 kgs 5 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_halted_04_5_true_true_01
-    sleep 10m
-    # Halted down 0.4 kgs 9 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_halted_04_9_true_true_01
-    sleep 10m
-    # Halted down 0.4 kgs 17 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_halted_04_17_true_true_01
-
-    sleep 10m
-
-    # Wild down 0.4 kgs 3 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_wild_04_3_true_true_01
-    # Wild down 0.4 kgs 5 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_wild_04_5_true_true_01
-    sleep 10m
-    # Wild down 0.4kgs 9 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_wild_04_9_true_true_01
-    sleep 10m
-    # Wild down 0.4 kgs 17 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_wild_04_17_true_true_01
-
-    sleep 10m
-
-    # Halted up 2 kgs 3 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_halted_2_3_true_true_01
-    # Halted up 2 kgs 5 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_halted_2_5_true_true_01
-    sleep 10m
-    # Halted up 2 kgs 9 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_halted_2_9_true_true_01
-    sleep 10m
-    # Halted up 2 kgs 17 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_halted_2_17_true_true_01
-
-    sleep 10m
-
-    # Wild up 2 kgs 3 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job wild_halted_2_3_true_true_01
-    # Wild up 2 kgs 5 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job wild_halted_2_5_true_true_01
-    sleep 10m
-    # Wild up 2 kgs 9 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job wild_halted_2_9_true_true_01
-    sleep 10m
-    # Wild up 2 kgs 17 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job wild_halted_2_17_true_true_01
-
-    sleep 10m
-
-    # Stitching & Connectivity
-    # Halted up 3 kgs 4 stitch=True, Conn=0.1, Ring=False
-    ./manage.sh run_job sc_halted_3_5_true_false_01
-    # Halted up 3 kgs 4 stitch=True, Conn=0.01, Ring=False
-    ./manage.sh run_job sc_halted_3_5_true_false_001
-    # Halted up 3 kgs 4 stitch=False, Conn=def, Ring=def
-    ./manage.sh run_job sc_halted_3_5_false_false_0
-    ;;
-# Tom's Jobs.
-"run_tom")
-    # Scalability
-    # Halted down 0.4 kgs 17 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_halted_04_17_true_true_01
-    sleep 10m
-    # Halted down 0.4 kgs 9 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_halted_04_9_true_true_01
-    sleep 10m
-    # Halted down 0.4 kgs 5 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_halted_04_5_true_true_01
-    # Halted down 0.4 kgs 3 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_halted_04_3_true_true_01
-
-    sleep 10m
-
-    # Wild down 0.4 kgs 17 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_wild_04_17_true_true_01
-    sleep 10m
-    # Wild down 0.4kgs 9 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_wild_04_9_true_true_01
-    sleep 10m
-    # Wild down 0.4 kgs 5 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_wild_04_5_true_true_01
-    # Wild down 0.4 kgs 3 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_wild_04_3_true_true_01
-
-    sleep 10m
-
-    # Halted up 2 kgs 17 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_halted_2_17_true_true_01
-    sleep 10m
-    # Halted up 2 kgs 9 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_halted_2_9_true_true_01
-    sleep 10m
-    # Halted up 2 kgs 5 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_halted_2_5_true_true_01
-    # Halted up 2 kgs 3 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job scala_halted_2_3_true_true_01
-
-    sleep 10m
-
-    # Wild up 2 kgs 17 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job wild_halted_2_17_true_true_01
-    sleep 10m
-    # Wild up 2 kgs 9 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job wild_halted_2_9_true_true_01
-    sleep 10m
-    # Wild up 2 kgs 5 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job wild_halted_2_5_true_true_01
-    # Wild up 2 kgs 3 stitch=True, Conn=0.1, Ring=True
-    ./manage.sh run_job wild_halted_2_3_true_true_01
-
-    sleep 10m
-
-    # Stitching & Connectivity
-    # Halted up 3 kgs 4 stitch=True, Conn=0.1, Ring=False
-    ./manage.sh run_job sc_halted_3_5_true_false_01
-    # Halted up 3 kgs 4 stitch=True, Conn=0.01, Ring=False
-    ./manage.sh run_job sc_halted_3_5_true_false_001
-    # Halted up 3 kgs 4 stitch=False, Conn=def, Ring=def
-    ./manage.sh run_job sc_halted_3_5_false_false_0
-    ;;
-# run failed jobs
-"run_failed_jobs")
-    ./manage.sh run_job scala_halted_04_3_true_true_01
-    ./manage.sh run_job scala_halted_2_3_true_true_01
-    sleep 10m
-    ./manage.sh run_job scala_halted_2_5_true_true_01
-    ./manage.sh run_job sc_halted_3_5_false_false_0
-    sleep 10m
-    ./manage.sh run_job sc_halted_3_5_true_false_001
-    ./manage.sh run_job sc_halted_3_5_true_false_01
-    sleep 10m
-    ./manage.sh run_job wild_halted_2_5_true_true_01
-    ;;
-# Compute all properties.
-"compute_properties")
-    ./manage.sh compute_properties scala_halted_04_3_true_true_01 &
-    ./manage.sh compute_properties scala_halted_04_5_true_true_01 &
-    ./manage.sh compute_properties scala_halted_04_9_true_true_01 &
-    ./manage.sh compute_properties scala_halted_04_17_true_true_01 &
-
-    ./manage.sh compute_properties scala_wild_04_3_true_true_01 &
-    ./manage.sh compute_properties scala_wild_04_5_true_true_01 &
-    ./manage.sh compute_properties scala_wild_04_9_true_true_01 &
-    ./manage.sh compute_properties scala_wild_04_17_true_true_01 &
-
-    ./manage.sh compute_properties scala_halted_2_3_true_true_01 &
-    ./manage.sh compute_properties scala_halted_2_5_true_true_01 &
-    ./manage.sh compute_properties scala_halted_2_9_true_true_01 &
-    ./manage.sh compute_properties scala_halted_2_17_true_true_01 &
-
-    ./manage.sh compute_properties wild_halted_2_3_true_true_01 &
-    ./manage.sh compute_properties wild_halted_2_5_true_true_01 &
-    ./manage.sh compute_properties wild_halted_2_9_true_true_01 &
-    ./manage.sh compute_properties wild_halted_2_17_true_true_01 &
-
-    ./manage.sh compute_properties sc_halted_3_5_true_false_01 &
-    ./manage.sh compute_properties sc_halted_3_5_true_false_001 &
-    ./manage.sh compute_properties sc_halted_3_5_false_false_0 &
-    wait
-
-    PREFIX="/var/scratch/"
-    POSTFIX="/results/scaled_graph_properties.json"
-
-    cp "${PREFIX}scala_halted_04_3_true_true_01${POSTFIX}" -t "${PWD}/jobs/scala_halted_04_3_true_true_01/results/."
-    cp "${PREFIX}scala_halted_04_5_true_true_01${POSTFIX}" -t "${PWD}/jobs/scala_halted_04_5_true_true_01/results/."
-    cp "${PREFIX}scala_halted_04_9_true_true_01${POSTFIX}" -t "${PWD}/jobs/scala_halted_04_9_true_true_01/results/."
-    cp "${PREFIX}scala_halted_04_17_true_true_01${POSTFIX}" -t "${PWD}/jobs/scala_halted_04_17_true_true_01/results/."
-
-    cp "${PREFIX}scala_wild_04_3_true_true_01${POSTFIX}" -t "${PWD}/jobs/scala_wild_04_3_true_true_01/results/."
-    cp "${PREFIX}scala_wild_04_5_true_true_01${POSTFIX}" -t "${PWD}/jobs/scala_wild_04_5_true_true_01/results/."
-    cp "${PREFIX}scala_wild_04_9_true_true_01${POSTFIX}" -t "${PWD}/jobs/scala_wild_04_9_true_true_01/results/."
-    cp "${PREFIX}scala_wild_04_17_true_true_01${POSTFIX}" -t "${PWD}/jobs/scala_wild_04_17_true_true_01/results/."
-
-    cp "${PREFIX}scala_halted_2_3_true_true_01${POSTFIX}" -t "${PWD}/jobs/scala_halted_2_3_true_true_01/results/."
-    cp "${PREFIX}scala_halted_2_5_true_true_01${POSTFIX}" -t "${PWD}/jobs/scala_halted_2_5_true_true_01/results/."
-    cp "${PREFIX}scala_halted_2_9_true_true_01${POSTFIX}" -t "${PWD}/jobs/scala_halted_2_9_true_true_01/results/."
-    cp "${PREFIX}scala_halted_2_17_true_true_01${POSTFIX}" -t "${PWD}/jobs/scala_halted_2_17_true_true_01/results/."
-
-    cp "${PREFIX}wild_halted_2_3_true_true_01${POSTFIX}" -t "${PWD}/jobs/wild_halted_2_3_true_true_01/results/."
-    cp "${PREFIX}wild_halted_2_5_true_true_01${POSTFIX}" -t "${PWD}/jobs/wild_halted_2_5_true_true_01/results/."
-    cp "${PREFIX}wild_halted_2_9_true_true_01${POSTFIX}" -t "${PWD}/jobs/wild_halted_2_9_true_true_01/results/."
-    cp "${PREFIX}wild_halted_2_17_true_true_01${POSTFIX}" -t "${PWD}/jobs/wild_halted_2_17_true_true_01/results/."
-
-    cp "${PREFIX}sc_halted_3_5_true_false_01${POSTFIX}" -t "${PWD}/jobs/sc_halted_3_5_true_false_01/results/."
-    cp "${PREFIX}sc_halted_3_5_true_false_001${POSTFIX}" -t "${PWD}/jobs/sc_halted_3_5_true_false_001/results/."
-    cp "${PREFIX}sc_halted_3_5_false_false_0${POSTFIX}" -t "${PWD}/jobs/sc_halted_3_5_false_false_0/results/."
+        # Stitching topology changes.
+        ./manage.sh run_job "${ds}_sc_halted_3_5_true_true_01"
+        sleep 10m
+        ./manage.sh run_job "${ds}_sc_halted_3_5_true_false_01"
+        sleep 10m
+        ./manage.sh run_job "${ds}_sc_wild_3_5_false_false_0"
+        sleep 10m
+        ./manage.sh run_job "${ds}_sc_wild_3_5_true_true_01"
+        sleep 10m
+        ./manage.sh run_job "${ds}_sc_wild_3_5_true_false_01"
+        sleep 10m
+    done
     ;;
 # Catch all for parse errors.
 *)
