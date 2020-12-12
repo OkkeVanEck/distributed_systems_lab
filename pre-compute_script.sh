@@ -123,8 +123,8 @@ case "$1" in
         # Stitching topology changes.
         ./manage.sh run_job "${ds}_sc_halted_3_5_true_true_01"
         sleep 10m
-        ./manage.sh run_job "${ds}_sc_halted_3_5_true_false_01"
-        sleep 10m
+#        ./manage.sh run_job "${ds}_sc_halted_3_5_true_false_01"
+#        sleep 10m
         ./manage.sh run_job "${ds}_sc_wild_3_5_false_false_0"
         sleep 10m
         ./manage.sh run_job "${ds}_sc_wild_3_5_true_true_01"
