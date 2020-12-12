@@ -36,8 +36,8 @@ srun -n "${SLURM_NTASKS}" --mpi=pmi2 python3 "code/run_simulation.py" \
     "${RING_STITCH}" "${CONN}" "${TMP_PLAY}" "${TMP_DATA}" "${TMP_RES}"
 
 # Compute properties of the resulting graph and copy those to HOME partition.
-cp "${TMP_RES}/scaled_graph.v" -t "jobs/${JOBNAME}/results/."
-cp "${TMP_RES}/scaled_graph.e" -t "jobs/${JOBNAME}/results/."
-./manage.sh compute_properties "${JOBNAME}"
-rm -f "jobs/${JOBNAME}/results/scaled_graph.v"
-rm -f "jobs/${JOBNAME}/results/scaled_graph.e"
+#cp "${TMP_RES}/scaled_graph.v" -t "jobs/${JOBNAME}/results/."
+#cp "${TMP_RES}/scaled_graph.e" -t "jobs/${JOBNAME}/results/."
+#./manage.sh compute_properties "${JOBNAME}"
+#rm -f "jobs/${JOBNAME}/results/scaled_graph.v"
+#rm -f "jobs/${JOBNAME}/results/scaled_graph.e"
