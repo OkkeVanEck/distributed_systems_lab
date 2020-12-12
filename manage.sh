@@ -346,8 +346,8 @@ CONN=\"${CONN}\"
         V_FILE="runtime_tmps/${2}/results/scaled_graph.v"
         E_FILE="runtime_tmps/${2}/results/scaled_graph.e"
     else
-        V_FILE="jobs/${2}/results/scaled_graph.v"
-        E_FILE="jobs/${2}/results/scaled_graph.e"
+        V_FILE="/var/scratch/$USER/${2}/results/scaled_graph.v"
+        E_FILE="/var/scratch/$USER/${2}/results/scaled_graph.e"
     fi
 
     # Check if the vertex file is in results.
