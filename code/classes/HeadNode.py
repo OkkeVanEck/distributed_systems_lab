@@ -21,6 +21,18 @@ class HeadNode:
     def __init__(self, rank, n_nodes, scale_factor, total_vertices, out_v,
                  out_e, stitch=True, ring_stitch=True, connectivity=0.1):
         """
+        Head node for the graph scaler that creates the resulting graph and
+        keeps track of what works needs to be done.
+
+        rank: rank inside MPI, system only supports headnode to the rank 0
+        n_nodes: number of nodes in the mpi system
+        scale_factor: factor the original graph needs to be scaled too
+        total_vertices: num vertices in the original graph
+        out_v: output file for vertices
+        out_e: output file for edges
+        stitch: boolean whether or not it need to stitch
+        ring_stitch: boolean whether to stitch in ring (True) or random (False)
+        connectivity: percentages of vertices that gets edge when stitching.
         """
         self.rank = rank
         self.num_compute_nodes = n_nodes - 1
@@ -29,7 +41,7 @@ class HeadNode:
         self.connectivity = connectivity
         self.ring_stitch = ring_stitch
 
-        # scale factor 1 will be upscale sample that stays the same size
+        # Calculates how many samples need to be created to get the scale factor
         if scale_factor <= 0.5:
             self.num_sample = 1
             self.cutoff_vertices = total_vertices * scale_factor
@@ -59,6 +71,11 @@ class HeadNode:
 
     @timeit(timer=timer, counter=counter)
     def run(self):
+        """
+        Main run loop for the headnode, loops over samples and while burning a
+        sample handles receiving from compute nodes and send to all whether to
+        keep burning (CONTINUE), move to next sample (RESET), or shutdown if done (Kill)
+        """
         for cur_sample in range(self.num_sample):
             logging.debug(f"entered sampling cur_sample = {cur_sample}")
             while self.keep_burning:
@@ -101,6 +118,7 @@ class HeadNode:
 
     @timeit(timer=timer, counter=counter)
     def stitch(self):
+        """ Controls the stitching algorithms topologie. """
         if not self.need_stitch:
             return
         if self.upscale:
@@ -113,7 +131,7 @@ class HeadNode:
                         end -= 10000
                     self.stitch_sample(vertices[i], vertices[(i+1) % self.num_sample], end)
             else:
-                sample = self.graph.get_random_stitch_list()
+                sample = self.graph.get_vertices_as_one()
                 end = np.int(np.ceil(len(sample) * self.connectivity))
                 while end > 10000:
                     self.stitch_sample(sample, sample, 10000)
@@ -128,6 +146,13 @@ class HeadNode:
             self.stitch_sample(sample, sample, end)
 
     def stitch_sample(self, src_sample, dest_sample, end):
+        """
+        adds edges form the two samples to to stich the samples together
+
+        src_sample: sample to take first vertices from
+        dest_sample: sample to take second vertices from
+        end: number of edges to add
+        """
         source = random.sample(src_sample, end)
         destination = random.sample(dest_sample, end)
         for (src, dest) in zip(source, destination):
@@ -135,4 +160,9 @@ class HeadNode:
                 self.graph.add_edge(src, dest, None, 0)
 
     def done_burning(self, cur_sample):
+        """
+        Checks if enough vertices have been added for the current samples
+
+        cur_sample: the current sample
+        """
         return self.graph.get_num_sample_vertices(cur_sample) >= self.cutoff_vertices

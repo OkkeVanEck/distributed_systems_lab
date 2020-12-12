@@ -13,7 +13,7 @@ from Enums import MPI_TAG, VertexStatus, SLEEP_TIMES
 comm = MPI.COMM_WORLD
 
 # add function names here that needs timing
-func_to_time = ["send_fire_to_remotes", "send_heartbeat", "send_burn_requests",
+func_to_time = ["send_heartbeat", "send_burn_requests",
                 "do_spread_steps", "init_partition", "receive_from_headnode", "do_tasks"]
 timer = {func:0 for func in func_to_time}
 counter = {func:0 for func in func_to_time}
@@ -46,7 +46,6 @@ class ComputeNode:
     def get_machine_log(self):
         return "On Machine " + str(self.rank) + "."
 
-    @timeit(timer=timer, counter=counter)
     def send_fire_to_remotes(self, machine_vertexes_to_receive):
         nodes_to_burn_locally = []
         logging.debug(self.get_machine_log() + " sending data")
