@@ -25,7 +25,7 @@ def parse_args():
 
 def parse_job_name(job_name):
     m = re.match(
-        r"(?P<dset>\w+)_(?P<job>\w+)_(?P<sim>\w+)_"
+        r"(?P<dset>[\w-]+)_(?P<job>\w+)_(?P<sim>\w+)_"
         r"(?P<scale>[0-9]+)_(?P<n_nodes>[0-9]+)_"
         r"(?P<stitch>\w+)_(?P<ring>\w+)_(?P<conn>[0-9]+)",
         job_name
