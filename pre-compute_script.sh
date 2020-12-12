@@ -36,41 +36,41 @@ case "$1" in
 
         # Scalability jobs.
         # Halted down 0.4
-        ./manage.sh create_job "${ds}_scala_halted_04_3_true_true_01" halted_forest_fire.py 0.4 "${ds}" 3 180 True True 0.1
-        ./manage.sh create_job "${ds}_scala_halted_04_5_true_true_01" halted_forest_fire.py 0.4 "${ds}" 5 180 True True 0.1
-        ./manage.sh create_job "${ds}_scala_halted_04_9_true_true_01" halted_forest_fire.py 0.4 "${ds}" 9 180 True True 0.1
-        ./manage.sh create_job "${ds}_scala_halted_04_17_true_true_01" halted_forest_fire.py 0.4 "${ds}" 17 180 True True 0.1
+        ./manage.sh create_job "${ds}_scala_halted_04_3_true_true_01" halted_forest_fire.py 0.4 "${ds}" 3 120 True True 0.1
+        ./manage.sh create_job "${ds}_scala_halted_04_5_true_true_01" halted_forest_fire.py 0.4 "${ds}" 5 120 True True 0.1
+        ./manage.sh create_job "${ds}_scala_halted_04_9_true_true_01" halted_forest_fire.py 0.4 "${ds}" 9 120 True True 0.1
+        ./manage.sh create_job "${ds}_scala_halted_04_17_true_true_01" halted_forest_fire.py 0.4 "${ds}" 17 120 True True 0.1
 
         # Wild down 0.4
-        ./manage.sh create_job "${ds}_scala_wild_04_3_true_true_01" wild_forest_fire.py 0.4 "${ds}" 3 180 True True 0.1
-        ./manage.sh create_job "${ds}_scala_wild_04_5_true_true_01" wild_forest_fire.py 0.4 "${ds}" 5 180 True True 0.1
-        ./manage.sh create_job "${ds}_scala_wild_04_9_true_true_01" wild_forest_fire.py 0.4 "${ds}" 9 180 True True 0.1
-        ./manage.sh create_job "${ds}_scala_wild_04_17_true_true_01" wild_forest_fire.py 0.4 "${ds}" 17 180 True True 0.1
+        ./manage.sh create_job "${ds}_scala_wild_04_3_true_true_01" wild_forest_fire.py 0.4 "${ds}" 3 120 True True 0.1
+        ./manage.sh create_job "${ds}_scala_wild_04_5_true_true_01" wild_forest_fire.py 0.4 "${ds}" 5 120 True True 0.1
+        ./manage.sh create_job "${ds}_scala_wild_04_9_true_true_01" wild_forest_fire.py 0.4 "${ds}" 9 120 True True 0.1
+        ./manage.sh create_job "${ds}_scala_wild_04_17_true_true_01" wild_forest_fire.py 0.4 "${ds}" 17 120 True True 0.1
 
         # Halted up 2
-        ./manage.sh create_job "${ds}_scala_halted_2_3_true_true_01" halted_forest_fire.py 2 "${ds}" 3 180 True True 0.1
-        ./manage.sh create_job "${ds}_scala_halted_2_5_true_true_01" halted_forest_fire.py 2 "${ds}" 5 180 True True 0.1
-        ./manage.sh create_job "${ds}_scala_halted_2_9_true_true_01" halted_forest_fire.py 2 "${ds}" 9 180 True True 0.1
-        ./manage.sh create_job "${ds}_scala_halted_2_17_true_true_01" halted_forest_fire.py 2 "${ds}" 17 180 True True 0.1
+        ./manage.sh create_job "${ds}_scala_halted_2_3_true_true_01" halted_forest_fire.py 2 "${ds}" 3 120 True True 0.1
+        ./manage.sh create_job "${ds}_scala_halted_2_5_true_true_01" halted_forest_fire.py 2 "${ds}" 5 120 True True 0.1
+        ./manage.sh create_job "${ds}_scala_halted_2_9_true_true_01" halted_forest_fire.py 2 "${ds}" 9 120 True True 0.1
+        ./manage.sh create_job "${ds}_scala_halted_2_17_true_true_01" halted_forest_fire.py 2 "${ds}" 17 120 True True 0.1
 
         # Wild up 2
-        ./manage.sh create_job "${ds}_scala_wild_2_3_true_true_01" wild_forest_fire.py 2 "${ds}" 3 180 True True 0.1
-        ./manage.sh create_job "${ds}_scala_wild_2_5_true_true_01" wild_forest_fire.py 2 "${ds}" 5 180 True True 0.1
-        ./manage.sh create_job "${ds}_scala_wild_2_9_true_true_01" wild_forest_fire.py 2 "${ds}" 9 180 True True 0.1
-        ./manage.sh create_job "${ds}_scala_wild_2_17_true_true_01" wild_forest_fire.py 2 "${ds}" 17 180 True True 0.1
+        ./manage.sh create_job "${ds}_scala_wild_2_3_true_true_01" wild_forest_fire.py 2 "${ds}" 3 120 True True 0.1
+        ./manage.sh create_job "${ds}_scala_wild_2_5_true_true_01" wild_forest_fire.py 2 "${ds}" 5 120 True True 0.1
+        ./manage.sh create_job "${ds}_scala_wild_2_9_true_true_01" wild_forest_fire.py 2 "${ds}" 9 120 True True 0.1
+        ./manage.sh create_job "${ds}_scala_wild_2_17_true_true_01" wild_forest_fire.py 2 "${ds}" 17 120 True True 0.1
 
         # Stitching & Connectivity
         # Connectivity changes.
-        ./manage.sh create_job "${ds}_sc_halted_3_5_true_false_01" halted_forest_fire.py 3 kgs 5 180 True False 0.1
-        ./manage.sh create_job "${ds}_sc_halted_3_5_true_false_001" halted_forest_fire.py 3 kgs 5 180 True False 0.01
-        ./manage.sh create_job "${ds}_sc_halted_3_5_false_false_0" halted_forest_fire.py 3 kgs 5 180
+        ./manage.sh create_job "${ds}_sc_halted_3_5_true_false_01" halted_forest_fire.py 3 kgs 5 120 True False 0.1
+        ./manage.sh create_job "${ds}_sc_halted_3_5_true_false_001" halted_forest_fire.py 3 kgs 5 120 True False 0.01
+        ./manage.sh create_job "${ds}_sc_halted_3_5_false_false_0" halted_forest_fire.py 3 kgs 5 120
 
         # Stitching topology changes.
-        ./manage.sh create_job "${ds}_sc_halted_3_5_true_true_01" halted_forest_fire.py 3 "${ds}" 5 180 True True 0.1
-        ./manage.sh create_job "${ds}_sc_halted_3_5_true_false_01" halted_forest_fire.py 3 "${ds}" 5 180 True False 0.1
-        ./manage.sh create_job "${ds}_sc_wild_3_5_false_false_0" wild_forest_fire.py 3 "${ds}" 5 180 False False 0.0
-        ./manage.sh create_job "${ds}_sc_wild_3_5_true_true_01" wild_forest_fire.py 3 "${ds}" 5 180 True True 0.1
-        ./manage.sh create_job "${ds}_sc_wild_3_5_true_false_01" wild_forest_fire.py 3 "${ds}" 5 180 True False 0.1
+        ./manage.sh create_job "${ds}_sc_halted_3_5_true_true_01" halted_forest_fire.py 3 "${ds}" 5 120 True True 0.1
+        ./manage.sh create_job "${ds}_sc_halted_3_5_true_false_01" halted_forest_fire.py 3 "${ds}" 5 120 True False 0.1
+        ./manage.sh create_job "${ds}_sc_wild_3_5_false_false_0" wild_forest_fire.py 3 "${ds}" 5 120 False False 0.0
+        ./manage.sh create_job "${ds}_sc_wild_3_5_true_true_01" wild_forest_fire.py 3 "${ds}" 5 120 True True 0.1
+        ./manage.sh create_job "${ds}_sc_wild_3_5_true_false_01" wild_forest_fire.py 3 "${ds}" 5 120 True False 0.1
     done
     ;;
 # Run all jobs.

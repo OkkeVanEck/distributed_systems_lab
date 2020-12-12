@@ -1,10 +1,8 @@
 from typing import List
 import numpy as np
 import random
-import time
 
 from EdgeSet import EdgeSet
-from HeadGraph import HeadGraph
 from Enums import VertexStatus
 from Vertex import Vertex
 
@@ -41,9 +39,7 @@ class Fire:
         # interpretation from ahmed11, n_neighbors_to_burn is a geometric
         # distributed rv and the given expectation is enough to characterize it
         # so, fwd_burning_prob / (1 - fwd_burning_prob) = 1 / p
-        n_neighbors_to_burn = min(np.random.geometric(
-            p=(1 - self.fwd_burning_prob) / self.fwd_burning_prob, size=1)[0],
-                                  len(neighbors))
+        n_neighbors_to_burn = int(np.ceil(self.fwd_burning_prob * len(neighbors)))
         neighbors_to_burn = random.sample(neighbors, n_neighbors_to_burn)
         return neighbors_to_burn
 
