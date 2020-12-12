@@ -85,7 +85,7 @@ class TimingVisiualizer:
         for job in self.get_vis_jobs():
             df = self.load_worker_log(job)
             df = df[["component", "time"]].groupby("component").mean().drop("do_tasks").reset_index()
-            df["n_nodes"] = int(parse_job_name(job)["n_nodes"])
+            df["n_nodes"] = int(parse_job_name(job)["n_nodes"]) - 1
             data.append(df)
 
         self.data = pd.concat(data).pivot(columns='component', index='n_nodes', values="time")
