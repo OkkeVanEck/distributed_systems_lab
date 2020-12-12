@@ -40,14 +40,15 @@ def load_graph(vertex_file, edge_file):
     G = nx.Graph()
 
     # Parse vertices.
-    with open(vertex_file, "r") as vertices:
-        for v in vertices.readlines():
-            v = v.strip()
-            if v.isdigit():
-                G.add_node(int(v))
-            else:
-                raise Exception(f"Please pass a vertex file with only integer "
-                                f"vertices.\n{v.strip()} is not a digit.")
+    # with open(vertex_file, "r") as vertices:
+    #     for v in vertices.readlines():
+    #         v = v.strip()
+    #         if v.isdigit():
+    #             G.add_node(int(v))
+    #         else:
+    #             raise Exception(f"Please pass a vertex file with only integer "
+    #                             f"vertices.\n{v.strip()} is not a digit.")
+
 
     # Parse edges.
     with open(edge_file, "r") as edges:

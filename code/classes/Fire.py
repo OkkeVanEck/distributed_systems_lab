@@ -63,7 +63,6 @@ class Fire:
             if self.relight_backoff <= 1 and self.relight_exponent > 4:
                 self.relight_exponent = self.relight_exponent - 1
                 self.relight_backoff = 2**(self.relight_exponent+4)
-                self.compute_node.set_fire_step(int(self.relight_backoff/4))
         else:
             num_relights = 2**self.relight_exponent
             for i in range(num_relights):
@@ -72,7 +71,6 @@ class Fire:
                 # lowering the relight exponent
             self.relight_backoff = 2**(self.relight_exponent+4)
             self.relight_exponent += 1
-            self.compute_node.set_fire_step(int(self.relight_backoff/4))
 
     def spread(self, new_edges: EdgeSet):
         # Every burn step adds new burning_vertex_ids to the
