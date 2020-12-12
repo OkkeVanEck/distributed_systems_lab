@@ -39,17 +39,6 @@ def load_graph(vertex_file, edge_file):
     """ Parses vertex and edge files into a graph. """
     G = nx.Graph()
 
-    # Parse vertices.
-    # with open(vertex_file, "r") as vertices:
-    #     for v in vertices.readlines():
-    #         v = v.strip()
-    #         if v.isdigit():
-    #             G.add_node(int(v))
-    #         else:
-    #             raise Exception(f"Please pass a vertex file with only integer "
-    #                             f"vertices.\n{v.strip()} is not a digit.")
-
-
     # Parse edges.
     with open(edge_file, "r") as edges:
         for e in edges.readlines():
@@ -82,16 +71,14 @@ def compute_properties(G):
     print(f"Density: {time() - start}")
     properties["component_count"] = nx.number_connected_components(G)
     print(f"Component count: {time() - start}")
-    properties["planar"] = nx.check_planarity(G)[0]
-    print(f"Planarity: {time() - start}")
+    # properties["planar"] = nx.check_planarity(G)[0]
+    # print(f"Planarity: {time() - start}")
     properties["node_connectivity"] = nx.node_connectivity(G)
     print(f"Nodes connectivity: {time() - start}")
     properties["avg_node_degree"] = comp_average_vertex_degree(G)
     print(f"Avg node degree: {time() - start}")
     # properties["avg_clustering_coefficient"] = nx.average_clustering(G)
     # print(f"Avg clustering coefficient: {time() - start}")
-    # properties["influential_node_count"] = len(nx.voterank(G))
-    # print(f"Influential node count: {time() - start}")
 
     # Unconnected graph might give infinite path length exception.
     try:
@@ -108,11 +95,11 @@ def compute_properties(G):
     print(f"Average shortest path: {time() - start}")
 
     # Graph has a node with no edge incident on it, so no edge cover exists.
-    try:
-        properties["min_edge_cover"] = nx.min_edge_cover(G)
-    except nx.exception.NetworkXException:
-        properties["min_edge_cover"] = -math.inf
-    print(f"Min edge cover: {time() - start}")
+    # try:
+    #     properties["min_edge_cover"] = nx.min_edge_cover(G)
+    # except nx.exception.NetworkXException:
+    #     properties["min_edge_cover"] = -math.inf
+    # print(f"Min edge cover: {time() - start}")
 
     return properties
 

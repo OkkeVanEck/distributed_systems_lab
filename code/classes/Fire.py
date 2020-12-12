@@ -52,7 +52,6 @@ class Fire:
             self.burning_vertex_ids.append(random_vertex_id)
             self.graph.set_vertex_status(random_vertex_id, VertexStatus.BURNED)
 
-
     def fire_help(self):
         if len(self.burning_vertex_ids) > 0:
             self.relight_backoff -= 1
