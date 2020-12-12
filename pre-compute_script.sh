@@ -67,7 +67,6 @@ case "$1" in
 
         # Stitching topology changes.
         ./manage.sh create_job "${ds}_sc_halted_3_5_true_true_01" halted_forest_fire.py 3 "${ds}" 5 120 True True 0.1
-#        ./manage.sh create_job "${ds}_sc_halted_3_5_true_false_01" halted_forest_fire.py 3 "${ds}" 5 120 True False 0.1
         ./manage.sh create_job "${ds}_sc_wild_3_5_false_false_0" wild_forest_fire.py 3 "${ds}" 5 120 False False 0.0
         ./manage.sh create_job "${ds}_sc_wild_3_5_true_true_01" wild_forest_fire.py 3 "${ds}" 5 120 True True 0.1
         ./manage.sh create_job "${ds}_sc_wild_3_5_true_false_01" wild_forest_fire.py 3 "${ds}" 5 120 True False 0.1
@@ -81,56 +80,83 @@ case "$1" in
         # Scalability jobs.
         # Halted down 0.4
         ./manage.sh run_job "${ds}_scala_halted_04_3_true_true_01"
-        sleep 10m
         ./manage.sh run_job "${ds}_scala_halted_04_5_true_true_01"
-        sleep 10m
         ./manage.sh run_job "${ds}_scala_halted_04_9_true_true_01"
         ./manage.sh run_job "${ds}_scala_halted_04_17_true_true_01"
 
         # Wild down 0.4
         ./manage.sh run_job "${ds}_scala_wild_04_3_true_true_01"
-        sleep 10m
         ./manage.sh run_job "${ds}_scala_wild_04_5_true_true_01"
-        sleep 10m
         ./manage.sh run_job "${ds}_scala_wild_04_9_true_true_01"
         ./manage.sh run_job "${ds}_scala_wild_04_17_true_true_01"
 
         # Halted up 2
         ./manage.sh run_job "${ds}_scala_halted_2_3_true_true_01"
-        sleep 10m
         ./manage.sh run_job "${ds}_scala_halted_2_5_true_true_01"
-        sleep 10m
         ./manage.sh run_job "${ds}_scala_halted_2_9_true_true_01"
         ./manage.sh run_job "${ds}_scala_halted_2_17_true_true_01"
 
         # Wild up 2
         ./manage.sh run_job "${ds}_scala_wild_2_3_true_true_01"
-        sleep 10m
         ./manage.sh run_job "${ds}_scala_wild_2_5_true_true_01"
-        sleep 10m
         ./manage.sh run_job "${ds}_scala_wild_2_9_true_true_01"
         ./manage.sh run_job "${ds}_scala_wild_2_17_true_true_01"
 
         # Stitching & Connectivity
         # Connectivity changes.
         ./manage.sh run_job "${ds}_sc_halted_3_5_true_false_01"
-        sleep 10m
         ./manage.sh run_job "${ds}_sc_halted_3_5_true_false_001"
-        sleep 10m
         ./manage.sh run_job "${ds}_sc_halted_3_5_false_false_0"
-        sleep 10m
 
         # Stitching topology changes.
         ./manage.sh run_job "${ds}_sc_halted_3_5_true_true_01"
-        sleep 10m
-#        ./manage.sh run_job "${ds}_sc_halted_3_5_true_false_01"
-#        sleep 10m
         ./manage.sh run_job "${ds}_sc_wild_3_5_false_false_0"
-        sleep 10m
         ./manage.sh run_job "${ds}_sc_wild_3_5_true_true_01"
-        sleep 10m
         ./manage.sh run_job "${ds}_sc_wild_3_5_true_false_01"
-        sleep 10m
+    done
+    ;;
+# Create jobs.
+"compute_properties")
+    for ds in "${DATASETS[@]}"; do
+        echo "Computing properties for ${ds}.."
+
+        # Scalability jobs.
+        # Halted down 0.4
+        ./manage.sh compute_properties "${ds}_scala_halted_04_3_true_true_01" &
+        ./manage.sh compute_properties "${ds}_scala_halted_04_5_true_true_01" &
+        ./manage.sh compute_properties "${ds}_scala_halted_04_9_true_true_01" &
+        ./manage.sh compute_properties "${ds}_scala_halted_04_17_true_true_01" &
+
+        # Wild down 0.4
+        ./manage.sh compute_properties "${ds}_scala_wild_04_3_true_true_01" &
+        ./manage.sh compute_properties "${ds}_scala_wild_04_5_true_true_01" &
+        ./manage.sh compute_properties "${ds}_scala_wild_04_9_true_true_01" &
+        ./manage.sh compute_properties "${ds}_scala_wild_04_17_true_true_01" &
+
+        # Halted up 2
+        ./manage.sh compute_properties "${ds}_scala_halted_2_3_true_true_01" &
+        ./manage.sh compute_properties "${ds}_scala_halted_2_5_true_true_01" &
+        ./manage.sh compute_properties "${ds}_scala_halted_2_9_true_true_01" &
+        ./manage.sh compute_properties "${ds}_scala_halted_2_17_true_true_01" &
+
+        # Wild up 2
+        ./manage.sh compute_properties "${ds}_scala_wild_2_3_true_true_01" &
+        ./manage.sh compute_properties "${ds}_scala_wild_2_5_true_true_01" &
+        ./manage.sh compute_properties "${ds}_scala_wild_2_9_true_true_01" &
+        ./manage.sh compute_properties "${ds}_scala_wild_2_17_true_true_01" &
+
+        # Stitching & Connectivity
+        # Connectivity changes.
+        ./manage.sh compute_properties "${ds}_sc_halted_3_5_true_false_01" &
+        ./manage.sh compute_properties "${ds}_sc_halted_3_5_true_false_001" &
+        ./manage.sh compute_properties "${ds}_sc_halted_3_5_false_false_0" &
+
+        # Stitching topology changes.
+        ./manage.sh compute_properties "${ds}_sc_halted_3_5_true_true_01" &
+        ./manage.sh compute_properties "${ds}_sc_wild_3_5_false_false_0" &
+        ./manage.sh compute_properties "${ds}_sc_wild_3_5_true_true_01" &
+        ./manage.sh compute_properties "${ds}_sc_wild_3_5_true_false_01" &
+        wait
     done
     ;;
 # Catch all for parse errors.
