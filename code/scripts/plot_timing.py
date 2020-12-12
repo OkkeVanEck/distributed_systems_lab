@@ -35,9 +35,18 @@ def parse_job_name(job_name):
 
 class TimingVisiualizer:
     def __init__(self, path_to_jobs, dset, job, sim, scale, stitch, ring, conn):
-        # a timing visualizer requires multiple jobs with different n_nodes
-        # self.job_names = job_names
-        # self.job_matadata = dict()
+        """Requires multiple jobs under same setting except for different n_nodes.
+        
+        Arguments:
+        path_to_jobs -- path to jobs (ex: jobs, /var/scratch/$USER, ...)
+        dset -- dataset name (ex: kgs, wiki-Talk, cit-Patents, ...)
+        job -- types of job (sc, scala)
+        sim -- types of simluation (wild, halted)
+        scale -- scale factor
+        stitch -- if do stitching or not (true, false)
+        ring -- if do ring stitching or not (true, false)
+        conn -- connectivity (for example, 0, 01, 001, ...)
+        """
         self.path_to_jobs = path_to_jobs
         self.dset = dset
         self.job = job
@@ -97,9 +106,6 @@ class TimingVisiualizer:
             colormap=cm.rainbow_r,
             alpha=0.5
         )
-        # ax = self.data.plot.area(stacked=True, colormap=cm.rainbow_r, alpha=0.5)
-
-        # ax.grid(True, linestyle='dotted')
         ax.set_title(
             f"{self.dset} {self.sim.title()} Forest Fire\n"
             f"Scale Factor: {self.scale}, Stitch: {self.stitch}, "
