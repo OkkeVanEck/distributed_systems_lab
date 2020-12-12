@@ -35,16 +35,19 @@ class Fire:
         self.relight_exponent = 4
         self.relight_backoff = 2**(self.relight_exponent + 1)
         self.spreads_without_relight = 0
+        self.avg_neighbors_burned = []
 
     # execute math to determine what neighbors to burn
     def determine_burn_list(self, neighbors: List[Vertex]) -> List[Vertex]:
         # interpretation from ahmed11, n_neighbors_to_burn is a geometric
         # distributed rv and the given expectation is enough to characterize it
         # so, fwd_burning_prob / (1 - fwd_burning_prob) = 1 / p
+
         n_neighbors_to_burn = min(np.random.geometric(
             p=(1 - self.fwd_burning_prob) / self.fwd_burning_prob, size=1)[0],
                                   len(neighbors))
         neighbors_to_burn = random.sample(neighbors, n_neighbors_to_burn)
+        self.avg_neihbors_burned.append(len(neighbors_to_burn)/len(neighbors))
         return neighbors_to_burn
 
     def ignite_random_node(self):

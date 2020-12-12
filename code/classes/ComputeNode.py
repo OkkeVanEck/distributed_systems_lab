@@ -145,6 +145,8 @@ class ComputeNode:
             logging.debug(self.get_machine_log() + ".. num_burning vertex ids = " +
                           str(len(self.fire.get_burning_vertex_ids())))
             self.do_spread_steps(new_edges)
+            logging.info(f"avg neighbors burned  = " + str(self.fire.avg_neighbors_burned))
+            self.fire.avg_neighbors_burned = []
 
             if self.fires_wild:
                 self.send_burn_requests()
