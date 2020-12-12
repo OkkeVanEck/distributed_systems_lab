@@ -67,7 +67,7 @@ case "$1" in
 
         # Stitching topology changes.
         ./manage.sh create_job "${ds}_sc_halted_3_5_true_true_01" halted_forest_fire.py 3 "${ds}" 5 120 True True 0.1
-        ./manage.sh create_job "${ds}_sc_halted_3_5_true_false_01" halted_forest_fire.py 3 "${ds}" 5 120 True False 0.1
+#        ./manage.sh create_job "${ds}_sc_halted_3_5_true_false_01" halted_forest_fire.py 3 "${ds}" 5 120 True False 0.1
         ./manage.sh create_job "${ds}_sc_wild_3_5_false_false_0" wild_forest_fire.py 3 "${ds}" 5 120 False False 0.0
         ./manage.sh create_job "${ds}_sc_wild_3_5_true_true_01" wild_forest_fire.py 3 "${ds}" 5 120 True True 0.1
         ./manage.sh create_job "${ds}_sc_wild_3_5_true_false_01" wild_forest_fire.py 3 "${ds}" 5 120 True False 0.1
