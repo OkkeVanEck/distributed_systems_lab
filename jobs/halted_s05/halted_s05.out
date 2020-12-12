@@ -1,0 +1,10 @@
+sample 0/1, prog: 0.0
+timer read_partition_file 0.20
+timer read_partition_file 0.20
+timer read_partition_file 0.21
+timer read_partition_file 0.65
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: got SIGCONT
+slurmstepd: error: *** JOB 2858272 ON node053 CANCELLED AT 2020-12-11T21:41:18 ***
+srun: forcing job termination
+slurmstepd: error: *** STEP 2858272.0 ON node053 CANCELLED AT 2020-12-11T21:41:18 ***

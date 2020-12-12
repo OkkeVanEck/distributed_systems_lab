@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-DATASETS=("kgs" "wiki-Talk" "cit-Patents")
+DATASETS=("wiki-Talk")
 
 
 case "$1" in
@@ -81,56 +81,56 @@ case "$1" in
         # Scalability jobs.
         # Halted down 0.4
         ./manage.sh run_job "${ds}_scala_halted_04_3_true_true_01"
-        sleep 10m
+#        sleep 10m
         ./manage.sh run_job "${ds}_scala_halted_04_5_true_true_01"
-        sleep 10m
+#        sleep 10m
         ./manage.sh run_job "${ds}_scala_halted_04_9_true_true_01"
         ./manage.sh run_job "${ds}_scala_halted_04_17_true_true_01"
 
         # Wild down 0.4
         ./manage.sh run_job "${ds}_scala_wild_04_3_true_true_01"
-        sleep 10m
+#        sleep 10m
         ./manage.sh run_job "${ds}_scala_wild_04_5_true_true_01"
-        sleep 10m
+#        sleep 10m
         ./manage.sh run_job "${ds}_scala_wild_04_9_true_true_01"
         ./manage.sh run_job "${ds}_scala_wild_04_17_true_true_01"
 
         # Halted up 2
         ./manage.sh run_job "${ds}_scala_halted_2_3_true_true_01"
-        sleep 10m
+#        sleep 10m
         ./manage.sh run_job "${ds}_scala_halted_2_5_true_true_01"
-        sleep 10m
+#        sleep 10m
         ./manage.sh run_job "${ds}_scala_halted_2_9_true_true_01"
         ./manage.sh run_job "${ds}_scala_halted_2_17_true_true_01"
 
         # Wild up 2
         ./manage.sh run_job "${ds}_scala_wild_2_3_true_true_01"
-        sleep 10m
+#        sleep 10m
         ./manage.sh run_job "${ds}_scala_wild_2_5_true_true_01"
-        sleep 10m
+#        sleep 10m
         ./manage.sh run_job "${ds}_scala_wild_2_9_true_true_01"
         ./manage.sh run_job "${ds}_scala_wild_2_17_true_true_01"
 
         # Stitching & Connectivity
         # Connectivity changes.
         ./manage.sh run_job "${ds}_sc_halted_3_5_true_false_01"
-        sleep 10m
+#        sleep 10m
         ./manage.sh run_job "${ds}_sc_halted_3_5_true_false_001"
-        sleep 10m
+#        sleep 10m
         ./manage.sh run_job "${ds}_sc_halted_3_5_false_false_0"
-        sleep 10m
+#        sleep 10m
 
         # Stitching topology changes.
         ./manage.sh run_job "${ds}_sc_halted_3_5_true_true_01"
-        sleep 10m
+#        sleep 10m
 #        ./manage.sh run_job "${ds}_sc_halted_3_5_true_false_01"
 #        sleep 10m
         ./manage.sh run_job "${ds}_sc_wild_3_5_false_false_0"
-        sleep 10m
+#        sleep 10m
         ./manage.sh run_job "${ds}_sc_wild_3_5_true_true_01"
-        sleep 10m
+#        sleep 10m
         ./manage.sh run_job "${ds}_sc_wild_3_5_true_false_01"
-        sleep 10m
+#        sleep 10m
     done
     ;;
 # Catch all for parse errors.

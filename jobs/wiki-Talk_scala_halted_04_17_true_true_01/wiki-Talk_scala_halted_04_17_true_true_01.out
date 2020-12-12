@@ -1,0 +1,846 @@
+sample 0/1, prog: 0.0
+timer read_partition_file 0.04
+timer read_partition_file 0.10
+timer read_partition_file 0.10
+timer read_partition_file 0.11
+timer read_partition_file 0.11
+timer read_partition_file 0.11
+timer read_partition_file 0.11
+timer read_partition_file 0.11
+timer read_partition_file 0.11
+timer read_partition_file 0.11
+timer read_partition_file 0.11
+timer read_partition_file 0.12
+timer read_partition_file 0.12
+timer read_partition_file 0.12
+timer read_partition_file 0.12
+timer read_partition_file 0.12
+sample 0/1, prog: 0.13216755033129593
+sample 0/1, prog: 0.13291513269586971
+sample 0/1, prog: 0.13298822035721072
+sample 0/1, prog: 0.13528734936110942
+sample 0/1, prog: 0.13589815338803074
+sample 0/1, prog: 0.1475650323569518
+sample 0/1, prog: 0.14901947681763794
+sample 0/1, prog: 0.14956972249659098
+sample 0/1, prog: 0.14965220714296154
+sample 0/1, prog: 0.1508153450677314
+sample 0/1, prog: 0.15158067729291655
+sample 0/1, prog: 0.15750182197098628
+sample 0/1, prog: 0.15781505480530492
+sample 0/1, prog: 0.1582681983056192
+sample 0/1, prog: 0.1584321234889126
+sample 0/1, prog: 0.16014133065484457
+sample 0/1, prog: 0.163091983954126
+sample 0/1, prog: 0.16343340774353332
+sample 0/1, prog: 0.16442739993777108
+sample 0/1, prog: 0.16625981201853504
+sample 0/1, prog: 0.16638301693336702
+sample 0/1, prog: 0.1684889856894359
+sample 0/1, prog: 0.16867066073334072
+sample 0/1, prog: 0.16871242511124987
+sample 0/1, prog: 0.1689901582243457
+sample 0/1, prog: 0.18099637276377858
+sample 0/1, prog: 0.1848543571731363
+sample 0/1, prog: 0.18563221871169425
+sample 0/1, prog: 0.18572410034309436
+sample 0/1, prog: 0.1863975509368794
+sample 0/1, prog: 0.19012084522748013
+sample 0/1, prog: 0.1903129613658622
+sample 0/1, prog: 0.19843508875974414
+sample 0/1, prog: 0.20753972314393884
+sample 0/1, prog: 0.21376574778074536
+sample 0/1, prog: 0.21849974001674752
+sample 0/1, prog: 0.22576360944459642
+sample 0/1, prog: 0.23025850061706868
+sample 0/1, prog: 0.2304412197704212
+sample 0/1, prog: 0.2330191259968635
+sample 0/1, prog: 0.23597917628117449
+sample 0/1, prog: 0.24185333603409645
+sample 0/1, prog: 0.24204127573468762
+sample 0/1, prog: 0.24220520091798103
+sample 0/1, prog: 0.24469435784136637
+sample 0/1, prog: 0.24473612221927551
+sample 0/1, prog: 0.24825372694867368
+sample 0/1, prog: 0.2487590759213744
+sample 0/1, prog: 0.2493583947443707
+sample 0/1, prog: 0.25058522334545197
+sample 0/1, prog: 0.25160009772864433
+sample 0/1, prog: 0.25200730041325853
+sample 0/1, prog: 0.2549851005581809
+sample 0/1, prog: 0.263087389872556
+sample 0/1, prog: 0.26496365455012455
+sample 0/1, prog: 0.26757079584110327
+sample 0/1, prog: 0.2676553687063693
+sample 0/1, prog: 0.26809911522165397
+sample 0/1, prog: 0.269142180559935
+sample 0/1, prog: 0.27243321353917604
+sample 0/1, prog: 0.2725846094090967
+sample 0/1, prog: 0.27330191259968634
+sample 0/1, prog: 0.2753024263015346
+sample 0/1, prog: 0.27727161671995104
+sample 0/1, prog: 0.27803799305458393
+sample 0/1, prog: 0.28068167817623313
+sample 0/1, prog: 0.28073597186751503
+sample 0/1, prog: 0.2807558099470219
+sample 0/1, prog: 0.2846858379082729
+sample 0/1, prog: 0.2854584788995922
+sample 0/1, prog: 0.2870810249813626
+sample 0/1, prog: 0.2882880155029371
+sample 0/1, prog: 0.2893811980947091
+sample 0/1, prog: 0.2899867815743917
+sample 0/1, prog: 0.29135143262257324
+sample 0/1, prog: 0.2931566978576962
+sample 0/1, prog: 0.29343338686134435
+sample 0/1, prog: 0.30675309108602
+sample 0/1, prog: 0.3081250509003356
+sample 0/1, prog: 0.310352136352341
+sample 0/1, prog: 0.3104910029088889
+sample 0/1, prog: 0.3142863407513829
+sample 0/1, prog: 0.31820905994649984
+sample 0/1, prog: 0.32155125428867953
+sample 0/1, prog: 0.32155751894536594
+sample 0/1, prog: 0.3227290097457176
+sample 0/1, prog: 0.32368645810928487
+sample 0/1, prog: 0.3237355312533281
+sample 0/1, prog: 0.326122365450836
+sample 0/1, prog: 0.32635102541988864
+sample 0/1, prog: 0.328813035497633
+sample 0/1, prog: 0.32890804945737634
+sample 0/1, prog: 0.3305431248525195
+sample 0/1, prog: 0.33216462682484227
+sample 0/1, prog: 0.33231602269476296
+sample 0/1, prog: 0.33317219244190055
+sample 0/1, prog: 0.33323901544655515
+sample 0/1, prog: 0.33361698306663295
+sample 0/1, prog: 0.33362533594221483
+sample 0/1, prog: 0.3337119970263763
+sample 0/1, prog: 0.33400539178118804
+sample 0/1, prog: 0.33569371675816545
+sample 0/1, prog: 0.3356978931959564
+sample 0/1, prog: 0.33812335944303024
+sample 0/1, prog: 0.34029510709430605
+sample 0/1, prog: 0.3403013717509924
+sample 0/1, prog: 0.3403400038005584
+sample 0/1, prog: 0.34049244377992677
+sample 0/1, prog: 0.3405989429435951
+sample 0/1, prog: 0.3418539624997651
+sample 0/1, prog: 0.3418623153753469
+sample 0/1, prog: 0.34217763642856097
+sample 0/1, prog: 0.34267776485402307
+sample 0/1, prog: 0.343332421477749
+sample 0/1, prog: 0.3450896576782765
+sample 0/1, prog: 0.35223032219129335
+sample 0/1, prog: 0.35230132163373895
+sample 0/1, prog: 0.3523284684793799
+sample 0/1, prog: 0.366620238599891
+sample 0/1, prog: 0.3698757718579092
+sample 0/1, prog: 0.37435186906032236
+sample 0/1, prog: 0.38151028343395066
+sample 0/1, prog: 0.38328944593288045
+sample 0/1, prog: 0.38584229353257726
+sample 0/1, prog: 0.3901074806265492
+sample 0/1, prog: 0.39295998763774415
+sample 0/1, prog: 0.3931291333682762
+sample 0/1, prog: 0.3968743539572792
+sample 0/1, prog: 0.3984948118201542
+sample 0/1, prog: 0.4022076650162777
+sample 0/1, prog: 0.40725593419604617
+sample 0/1, prog: 0.40803901628184275
+sample 0/1, prog: 0.4098756048003976
+sample 0/1, prog: 0.4110700660085993
+sample 0/1, prog: 0.4129734775318088
+sample 0/1, prog: 0.41526007722233477
+sample 0/1, prog: 0.41602332122862445
+sample 0/1, prog: 0.41722822353130345
+sample 0/1, prog: 0.422249345865431
+sample 0/1, prog: 0.4231859120400437
+sample 0/1, prog: 0.4298765653810895
+sample 0/1, prog: 0.4304748400946381
+sample 0/1, prog: 0.43246073626421816
+sample 0/1, prog: 0.43373768211879044
+sample 0/1, prog: 0.4350762304307787
+sample 0/1, prog: 0.4384727184642403
+sample 0/1, prog: 0.43868780501047244
+sample 0/1, prog: 0.4469174756774704
+sample 0/1, prog: 0.4505008593020755
+sample 0/1, prog: 0.4525473138196238
+sample 0/1, prog: 0.45721970359820996
+sample 0/1, prog: 0.46343319892164375
+sample 0/1, prog: 0.4656790783437083
+sample 0/1, prog: 0.4694159460571295
+sample 0/1, prog: 0.4709935954326476
+sample 0/1, prog: 0.47284688970236616
+sample 0/1, prog: 0.47814470104014184
+sample 0/1, prog: 0.47896954750384757
+sample 0/1, prog: 0.4801598322742583
+sample 0/1, prog: 0.4814806307256352
+sample 0/1, prog: 0.48295700148472365
+sample 0/1, prog: 0.4835229088053926
+sample 0/1, prog: 0.48366177536194055
+sample 0/1, prog: 0.48387686190817264
+sample 0/1, prog: 0.4844271075871257
+sample 0/1, prog: 0.48666150180526524
+sample 0/1, prog: 0.4871219540717136
+sample 0/1, prog: 0.48724202665820243
+sample 0/1, prog: 0.4872566441904706
+sample 0/1, prog: 0.4874330986871368
+sample 0/1, prog: 0.48759911208932566
+sample 0/1, prog: 0.48871735330784316
+sample 0/1, prog: 0.4916283304481109
+sample 0/1, prog: 0.49199794519260687
+sample 0/1, prog: 0.49201151861542736
+sample 0/1, prog: 0.4920971355901411
+sample 0/1, prog: 0.4956063874439574
+sample 0/1, prog: 0.4960918983371513
+sample 0/1, prog: 0.49613992737174684
+sample 0/1, prog: 0.4962088385952969
+sample 0/1, prog: 0.4964301897982154
+sample 0/1, prog: 0.4966306588121793
+sample 0/1, prog: 0.4971464488793573
+sample 0/1, prog: 0.49896215520895765
+sample 0/1, prog: 0.49928269680941034
+sample 0/1, prog: 0.49929104968499216
+sample 0/1, prog: 0.4994361808982265
+sample 0/1, prog: 0.5010952708106674
+sample 0/1, prog: 0.5015379732165044
+sample 0/1, prog: 0.5025925237587104
+sample 0/1, prog: 0.5033536795461048
+sample 0/1, prog: 0.5036136627985892
+sample 0/1, prog: 0.5051881798457641
+sample 0/1, prog: 0.5053124288700439
+sample 0/1, prog: 0.5069078281061734
+sample 0/1, prog: 0.5094523228302884
+sample 0/1, prog: 0.5095389839144499
+sample 0/1, prog: 0.5099461865990641
+sample 0/1, prog: 0.5174324513392792
+sample 0/1, prog: 0.5177268902035387
+sample 0/1, prog: 0.5180056674260822
+sample 0/1, prog: 0.5194642883245594
+sample 0/1, prog: 0.520720351990177
+sample 0/1, prog: 0.5207840426664885
+sample 0/1, prog: 0.5228712174524982
+sample 0/1, prog: 0.5231499946750419
+sample 0/1, prog: 0.5231635680978622
+sample 0/1, prog: 0.5232982582166193
+sample 0/1, prog: 0.5235384033895969
+sample 0/1, prog: 0.525070111949415
+sample 0/1, prog: 0.5279737803235486
+sample 0/1, prog: 0.530401334789518
+sample 0/1, prog: 0.5317242214597903
+sample 0/1, prog: 0.5327088166689985
+sample 0/1, prog: 0.534493199715167
+sample 0/1, prog: 0.5372360752343504
+sample 0/1, prog: 0.5394401902785058
+sample 0/1, prog: 0.5410836185492308
+sample 0/1, prog: 0.5412913963293289
+sample 0/1, prog: 0.5414093806969221
+sample 0/1, prog: 0.5439831104855736
+sample 0/1, prog: 0.5441825353900898
+sample 0/1, prog: 0.545436510836812
+sample 0/1, prog: 0.5518807543481938
+sample 0/1, prog: 0.5568851709311576
+sample 0/1, prog: 0.5618300732756011
+sample 0/1, prog: 0.5633670023826578
+sample 0/1, prog: 0.5639443949072518
+sample 0/1, prog: 0.565471927029279
+sample 0/1, prog: 0.574001257107775
+sample 0/1, prog: 0.5755893475777705
+sample 0/1, prog: 0.5775084207426959
+sample 0/1, prog: 0.5784073989771904
+sample 0/1, prog: 0.5787342052343295
+sample 0/1, prog: 0.5798649757662198
+sample 0/1, prog: 0.5840038256170165
+sample 0/1, prog: 0.5863019105114674
+sample 0/1, prog: 0.5882815420243611
+sample 0/1, prog: 0.5898529267431929
+sample 0/1, prog: 0.5902580412089117
+sample 0/1, prog: 0.5909962265884559
+sample 0/1, prog: 0.593128298080718
+sample 0/1, prog: 0.5939604533105578
+sample 0/1, prog: 0.5939688061861397
+sample 0/1, prog: 0.5940324968624511
+sample 0/1, prog: 0.5982527872501707
+sample 0/1, prog: 0.6011940435644226
+sample 0/1, prog: 0.6059739766161248
+sample 0/1, prog: 0.6086343674889376
+sample 0/1, prog: 0.6106286165340996
+sample 0/1, prog: 0.6164985998492306
+sample 0/1, prog: 0.6185126869738994
+sample 0/1, prog: 0.6218611459727654
+sample 0/1, prog: 0.6223101130352888
+sample 0/1, prog: 0.6233072375578698
+sample 0/1, prog: 0.6341137703418623
+sample 0/1, prog: 0.6352727318288413
+sample 0/1, prog: 0.6378349764135676
+sample 0/1, prog: 0.6403136922424756
+sample 0/1, prog: 0.6408952612048605
+sample 0/1, prog: 0.6455352835905671
+sample 0/1, prog: 0.6456052389235649
+sample 0/1, prog: 0.6485391864716827
+sample 0/1, prog: 0.6489672713452515
+sample 0/1, prog: 0.649069594071129
+sample 0/1, prog: 0.6498067353412255
+sample 0/1, prog: 0.6506806549489744
+sample 0/1, prog: 0.6506942283717948
+sample 0/1, prog: 0.6514908838804119
+sample 0/1, prog: 0.6525673607210202
+sample 0/1, prog: 0.6527333741232091
+sample 0/1, prog: 0.6528617995852797
+sample 0/1, prog: 0.6537430279591628
+sample 0/1, prog: 0.6549051217744849
+sample 0/1, prog: 0.6554397058117221
+sample 0/1, prog: 0.6557153507059224
+sample 0/1, prog: 0.6573097058326042
+sample 0/1, prog: 0.657429778419093
+sample 0/1, prog: 0.6575331452544182
+sample 0/1, prog: 0.6575769978512228
+sample 0/1, prog: 0.6645652223848713
+sample 0/1, prog: 0.6646111632005713
+sample 0/1, prog: 0.664828337965699
+sample 0/1, prog: 0.6651165121732721
+sample 0/1, prog: 0.6657168751057161
+sample 0/1, prog: 0.6659455350747687
+sample 0/1, prog: 0.6661815038099553
+sample 0/1, prog: 0.6661867243571941
+sample 0/1, prog: 0.6665730448528536
+sample 0/1, prog: 0.6665981034795991
+sample 0/1, prog: 0.6666158533402106
+sample 0/1, prog: 0.6668204987919654
+sample 0/1, prog: 0.6672454513371909
+sample 0/1, prog: 0.6677299181209371
+sample 0/1, prog: 0.67072129168868
+sample 0/1, prog: 0.67074426209653
+sample 0/1, prog: 0.6710992593087578
+sample 0/1, prog: 0.6714208450186583
+sample 0/1, prog: 0.6739308841309981
+sample 0/1, prog: 0.6740165011057119
+sample 0/1, prog: 0.6743902922879988
+sample 0/1, prog: 0.6747118779978992
+sample 0/1, prog: 0.6750407724739338
+sample 0/1, prog: 0.6753727992783115
+sample 0/1, prog: 0.6762080868364946
+sample 0/1, prog: 0.678777640187355
+sample 0/1, prog: 0.6788559483959347
+sample 0/1, prog: 0.6788956245549483
+sample 0/1, prog: 0.6807123749939964
+sample 0/1, prog: 0.6902889468485645
+sample 0/1, prog: 0.6914207614899024
+sample 0/1, prog: 0.6914865403851094
+sample 0/1, prog: 0.6976478302361567
+sample 0/1, prog: 0.699555418197157
+sample 0/1, prog: 0.6998738715787144
+sample 0/1, prog: 0.7000941786721852
+sample 0/1, prog: 0.7011132294931683
+sample 0/1, prog: 0.7016436370926146
+sample 0/1, prog: 0.7026449380529864
+sample 0/1, prog: 0.7038268699478154
+sample 0/1, prog: 0.7064538493183009
+sample 0/1, prog: 0.7065989805315352
+sample 0/1, prog: 0.7071523585388315
+sample 0/1, prog: 0.7082069090810376
+sample 0/1, prog: 0.7121077019777521
+sample 0/1, prog: 0.7149998851479608
+sample 0/1, prog: 0.7158247316116665
+sample 0/1, prog: 0.7159656863871099
+sample 0/1, prog: 0.7159803039193781
+sample 0/1, prog: 0.7164574619369901
+sample 0/1, prog: 0.7172290588188617
+sample 0/1, prog: 0.7200262280293269
+sample 0/1, prog: 0.7211747484218286
+sample 0/1, prog: 0.7212217333469764
+sample 0/1, prog: 0.722000638994982
+sample 0/1, prog: 0.7250254240650522
+sample 0/1, prog: 0.7346750835809613
+sample 0/1, prog: 0.7421832746195787
+sample 0/1, prog: 0.7423920965091245
+sample 0/1, prog: 0.7429778419093003
+sample 0/1, prog: 0.7430436208045073
+sample 0/1, prog: 0.7430645029934618
+sample 0/1, prog: 0.7443498017236159
+sample 0/1, prog: 0.7496716275786893
+sample 0/1, prog: 0.7518882719362174
+sample 0/1, prog: 0.7520135650699449
+sample 0/1, prog: 0.7535129062368834
+sample 0/1, prog: 0.7544358989886756
+sample 0/1, prog: 0.7554204941978838
+sample 0/1, prog: 0.7560271217870143
+sample 0/1, prog: 0.756085591916087
+sample 0/1, prog: 0.7564385009094193
+sample 0/1, prog: 0.7571370101299498
+sample 0/1, prog: 0.7571578923189044
+sample 0/1, prog: 0.7581216053391581
+sample 0/1, prog: 0.7582145310800059
+sample 0/1, prog: 0.7593787131142234
+sample 0/1, prog: 0.759449712556669
+sample 0/1, prog: 0.7595415941880692
+sample 0/1, prog: 0.7602745590203748
+sample 0/1, prog: 0.7604050727013408
+sample 0/1, prog: 0.7616872391031517
+sample 0/1, prog: 0.7616935037598381
+sample 0/1, prog: 0.7641617784942689
+sample 0/1, prog: 0.7660067198884056
+sample 0/1, prog: 0.7738667758109076
+sample 0/1, prog: 0.7758798188261287
+sample 0/1, prog: 0.779581186818327
+sample 0/1, prog: 0.7809646318365676
+sample 0/1, prog: 0.7817706843302142
+sample 0/1, prog: 0.7821037552440397
+sample 0/1, prog: 0.7837450952958693
+sample 0/1, prog: 0.7842525324874655
+sample 0/1, prog: 0.7845563683367546
+sample 0/1, prog: 0.7854636994468308
+sample 0/1, prog: 0.7864148831537117
+sample 0/1, prog: 0.7883214270052644
+sample 0/1, prog: 0.7902133533245489
+sample 0/1, prog: 0.7911822868920412
+sample 0/1, prog: 0.7915853131388645
+sample 0/1, prog: 0.7920499418431037
+sample 0/1, prog: 0.7924007626175407
+sample 0/1, prog: 0.7932705057874987
+sample 0/1, prog: 0.7939147213167473
+sample 0/1, prog: 0.7954579150804904
+sample 0/1, prog: 0.7958901763918501
+sample 0/1, prog: 0.7993827224945028
+sample 0/1, prog: 0.8016317342449105
+sample 0/1, prog: 0.8016505282149696
+sample 0/1, prog: 0.8097319353403901
+sample 0/1, prog: 0.8110234987272306
+sample 0/1, prog: 0.8111049392641534
+sample 0/1, prog: 0.8141923709010873
+sample 0/1, prog: 0.816345324582304
+sample 0/1, prog: 0.8176107852329513
+sample 0/1, prog: 0.8177788868540355
+sample 0/1, prog: 0.8183228678763023
+sample 0/1, prog: 0.8187060560436187
+sample 0/1, prog: 0.8198472676699863
+sample 0/1, prog: 0.8199057377990591
+sample 0/1, prog: 0.8201437947531413
+sample 0/1, prog: 0.8310286357457134
+sample 0/1, prog: 0.8326115056684702
+sample 0/1, prog: 0.8349534431597258
+sample 0/1, prog: 0.8390244258964201
+sample 0/1, prog: 0.8396947441618621
+sample 0/1, prog: 0.8407294566245612
+sample 0/1, prog: 0.8409643812503002
+sample 0/1, prog: 0.8411617179359209
+sample 0/1, prog: 0.8421421367073382
+sample 0/1, prog: 0.8426600149934117
+sample 0/1, prog: 0.843163275747217
+sample 0/1, prog: 0.8431998195778875
+sample 0/1, prog: 0.8463133539510146
+sample 0/1, prog: 0.8464125443485488
+sample 0/1, prog: 0.8464898084476807
+sample 0/1, prog: 0.8479755761917988
+sample 0/1, prog: 0.8486813941784633
+sample 0/1, prog: 0.8489810535899616
+sample 0/1, prog: 0.849695224452208
+sample 0/1, prog: 0.8499050904512014
+sample 0/1, prog: 0.8541723657640689
+sample 0/1, prog: 0.8564537449073562
+sample 0/1, prog: 0.8593156489035807
+sample 0/1, prog: 0.8593459280775648
+sample 0/1, prog: 0.8600694959248408
+sample 0/1, prog: 0.861569881201227
+sample 0/1, prog: 0.8648233262403499
+sample 0/1, prog: 0.8648285467875885
+sample 0/1, prog: 0.8648556936332294
+sample 0/1, prog: 0.865134470855773
+sample 0/1, prog: 0.8672393955023942
+sample 0/1, prog: 0.868552885187637
+sample 0/1, prog: 0.8691052190854854
+sample 0/1, prog: 0.870184828254437
+sample 0/1, prog: 0.875500389452824
+sample 0/1, prog: 0.8755870505369855
+sample 0/1, prog: 0.877332801533588
+sample 0/1, prog: 0.8776115787561315
+sample 0/1, prog: 0.8779540466549866
+sample 0/1, prog: 0.8782432649720074
+sample 0/1, prog: 0.8782808529121257
+sample 0/1, prog: 0.8915222489282216
+sample 0/1, prog: 0.8916297922013378
+sample 0/1, prog: 0.8916391891863673
+sample 0/1, prog: 0.8916590272658741
+sample 0/1, prog: 0.8917582176634083
+sample 0/1, prog: 0.8917623941011993
+sample 0/1, prog: 0.8926164756294414
+sample 0/1, prog: 0.8930236783140556
+sample 0/1, prog: 0.8930591780352783
+sample 0/1, prog: 0.8930706632392034
+sample 0/1, prog: 0.8934319251081175
+sample 0/1, prog: 0.8934883070182948
+sample 0/1, prog: 0.8935133656450404
+sample 0/1, prog: 0.8935196303017268
+sample 0/1, prog: 0.8937566431463612
+sample 0/1, prog: 0.8958521708079528
+sample 0/1, prog: 0.8959033321708915
+sample 0/1, prog: 0.8959356995637711
+sample 0/1, prog: 0.8962729469153875
+sample 0/1, prog: 0.8964869893521719
+sample 0/1, prog: 0.8969234271013224
+sample 0/1, prog: 0.8969276035391134
+sample 0/1, prog: 0.8976282009785393
+sample 0/1, prog: 0.8981721820008061
+sample 0/1, prog: 0.8984321652532905
+sample 0/1, prog: 0.899119189269896
+sample 0/1, prog: 0.8991452920060893
+sample 0/1, prog: 0.8996892730283559
+sample 0/1, prog: 0.900967262992376
+sample 0/1, prog: 0.9010079832608373
+sample 0/1, prog: 0.9010434829820602
+sample 0/1, prog: 0.9018203004111703
+sample 0/1, prog: 0.9018265650678566
+sample 0/1, prog: 0.9020207694251342
+sample 0/1, prog: 0.9030857610618176
+sample 0/1, prog: 0.9037258001532753
+sample 0/1, prog: 0.9040609592859962
+sample 0/1, prog: 0.9040776650371598
+sample 0/1, prog: 0.9050633043558158
+sample 0/1, prog: 0.906675409343109
+sample 0/1, prog: 0.9066795857808999
+sample 0/1, prog: 0.9073415511707599
+sample 0/1, prog: 0.9073446834991031
+sample 0/1, prog: 0.9076025785326921
+sample 0/1, prog: 0.9076182401744081
+sample 0/1, prog: 0.9076495634578399
+sample 0/1, prog: 0.90771847468139
+sample 0/1, prog: 0.9081027069581542
+sample 0/1, prog: 0.9082238236540907
+sample 0/1, prog: 0.9087928633031029
+sample 0/1, prog: 0.9089703619092168
+sample 0/1, prog: 0.9098233993280112
+sample 0/1, prog: 0.9100270006703183
+sample 0/1, prog: 0.9100812943616001
+sample 0/1, prog: 0.9101000883316592
+sample 0/1, prog: 0.9108675087757399
+sample 0/1, prog: 0.910874817541874
+sample 0/1, prog: 0.911682958254416
+sample 0/1, prog: 0.9118500157660526
+sample 0/1, prog: 0.9123772910371557
+sample 0/1, prog: 0.9124169671961694
+sample 0/1, prog: 0.9124535110268399
+sample 0/1, prog: 0.9128628019303495
+sample 0/1, prog: 0.9129202279499746
+sample 0/1, prog: 0.9147328019512317
+sample 0/1, prog: 0.9147714340007977
+sample 0/1, prog: 0.9153018416002439
+sample 0/1, prog: 0.9154918695197305
+sample 0/1, prog: 0.9177513223646155
+sample 0/1, prog: 0.9356504906270295
+sample 0/1, prog: 0.9366789384330423
+sample 0/1, prog: 0.9370516855058815
+sample 0/1, prog: 0.938108324266983
+sample 0/1, prog: 0.9381918530228013
+sample 0/1, prog: 0.9382973080770218
+sample 0/1, prog: 0.9402038519285746
+sample 0/1, prog: 0.9407812444531686
+sample 0/1, prog: 0.9412886816447648
+sample 0/1, prog: 0.9423818642365367
+sample 0/1, prog: 0.9424591283356687
+sample 0/1, prog: 0.9438185588366115
+sample 0/1, prog: 0.9442643935707916
+sample 0/1, prog: 0.9455580451765276
+sample 0/1, prog: 0.9456353092756595
+sample 0/1, prog: 0.9457699993944165
+sample 0/1, prog: 0.946399597391397
+sample 0/1, prog: 0.946472685052738
+sample 0/1, prog: 0.9466741981761496
+sample 0/1, prog: 0.9467671239169975
+sample 0/1, prog: 0.946792182543743
+sample 0/1, prog: 0.9469331373191864
+sample 0/1, prog: 0.946938357866425
+sample 0/1, prog: 0.9480304963487493
+sample 0/1, prog: 0.94825080344222
+sample 0/1, prog: 0.9485233160080773
+sample 0/1, prog: 0.9492406191986669
+sample 0/1, prog: 0.9495768224408355
+sample 0/1, prog: 0.9496927185895334
+sample 0/1, prog: 0.9499192903396906
+sample 0/1, prog: 0.9502502730346206
+sample 0/1, prog: 0.9511784863336514
+sample 0/1, prog: 0.9516065712072203
+sample 0/1, prog: 0.952735253520215
+sample 0/1, prog: 0.9527446505052446
+sample 0/1, prog: 0.9531455885331724
+sample 0/1, prog: 0.9532489553684975
+sample 0/1, prog: 0.9532969844030931
+sample 0/1, prog: 0.9538795974749257
+sample 0/1, prog: 0.9539599939024008
+sample 0/1, prog: 0.9543066382390468
+sample 0/1, prog: 0.9551722049712139
+sample 0/1, prog: 0.9564982239698294
+sample 0/1, prog: 0.9614024060458114
+sample 0/1, prog: 0.961526655070091
+sample 0/1, prog: 0.9621489443009374
+sample 0/1, prog: 0.962270060996874
+sample 0/1, prog: 0.9632891118178571
+sample 0/1, prog: 0.9634102285137938
+sample 0/1, prog: 0.9634311107027483
+sample 0/1, prog: 0.9654180509817761
+sample 0/1, prog: 0.9654556389218943
+sample 0/1, prog: 0.9660904574661134
+sample 0/1, prog: 0.9665436009664277
+sample 0/1, prog: 0.9668286428456576
+sample 0/1, prog: 0.9668443044873736
+sample 0/1, prog: 0.9680993240435435
+sample 0/1, prog: 0.9688375094230878
+sample 0/1, prog: 0.9705320990567515
+sample 0/1, prog: 0.9707002006778358
+sample 0/1, prog: 0.9715104296092734
+sample 0/1, prog: 0.9743357897748274
+sample 0/1, prog: 0.9779870405135348
+sample 0/1, prog: 0.9790739584486204
+sample 0/1, prog: 0.9814085871737419
+sample 0/1, prog: 0.9821540813194203
+sample 0/1, prog: 0.9831324118719421
+sample 0/1, prog: 0.9831365883097329
+sample 0/1, prog: 0.9834122332039333
+sample 0/1, prog: 0.9836732605658656
+sample 0/1, prog: 0.9851830428272813
+sample 0/1, prog: 0.985457643612034
+sample 0/1, prog: 0.9862762254190534
+sample 0/1, prog: 0.9866562812580266
+sample 0/1, prog: 0.9866677664619516
+sample 0/1, prog: 0.986731457138263
+sample 0/1, prog: 0.9873547904785571
+sample 0/1, prog: 0.9886045894874884
+sample 0/1, prog: 0.9911637017438716
+sample 0/1, prog: 0.9912169513257058
+sample 0/1, prog: 0.9923686040465506
+sample 0/1, prog: 0.9924406475984439
+sample 0/1, prog: 0.9982208375010702
+sample 0/1, prog: 0.9984129536394523
+sample 0/1, prog: 0.9984317476095114
+timer run_sim 24.25
+timer run_sim 24.25
+timer run_sim 24.25
+timer run_sim 24.26
+timer run_sim 24.26
+timer run_sim 24.27
+timer run_sim 24.27
+timer run_sim 24.27
+timer run_sim 24.27
+timer run_sim 24.28
+timer run_sim 24.28
+timer run_sim 24.28
+timer run_sim 24.28
+timer run_sim 24.28
+timer send_heartbeat 0.12
+timer send_burn_requests 0.00
+timer do_spread_steps 0.23
+timer init_partition 0.68
+timer receive_from_headnode 22.58
+timer do_tasks 23.53
+counter send_heartbeat 597
+counter send_burn_requests 0
+counter do_spread_steps 597
+counter init_partition 1
+counter receive_from_headnode 597
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 146808
+timer run_sim 24.33
+timer run_sim 24.34
+timer send_heartbeat 1.40
+timer send_burn_requests 0.00
+timer do_spread_steps 0.17
+timer init_partition 1.73
+timer receive_from_headnode 20.22
+timer do_tasks 22.40
+counter send_heartbeat 597
+counter send_burn_requests 0
+counter do_spread_steps 597
+counter init_partition 1
+counter receive_from_headnode 597
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 123712
+timer send_heartbeat 0.08
+timer send_burn_requests 0.00
+timer do_spread_steps 0.17
+timer init_partition 1.97
+timer receive_from_headnode 21.16
+timer do_tasks 22.17
+counter send_heartbeat 597
+counter send_burn_requests 0
+counter do_spread_steps 597
+counter init_partition 1
+counter receive_from_headnode 597
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 159778
+timer send_heartbeat 0.20
+timer send_burn_requests 0.00
+timer do_spread_steps 0.28
+timer init_partition 1.75
+timer receive_from_headnode 21.13
+timer do_tasks 22.41
+counter send_heartbeat 597
+counter send_burn_requests 0
+counter do_spread_steps 597
+counter init_partition 1
+counter receive_from_headnode 597
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 187170
+timer send_heartbeat 0.13
+timer send_burn_requests 0.00
+timer do_spread_steps 0.35
+timer init_partition 1.59
+timer receive_from_headnode 21.20
+timer do_tasks 22.58
+counter send_heartbeat 597
+counter send_burn_requests 0
+counter do_spread_steps 597
+counter init_partition 1
+counter receive_from_headnode 597
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 243624
+timer send_heartbeat 0.16
+timer send_burn_requests 0.00
+timer do_spread_steps 0.43
+timer init_partition 1.66
+timer receive_from_headnode 21.06
+timer do_tasks 22.51
+counter send_heartbeat 597
+counter send_burn_requests 0
+counter do_spread_steps 597
+counter init_partition 1
+counter receive_from_headnode 597
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 258862
+timer send_heartbeat 0.14
+timer send_burn_requests 0.00
+timer do_spread_steps 0.40
+timer init_partition 1.95
+timer receive_from_headnode 20.76
+timer do_tasks 22.22
+counter send_heartbeat 597
+counter send_burn_requests 0
+counter do_spread_steps 597
+counter init_partition 1
+counter receive_from_headnode 597
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 275284
+timer send_heartbeat 0.06
+timer send_burn_requests 0.00
+timer do_spread_steps 0.19
+timer init_partition 1.75
+timer receive_from_headnode 21.50
+timer do_tasks 22.41
+counter send_heartbeat 597
+counter send_burn_requests 0
+counter do_spread_steps 597
+counter init_partition 1
+counter receive_from_headnode 597
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 130424
+timer send_heartbeat 0.10
+timer send_burn_requests 0.00
+timer do_spread_steps 0.24
+timer init_partition 1.72
+timer receive_from_headnode 21.45
+timer do_tasks 22.42
+counter send_heartbeat 597
+counter send_burn_requests 0
+counter do_spread_steps 597
+counter init_partition 1
+counter receive_from_headnode 597
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 147080
+timer send_heartbeat 0.31
+timer send_burn_requests 0.00
+timer do_spread_steps 0.30
+timer init_partition 1.56
+timer receive_from_headnode 21.19
+timer do_tasks 22.58
+counter send_heartbeat 597
+counter send_burn_requests 0
+counter do_spread_steps 597
+counter init_partition 1
+counter receive_from_headnode 597
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 166310
+timer send_heartbeat 0.15
+timer send_burn_requests 0.00
+timer do_spread_steps 0.35
+timer init_partition 1.68
+timer receive_from_headnode 21.15
+timer do_tasks 22.48
+counter send_heartbeat 597
+counter send_burn_requests 0
+counter do_spread_steps 597
+counter init_partition 1
+counter receive_from_headnode 597
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 206320
+timer send_heartbeat 0.08
+timer send_burn_requests 0.00
+timer do_spread_steps 0.34
+timer init_partition 2.20
+timer receive_from_headnode 20.75
+timer do_tasks 21.95
+counter send_heartbeat 597
+counter send_burn_requests 0
+counter do_spread_steps 597
+counter init_partition 1
+counter receive_from_headnode 597
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 193188
+timer send_heartbeat 0.12
+timer send_burn_requests 0.00
+timer do_spread_steps 0.40
+timer init_partition 1.92
+timer receive_from_headnode 20.70
+timer do_tasks 22.25
+counter send_heartbeat 597
+counter send_burn_requests 0
+counter do_spread_steps 597
+counter init_partition 1
+counter receive_from_headnode 597
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 249424
+timer send_heartbeat 0.10
+timer send_burn_requests 0.00
+timer do_spread_steps 0.31
+timer init_partition 2.18
+timer receive_from_headnode 20.55
+timer do_tasks 22.00
+counter send_heartbeat 597
+counter send_burn_requests 0
+counter do_spread_steps 597
+counter init_partition 1
+counter receive_from_headnode 597
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 232848
+timer send_heartbeat 0.08
+timer send_burn_requests 0.00
+timer do_spread_steps 0.64
+timer init_partition 2.59
+timer receive_from_headnode 19.09
+timer do_tasks 21.64
+counter send_heartbeat 597
+counter send_burn_requests 0
+counter do_spread_steps 597
+counter init_partition 1
+counter receive_from_headnode 597
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 508502
+timer send_heartbeat 0.13
+timer send_burn_requests 0.00
+timer do_spread_steps 0.53
+timer init_partition 2.62
+timer receive_from_headnode 19.22
+timer do_tasks 21.58
+counter send_heartbeat 597
+counter send_burn_requests 0
+counter do_spread_steps 597
+counter init_partition 1
+counter receive_from_headnode 597
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 428166
+timer run 27.86
+timer stitch 1.23
+counter run 1
+counter stitch 1
+timer edges2file 1.59
+timer write2file 0.56
+counter edges2file 1
+counter write2file 1
+timer run_sim 28.07

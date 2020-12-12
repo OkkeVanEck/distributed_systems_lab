@@ -1,0 +1,780 @@
+sample 0/1, prog: 0.0
+timer read_partition_file 0.12
+timer read_partition_file 0.12
+timer read_partition_file 0.15
+timer read_partition_file 0.16
+timer read_partition_file 0.16
+timer read_partition_file 0.18
+timer read_partition_file 0.18
+timer read_partition_file 0.19
+sample 0/1, prog: 0.09594948180848109
+sample 0/1, prog: 0.09738513229910813
+sample 0/1, prog: 0.10101654495830871
+sample 0/1, prog: 0.10103638303781555
+sample 0/1, prog: 0.1045571200955569
+sample 0/1, prog: 0.10545401011115589
+sample 0/1, prog: 0.10772285994107046
+sample 0/1, prog: 0.107905579094423
+sample 0/1, prog: 0.10795047580067534
+sample 0/1, prog: 0.1138402971953132
+sample 0/1, prog: 0.11919971099050487
+sample 0/1, prog: 0.11936676850214147
+sample 0/1, prog: 0.1211438427821758
+sample 0/1, prog: 0.1231996942847537
+sample 0/1, prog: 0.1243795379606872
+sample 0/1, prog: 0.12634141961296952
+sample 0/1, prog: 0.1268415480384316
+sample 0/1, prog: 0.12684885680456567
+sample 0/1, prog: 0.12732288249383453
+sample 0/1, prog: 0.1275504983534394
+sample 0/1, prog: 0.12775201147685106
+sample 0/1, prog: 0.12777498188470107
+sample 0/1, prog: 0.12778124654138745
+sample 0/1, prog: 0.13351131919052284
+sample 0/1, prog: 0.13373893505012768
+sample 0/1, prog: 0.13375772902018682
+sample 0/1, prog: 0.1357989629904965
+sample 0/1, prog: 0.13594931475096947
+sample 0/1, prog: 0.13606521089966736
+sample 0/1, prog: 0.13718867266542348
+sample 0/1, prog: 0.13719702554100532
+sample 0/1, prog: 0.13927689156088097
+sample 0/1, prog: 0.14333638909365035
+sample 0/1, prog: 0.1458735750516312
+sample 0/1, prog: 0.14663159851068228
+sample 0/1, prog: 0.15005105695199394
+sample 0/1, prog: 0.1511797392649887
+sample 0/1, prog: 0.15200458572869444
+sample 0/1, prog: 0.1522572602150448
+sample 0/1, prog: 0.15500535628146686
+sample 0/1, prog: 0.1643302977591323
+sample 0/1, prog: 0.16545062719654524
+sample 0/1, prog: 0.16799303370176474
+sample 0/1, prog: 0.16921046531781647
+sample 0/1, prog: 0.16986825426988558
+sample 0/1, prog: 0.17003740000041764
+sample 0/1, prog: 0.17097396617503033
+sample 0/1, prog: 0.18245081722446474
+sample 0/1, prog: 0.19655673586328012
+sample 0/1, prog: 0.20504534567331487
+sample 0/1, prog: 0.20974174996919878
+sample 0/1, prog: 0.20998502747051956
+sample 0/1, prog: 0.210356730433911
+sample 0/1, prog: 0.21303487116733524
+sample 0/1, prog: 0.21537263222079991
+sample 0/1, prog: 0.21566393875671624
+sample 0/1, prog: 0.2166683720454313
+sample 0/1, prog: 0.2167738270996519
+sample 0/1, prog: 0.21678740052247236
+sample 0/1, prog: 0.21800692035741956
+sample 0/1, prog: 0.23003192886691154
+sample 0/1, prog: 0.2310718618768494
+sample 0/1, prog: 0.23319766871242512
+sample 0/1, prog: 0.23889119753088997
+sample 0/1, prog: 0.24835604967455108
+sample 0/1, prog: 0.24985747906038502
+sample 0/1, prog: 0.25123570353138697
+sample 0/1, prog: 0.2565679704809377
+sample 0/1, prog: 0.2567611307287675
+sample 0/1, prog: 0.26024114751804744
+sample 0/1, prog: 0.26029961764712023
+sample 0/1, prog: 0.2604280431091909
+sample 0/1, prog: 0.2610273619321872
+sample 0/1, prog: 0.2623168371001322
+sample 0/1, prog: 0.26767207445753294
+sample 0/1, prog: 0.2713191487584495
+sample 0/1, prog: 0.2720113933222936
+sample 0/1, prog: 0.27377489417950746
+sample 0/1, prog: 0.2740014659296646
+sample 0/1, prog: 0.28202544703546006
+sample 0/1, prog: 0.29005882512628506
+sample 0/1, prog: 0.2909504945946454
+sample 0/1, prog: 0.2941559105991726
+sample 0/1, prog: 0.2942665862006319
+sample 0/1, prog: 0.29515094690285815
+sample 0/1, prog: 0.2967077140894217
+sample 0/1, prog: 0.2971472841669155
+sample 0/1, prog: 0.2972934594895975
+sample 0/1, prog: 0.29736759126038625
+sample 0/1, prog: 0.298546390826872
+sample 0/1, prog: 0.2995727504139894
+sample 0/1, prog: 0.30146989728051254
+sample 0/1, prog: 0.3036719241057725
+sample 0/1, prog: 0.3048413266872287
+sample 0/1, prog: 0.3080352574878309
+sample 0/1, prog: 0.3080738895373969
+sample 0/1, prog: 0.30898539708526407
+sample 0/1, prog: 0.311102851045258
+sample 0/1, prog: 0.3120738728316457
+sample 0/1, prog: 0.31359409618753875
+sample 0/1, prog: 0.3142195177467283
+sample 0/1, prog: 0.31451186839209233
+sample 0/1, prog: 0.3156656093318326
+sample 0/1, prog: 0.3156666534412803
+sample 0/1, prog: 0.317538741681058
+sample 0/1, prog: 0.3185671894870708
+sample 0/1, prog: 0.3273993113054083
+sample 0/1, prog: 0.3286741689410851
+sample 0/1, prog: 0.33295501767677294
+sample 0/1, prog: 0.3329591941145639
+sample 0/1, prog: 0.3340836999897677
+sample 0/1, prog: 0.3355705118433335
+sample 0/1, prog: 0.3358304950958179
+sample 0/1, prog: 0.3367910757877284
+sample 0/1, prog: 0.34006227068746253
+sample 0/1, prog: 0.34558769788484306
+sample 0/1, prog: 0.3460826057630665
+sample 0/1, prog: 0.3471089653501839
+sample 0/1, prog: 0.34783984196359397
+sample 0/1, prog: 0.3483566761402197
+sample 0/1, prog: 0.3487837169043408
+sample 0/1, prog: 0.3516790324028926
+sample 0/1, prog: 0.35184504580508147
+sample 0/1, prog: 0.35189829538691564
+sample 0/1, prog: 0.35437492299692824
+sample 0/1, prog: 0.35505150591905643
+sample 0/1, prog: 0.35834462711719295
+sample 0/1, prog: 0.3610520029151536
+sample 0/1, prog: 0.36298882594069043
+sample 0/1, prog: 0.36319973604913164
+sample 0/1, prog: 0.3632634267254431
+sample 0/1, prog: 0.3652482787855754
+sample 0/1, prog: 0.3734455820596938
+sample 0/1, prog: 0.37571025545181747
+sample 0/1, prog: 0.3762218690812046
+sample 0/1, prog: 0.37718975853924913
+sample 0/1, prog: 0.3780709869131322
+sample 0/1, prog: 0.37923621305679744
+sample 0/1, prog: 0.38065933423405174
+sample 0/1, prog: 0.38077627449219736
+sample 0/1, prog: 0.38078984791501785
+sample 0/1, prog: 0.38092453803377485
+sample 0/1, prog: 0.38180472229821016
+sample 0/1, prog: 0.3818120310643443
+sample 0/1, prog: 0.3825648339761567
+sample 0/1, prog: 0.3844317016686957
+sample 0/1, prog: 0.38592268996005236
+sample 0/1, prog: 0.3906389323354431
+sample 0/1, prog: 0.3913489267598987
+sample 0/1, prog: 0.3914084409984192
+sample 0/1, prog: 0.39160160124624904
+sample 0/1, prog: 0.394723488494958
+sample 0/1, prog: 0.3968879273800997
+sample 0/1, prog: 0.3969474416186202
+sample 0/1, prog: 0.4014266711493766
+sample 0/1, prog: 0.4029281005352105
+sample 0/1, prog: 0.4046602781089925
+sample 0/1, prog: 0.4058150631581805
+sample 0/1, prog: 0.4060009146398762
+sample 0/1, prog: 0.4074167270509964
+sample 0/1, prog: 0.40938696157886056
+sample 0/1, prog: 0.4097116796171042
+sample 0/1, prog: 0.41093850821818545
+sample 0/1, prog: 0.4109614786260355
+sample 0/1, prog: 0.41143237198696114
+sample 0/1, prog: 0.41247439321579443
+sample 0/1, prog: 0.4124817019819286
+sample 0/1, prog: 0.41363648703111655
+sample 0/1, prog: 0.41667171319566404
+sample 0/1, prog: 0.4214829695307981
+sample 0/1, prog: 0.42169596785813473
+sample 0/1, prog: 0.42194551001614194
+sample 0/1, prog: 0.42235062448186067
+sample 0/1, prog: 0.42295307563320017
+sample 0/1, prog: 0.4237820985346968
+sample 0/1, prog: 0.42445659323792956
+sample 0/1, prog: 0.42595489029542033
+sample 0/1, prog: 0.4263098875076481
+sample 0/1, prog: 0.42646545981535966
+sample 0/1, prog: 0.42801074179799825
+sample 0/1, prog: 0.42870403047129013
+sample 0/1, prog: 0.4323354431304907
+sample 0/1, prog: 0.43239078093122035
+sample 0/1, prog: 0.4325860293979456
+sample 0/1, prog: 0.4326726904821071
+sample 0/1, prog: 0.43275204280013446
+sample 0/1, prog: 0.4340717971420636
+sample 0/1, prog: 0.43547090380202014
+sample 0/1, prog: 0.43735865368351373
+sample 0/1, prog: 0.43888200936774996
+sample 0/1, prog: 0.43978620814948305
+sample 0/1, prog: 0.4399219423776878
+sample 0/1, prog: 0.44062880447380015
+sample 0/1, prog: 0.44197361744247476
+sample 0/1, prog: 0.4420968223573068
+sample 0/1, prog: 0.4423954376593572
+sample 0/1, prog: 0.44306784414369454
+sample 0/1, prog: 0.44336332711740173
+sample 0/1, prog: 0.4441088212630801
+sample 0/1, prog: 0.445772087613312
+sample 0/1, prog: 0.44824140645719046
+sample 0/1, prog: 0.4490453707319416
+sample 0/1, prog: 0.45047475656588226
+sample 0/1, prog: 0.4509404293795693
+sample 0/1, prog: 0.45113150140850367
+sample 0/1, prog: 0.452292551114378
+sample 0/1, prog: 0.45295034006644713
+sample 0/1, prog: 0.45417403633918524
+sample 0/1, prog: 0.4564407979502043
+sample 0/1, prog: 0.45721970359820996
+sample 0/1, prog: 0.4573345556374601
+sample 0/1, prog: 0.4589717192514988
+sample 0/1, prog: 0.46518625868438035
+sample 0/1, prog: 0.46897428776074024
+sample 0/1, prog: 0.4721891007502971
+sample 0/1, prog: 0.4724261135949315
+sample 0/1, prog: 0.47944670552145957
+sample 0/1, prog: 0.47991655477293754
+sample 0/1, prog: 0.4804469623723837
+sample 0/1, prog: 0.4911960691367512
+sample 0/1, prog: 0.4922203405049731
+sample 0/1, prog: 0.49226314899233
+sample 0/1, prog: 0.49270271906982377
+sample 0/1, prog: 0.49396609150157555
+sample 0/1, prog: 0.4959519876711556
+sample 0/1, prog: 0.49711408148647773
+sample 0/1, prog: 0.4976695477126694
+sample 0/1, prog: 0.5013155779041383
+sample 0/1, prog: 0.5021675712134849
+sample 0/1, prog: 0.5030550642440543
+sample 0/1, prog: 0.5051860916268687
+sample 0/1, prog: 0.51152488008403
+sample 0/1, prog: 0.5119038918135554
+sample 0/1, prog: 0.5124436963980312
+sample 0/1, prog: 0.5144765774927591
+sample 0/1, prog: 0.5145120772139818
+sample 0/1, prog: 0.515300379847017
+sample 0/1, prog: 0.5153452765532694
+sample 0/1, prog: 0.5159372866101316
+sample 0/1, prog: 0.5187386322583879
+sample 0/1, prog: 0.5199518874366487
+sample 0/1, prog: 0.5222468400027565
+sample 0/1, prog: 0.5250105977108944
+sample 0/1, prog: 0.5270361700394882
+sample 0/1, prog: 0.5270873314024269
+sample 0/1, prog: 0.5293248579489096
+sample 0/1, prog: 0.5313493861680557
+sample 0/1, prog: 0.5316344280472857
+sample 0/1, prog: 0.5323172756261002
+sample 0/1, prog: 0.5393503968660011
+sample 0/1, prog: 0.542422166861219
+sample 0/1, prog: 0.5432929541406248
+sample 0/1, prog: 0.5459961535007946
+sample 0/1, prog: 0.5535450648078735
+sample 0/1, prog: 0.5613278566312435
+sample 0/1, prog: 0.5651837528217057
+sample 0/1, prog: 0.5664784485368894
+sample 0/1, prog: 0.5708062821977251
+sample 0/1, prog: 0.5719401850579585
+sample 0/1, prog: 0.5754431722550885
+sample 0/1, prog: 0.5759756680734301
+sample 0/1, prog: 0.5783155173457902
+sample 0/1, prog: 0.5806553666181504
+sample 0/1, prog: 0.5821181639544184
+sample 0/1, prog: 0.5821641047701184
+sample 0/1, prog: 0.5834065950129156
+sample 0/1, prog: 0.5837908272896798
+sample 0/1, prog: 0.5841489568302508
+sample 0/1, prog: 0.584225176819935
+sample 0/1, prog: 0.5843974548788102
+sample 0/1, prog: 0.5848244956429313
+sample 0/1, prog: 0.5852828596904842
+sample 0/1, prog: 0.5887921115443006
+sample 0/1, prog: 0.5890541830156805
+sample 0/1, prog: 0.5903238201041185
+sample 0/1, prog: 0.5906036414361099
+sample 0/1, prog: 0.5942966565527265
+sample 0/1, prog: 0.5942997888810697
+sample 0/1, prog: 0.600484049139967
+sample 0/1, prog: 0.602774825268284
+sample 0/1, prog: 0.6031590575450481
+sample 0/1, prog: 0.6032196158930163
+sample 0/1, prog: 0.6032874830071188
+sample 0/1, prog: 0.6068113523932033
+sample 0/1, prog: 0.6074232005295723
+sample 0/1, prog: 0.6089235858059585
+sample 0/1, prog: 0.6115985942110396
+sample 0/1, prog: 0.6157729437830591
+sample 0/1, prog: 0.6184938930038403
+sample 0/1, prog: 0.6186693033910586
+sample 0/1, prog: 0.6187152442067587
+sample 0/1, prog: 0.6194012241139165
+sample 0/1, prog: 0.6206792140779365
+sample 0/1, prog: 0.6209684323949574
+sample 0/1, prog: 0.6222391135928432
+sample 0/1, prog: 0.629707628472447
+sample 0/1, prog: 0.6316005989011793
+sample 0/1, prog: 0.6403251774464006
+sample 0/1, prog: 0.6439858251701376
+sample 0/1, prog: 0.6497597504160776
+sample 0/1, prog: 0.6506806549489744
+sample 0/1, prog: 0.6569171206802582
+sample 0/1, prog: 0.6621251386055292
+sample 0/1, prog: 0.6633968639128628
+sample 0/1, prog: 0.6652063055857768
+sample 0/1, prog: 0.668365780774604
+sample 0/1, prog: 0.6736761214257523
+sample 0/1, prog: 0.6745082766555921
+sample 0/1, prog: 0.6748455240072085
+sample 0/1, prog: 0.6838269534765712
+sample 0/1, prog: 0.6840274224905352
+sample 0/1, prog: 0.6883051388978798
+sample 0/1, prog: 0.6886047983093779
+sample 0/1, prog: 0.6890412360585286
+sample 0/1, prog: 0.6891978524756879
+sample 0/1, prog: 0.6908339719802788
+sample 0/1, prog: 0.6918352729406507
+sample 0/1, prog: 0.6926444577626405
+sample 0/1, prog: 0.6926601194043565
+sample 0/1, prog: 0.6933836872516325
+sample 0/1, prog: 0.6940686230493425
+sample 0/1, prog: 0.6947493824092617
+sample 0/1, prog: 0.6971362166067696
+sample 0/1, prog: 0.6982575901536303
+sample 0/1, prog: 0.7051142568968649
+sample 0/1, prog: 0.7053387404281266
+sample 0/1, prog: 0.7065979364220875
+sample 0/1, prog: 0.7073757979606454
+sample 0/1, prog: 0.7075908845068776
+sample 0/1, prog: 0.7083530844037196
+sample 0/1, prog: 0.7085378917759675
+sample 0/1, prog: 0.7087968309190043
+sample 0/1, prog: 0.7089701530873272
+sample 0/1, prog: 0.709055770062041
+sample 0/1, prog: 0.7091977689469321
+sample 0/1, prog: 0.7099537041870877
+sample 0/1, prog: 0.7120826433510066
+sample 0/1, prog: 0.720661046573546
+sample 0/1, prog: 0.7230666747411131
+sample 0/1, prog: 0.7232274675960633
+sample 0/1, prog: 0.7233893045604612
+sample 0/1, prog: 0.7236795669869298
+sample 0/1, prog: 0.7236931404097503
+sample 0/1, prog: 0.7291371270702081
+sample 0/1, prog: 0.7293762281337379
+sample 0/1, prog: 0.7305800863269691
+sample 0/1, prog: 0.731138684881504
+dropping data. exception reported
+invalid load key, '\x00'.
+sample 0/1, prog: 0.7314978585315227
+sample 0/1, prog: 0.7320919568072803
+sample 0/1, prog: 0.732439645253374
+sample 0/1, prog: 0.732801951231736
+sample 0/1, prog: 0.7335035927806096
+sample 0/1, prog: 0.7340882940713377
+sample 0/1, prog: 0.7350624481860687
+sample 0/1, prog: 0.7359676910772495
+sample 0/1, prog: 0.7386374789350919
+sample 0/1, prog: 0.738644787701226
+sample 0/1, prog: 0.738660449342942
+sample 0/1, prog: 0.7387659043971625
+sample 0/1, prog: 0.7405210523787945
+sample 0/1, prog: 0.7431563846248619
+sample 0/1, prog: 0.7432472221468143
+sample 0/1, prog: 0.7462145811972595
+sample 0/1, prog: 0.7462156253067072
+sample 0/1, prog: 0.7468441791942398
+dropping data. exception reported
+invalid load key, '\x00'.
+sample 0/1, prog: 0.7470446482082038
+sample 0/1, prog: 0.7471751618891699
+sample 0/1, prog: 0.7472847933811814
+sample 0/1, prog: 0.7489438832936224
+sample 0/1, prog: 0.7493281155703866
+dropping data. exception reported
+invalid load key, '\x04'.
+sample 0/1, prog: 0.7503221077646243
+sample 0/1, prog: 0.7503450781724743
+sample 0/1, prog: 0.7503607398141903
+sample 0/1, prog: 0.7525011641820342
+sample 0/1, prog: 0.7525168258237501
+sample 0/1, prog: 0.7713191487584494
+sample 0/1, prog: 0.772741225826256
+sample 0/1, prog: 0.7728070047214629
+sample 0/1, prog: 0.7732309131572408
+sample 0/1, prog: 0.7732309131572408
+sample 0/1, prog: 0.7758150840403695
+sample 0/1, prog: 0.776020773601572
+sample 0/1, prog: 0.7761398020786131
+sample 0/1, prog: 0.7767036211803866
+sample 0/1, prog: 0.7768769433487096
+sample 0/1, prog: 0.7770043247013325
+sample 0/1, prog: 0.7771619852279396
+sample 0/1, prog: 0.777302940003383
+sample 0/1, prog: 0.7774981884701082
+sample 0/1, prog: 0.7813091879543181
+sample 0/1, prog: 0.7817414492656778
+sample 0/1, prog: 0.7820609467566828
+sample 0/1, prog: 0.7828659551408816
+sample 0/1, prog: 0.7829077195187908
+sample 0/1, prog: 0.784389310825118
+sample 0/1, prog: 0.7847244699578388
+sample 0/1, prog: 0.7863626776813253
+sample 0/1, prog: 0.7865568820386029
+sample 0/1, prog: 0.7890940679965837
+sample 0/1, prog: 0.7893175074183977
+sample 0/1, prog: 0.7894313153482001
+sample 0/1, prog: 0.7929061115902414
+sample 0/1, prog: 0.7930293165050734
+sample 0/1, prog: 0.7944691434334913
+sample 0/1, prog: 0.7998598805121148
+sample 0/1, prog: 0.8000425996654673
+sample 0/1, prog: 0.8040707739148049
+sample 0/1, prog: 0.8061924043125896
+sample 0/1, prog: 0.8062905506006761
+sample 0/1, prog: 0.8127191324703421
+sample 0/1, prog: 0.8179177534105835
+sample 0/1, prog: 0.8180921196883542
+sample 0/1, prog: 0.8188772899930462
+sample 0/1, prog: 0.8302758328339009
+sample 0/1, prog: 0.8303906848731512
+sample 0/1, prog: 0.8314274855547458
+sample 0/1, prog: 0.8315705285490846
+sample 0/1, prog: 0.834490902674382
+sample 0/1, prog: 0.83502966314941
+sample 0/1, prog: 0.8351727061437488
+sample 0/1, prog: 0.8354744537741424
+sample 0/1, prog: 0.8385253415804058
+sample 0/1, prog: 0.8393345264023956
+sample 0/1, prog: 0.8397772288082326
+sample 0/1, prog: 0.8398774633152145
+sample 0/1, prog: 0.8400100652150762
+sample 0/1, prog: 0.8403420920194539
+sample 0/1, prog: 0.841527156242626
+sample 0/1, prog: 0.841657669923592
+sample 0/1, prog: 0.8422830914827816
+sample 0/1, prog: 0.8429450568726417
+sample 0/1, prog: 0.8438054030575701
+sample 0/1, prog: 0.8443191049058526
+sample 0/1, prog: 0.8446761903369758
+sample 0/1, prog: 0.8448891886643125
+sample 0/1, prog: 0.845395581746461
+sample 0/1, prog: 0.8475046828308731
+sample 0/1, prog: 0.8476759167803006
+sample 0/1, prog: 0.8479097972965918
+sample 0/1, prog: 0.8479515616745009
+sample 0/1, prog: 0.8481572512357035
+sample 0/1, prog: 0.8482773238221923
+sample 0/1, prog: 0.8483128235434151
+sample 0/1, prog: 0.8502089263004905
+sample 0/1, prog: 0.850384336687709
+sample 0/1, prog: 0.851400255180349
+sample 0/1, prog: 0.8527179213033828
+sample 0/1, prog: 0.8537547219849774
+sample 0/1, prog: 0.854017837565805
+sample 0/1, prog: 0.8544135550464942
+sample 0/1, prog: 0.8604004786197709
+sample 0/1, prog: 0.8618016734986228
+sample 0/1, prog: 0.8625356824403762
+sample 0/1, prog: 0.863336514386784
+sample 0/1, prog: 0.8633845434213796
+sample 0/1, prog: 0.8634043815008865
+sample 0/1, prog: 0.8639243480058554
+sample 0/1, prog: 0.8647011654349656
+sample 0/1, prog: 0.8668833541807186
+sample 0/1, prog: 0.8690895574437695
+sample 0/1, prog: 0.870819646798656
+sample 0/1, prog: 0.8709063078828175
+sample 0/1, prog: 0.8709094402111607
+sample 0/1, prog: 0.8709094402111607
+sample 0/1, prog: 0.8711057327873337
+sample 0/1, prog: 0.8711704675730929
+sample 0/1, prog: 0.8723471789206831
+sample 0/1, prog: 0.8735635664272872
+sample 0/1, prog: 0.8756476088849537
+sample 0/1, prog: 0.8771302443007286
+sample 0/1, prog: 0.8771333766290718
+sample 0/1, prog: 0.8772085525093082
+sample 0/1, prog: 0.8772179494943378
+sample 0/1, prog: 0.8773745659114971
+sample 0/1, prog: 0.878106486634355
+sample 0/1, prog: 0.8781398981366823
+sample 0/1, prog: 0.8783205290711393
+sample 0/1, prog: 0.8783215731805871
+sample 0/1, prog: 0.8789574358342539
+sample 0/1, prog: 0.8791693900521428
+sample 0/1, prog: 0.8792142867583952
+sample 0/1, prog: 0.8798042085963619
+sample 0/1, prog: 0.8798167379097347
+sample 0/1, prog: 0.8805956435577403
+sample 0/1, prog: 0.8805987758860835
+sample 0/1, prog: 0.8806635106718427
+sample 0/1, prog: 0.8807073632686473
+sample 0/1, prog: 0.8807146720347814
+sample 0/1, prog: 0.8807334660048405
+sample 0/1, prog: 0.8807365983331836
+sample 0/1, prog: 0.8807418188804224
+sample 0/1, prog: 0.8812607412759436
+sample 0/1, prog: 0.8812649177137344
+sample 0/1, prog: 0.8815144598717416
+sample 0/1, prog: 0.882232807171779
+sample 0/1, prog: 0.8822975419575382
+sample 0/1, prog: 0.8823622767432974
+sample 0/1, prog: 0.8834565034445171
+sample 0/1, prog: 0.8834565034445171
+sample 0/1, prog: 0.8839315732432337
+sample 0/1, prog: 0.8841132482871384
+sample 0/1, prog: 0.8841236893816158
+sample 0/1, prog: 0.8842093063563295
+sample 0/1, prog: 0.8844682454993662
+sample 0/1, prog: 0.8855374135738404
+sample 0/1, prog: 0.8855906631556746
+sample 0/1, prog: 0.8858569110648454
+sample 0/1, prog: 0.886466670982319
+sample 0/1, prog: 0.8867266542348035
+sample 0/1, prog: 0.8867308306725944
+sample 0/1, prog: 0.8878323661399482
+sample 0/1, prog: 0.8878668217517233
+sample 0/1, prog: 0.8883178770331421
+sample 0/1, prog: 0.8885778602856266
+sample 0/1, prog: 0.8885789043950743
+sample 0/1, prog: 0.888837843538111
+sample 0/1, prog: 0.8888441081947974
+sample 0/1, prog: 0.8895551467287007
+sample 0/1, prog: 0.8901356715816379
+sample 0/1, prog: 0.8901492450044584
+sample 0/1, prog: 0.8903914783963314
+sample 0/1, prog: 0.891678865345381
+sample 0/1, prog: 0.892229111024334
+sample 0/1, prog: 0.8947495912311512
+sample 0/1, prog: 0.8947495912311512
+sample 0/1, prog: 0.8948101495791195
+sample 0/1, prog: 0.8948842813499083
+sample 0/1, prog: 0.8949281339467128
+sample 0/1, prog: 0.8949291780561606
+sample 0/1, prog: 0.8958730529969073
+sample 0/1, prog: 0.8958939351858619
+sample 0/1, prog: 0.8984655767556178
+sample 0/1, prog: 0.898973013947214
+sample 0/1, prog: 0.8989834550416913
+sample 0/1, prog: 0.8990043372306459
+sample 0/1, prog: 0.8992319530902507
+sample 0/1, prog: 0.8992684969209213
+sample 0/1, prog: 0.8993374081444714
+sample 0/1, prog: 0.8995232596261671
+sample 0/1, prog: 0.8997122434362059
+sample 0/1, prog: 0.9082123384501657
+sample 0/1, prog: 0.9093838292505173
+sample 0/1, prog: 0.9101846611969253
+sample 0/1, prog: 0.9109917578000196
+sample 0/1, prog: 0.911390607609052
+sample 0/1, prog: 0.9176844993599609
+sample 0/1, prog: 0.9287207362224538
+sample 0/1, prog: 0.9287896474460039
+sample 0/1, prog: 0.9287917356648994
+sample 0/1, prog: 0.9291206301409339
+sample 0/1, prog: 0.9292657613541682
+sample 0/1, prog: 0.9300885195989784
+sample 0/1, prog: 0.9347744828003851
+sample 0/1, prog: 0.9388726123827205
+sample 0/1, prog: 0.9419255884078793
+sample 0/1, prog: 0.9441662472827052
+sample 0/1, prog: 0.9443855102667282
+sample 0/1, prog: 0.9449086091000403
+sample 0/1, prog: 0.9459307922493667
+sample 0/1, prog: 0.945945409781635
+sample 0/1, prog: 0.9463557447945924
+sample 0/1, prog: 0.9466449631116132
+sample 0/1, prog: 0.9466480954399564
+sample 0/1, prog: 0.9474134276651416
+sample 0/1, prog: 0.9516587766796066
+sample 0/1, prog: 0.9530359570411608
+sample 0/1, prog: 0.9534421156163274
+sample 0/1, prog: 0.9534483802730137
+sample 0/1, prog: 0.9539307588378644
+sample 0/1, prog: 0.9540226404692645
+sample 0/1, prog: 0.9540466549865623
+sample 0/1, prog: 0.9543504908358513
+sample 0/1, prog: 0.9543661524775673
+sample 0/1, prog: 0.9543692848059105
+sample 0/1, prog: 0.9543859905570742
+sample 0/1, prog: 0.9544319313727743
+sample 0/1, prog: 0.9544935338301902
+sample 0/1, prog: 0.9545259012230698
+sample 0/1, prog: 0.9545259012230698
+sample 0/1, prog: 0.9545279894419653
+sample 0/1, prog: 0.9545582686159494
+sample 0/1, prog: 0.9546428414812155
+sample 0/1, prog: 0.9566548403869888
+sample 0/1, prog: 0.9581322552555249
+sample 0/1, prog: 0.9591533942954036
+sample 0/1, prog: 0.95915965895209
+sample 0/1, prog: 0.9595042150698405
+sample 0/1, prog: 0.9616759627211163
+sample 0/1, prog: 0.9624110157723174
+sample 0/1, prog: 0.9627691453128883
+sample 0/1, prog: 0.9631366718384888
+sample 0/1, prog: 0.9631387600573843
+sample 0/1, prog: 0.9632379504549184
+sample 0/1, prog: 0.9636806528607554
+sample 0/1, prog: 0.9637151084725305
+sample 0/1, prog: 0.963717196691426
+sample 0/1, prog: 0.9642204574452312
+sample 0/1, prog: 0.9642246338830222
+sample 0/1, prog: 0.964278927574304
+sample 0/1, prog: 0.9649137461185231
+sample 0/1, prog: 0.9758100723150204
+sample 0/1, prog: 0.9762287602035595
+sample 0/1, prog: 0.9767884028675422
+sample 0/1, prog: 0.9768186820415263
+sample 0/1, prog: 0.9774503682574022
+sample 0/1, prog: 0.9793391622483435
+sample 0/1, prog: 0.9793475151239254
+sample 0/1, prog: 0.9804292125117723
+sample 0/1, prog: 0.9817719372615515
+sample 0/1, prog: 0.9823065212987886
+sample 0/1, prog: 0.9839113175199478
+sample 0/1, prog: 0.9839154939577386
+sample 0/1, prog: 0.9840272136686457
+sample 0/1, prog: 0.9845847681137327
+sample 0/1, prog: 0.9845847681137327
+sample 0/1, prog: 0.9845941650987623
+sample 0/1, prog: 0.9845952092082101
+sample 0/1, prog: 0.9855787603079705
+sample 0/1, prog: 0.9856059071536115
+sample 0/1, prog: 0.9859984923059575
+sample 0/1, prog: 0.9859984923059575
+sample 0/1, prog: 0.9860360802460757
+sample 0/1, prog: 0.9860360802460757
+sample 0/1, prog: 0.9860548742161348
+sample 0/1, prog: 0.9864255330700785
+sample 0/1, prog: 0.986427621288974
+sample 0/1, prog: 0.9868630149286769
+sample 0/1, prog: 0.9872900556927979
+sample 0/1, prog: 0.9890974091468164
+sample 0/1, prog: 0.989133952977487
+sample 0/1, prog: 0.9891475264003073
+sample 0/1, prog: 0.9895745671644285
+sample 0/1, prog: 0.9913328474744036
+sample 0/1, prog: 0.9914069792451924
+sample 0/1, prog: 0.9924312506134143
+sample 0/1, prog: 0.9924343829417575
+sample 0/1, prog: 0.9924343829417575
+sample 0/1, prog: 0.9924636180062939
+sample 0/1, prog: 0.9932467000920905
+sample 0/1, prog: 0.9938418424772958
+sample 0/1, prog: 0.9951167001129726
+sample 0/1, prog: 0.9951177442224204
+sample 0/1, prog: 0.997012802870048
+sample 0/1, prog: 0.9998078838616179
+timer run_sim 27.09
+timer run_sim 27.10
+timer run_sim 27.10
+timer run_sim 27.16
+timer run_sim 27.18
+timer run_sim 27.18
+timer run_sim 27.19
+timer run_sim 27.22
+timer send_heartbeat 0.25
+timer send_burn_requests 0.00
+timer do_spread_steps 0.43
+timer init_partition 2.48
+timer receive_from_headnode 22.74
+timer do_tasks 24.51
+counter send_heartbeat 645
+counter send_burn_requests 0
+counter do_spread_steps 645
+counter init_partition 1
+counter receive_from_headnode 645
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 252264
+timer send_heartbeat 0.18
+timer send_burn_requests 0.00
+timer do_spread_steps 0.37
+timer init_partition 3.49
+timer receive_from_headnode 21.78
+timer do_tasks 23.47
+counter send_heartbeat 645
+counter send_burn_requests 0
+counter do_spread_steps 645
+counter init_partition 1
+counter receive_from_headnode 645
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 257272
+timer send_heartbeat 0.40
+timer send_burn_requests 0.00
+timer do_spread_steps 0.94
+timer init_partition 3.17
+timer receive_from_headnode 21.05
+timer do_tasks 23.83
+counter send_heartbeat 645
+counter send_burn_requests 0
+counter do_spread_steps 645
+counter init_partition 1
+counter receive_from_headnode 645
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 528450
+timer send_heartbeat 0.17
+timer send_burn_requests 0.00
+timer do_spread_steps 0.81
+timer init_partition 4.90
+timer receive_from_headnode 18.99
+timer do_tasks 22.16
+counter send_heartbeat 645
+counter send_burn_requests 0
+counter do_spread_steps 645
+counter init_partition 1
+counter receive_from_headnode 645
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 601192
+timer send_heartbeat 0.12
+timer send_burn_requests 0.00
+timer do_spread_steps 0.87
+timer init_partition 5.17
+timer receive_from_headnode 18.54
+timer send_heartbeat 1.36
+timer do_tasks 21.82
+counter send_heartbeat 645
+counter send_burn_requests 0
+timer send_burn_requests 0.00
+counter do_spread_steps 645
+timer do_spread_steps 0.30
+timer init_partition 3.46
+counter init_partition 1
+timer receive_from_headnode 20.82
+counter receive_from_headnode 645
+counter do_tasks 1
+timer do_tasks 23.47
+counter send_heartbeat 645
+counter send_burn_requests 0
+counter n_edge_in_send_heartbeat 602132
+counter do_spread_steps 645
+counter init_partition 1
+counter receive_from_headnode 645
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 162698
+timer send_heartbeat 0.26
+timer send_burn_requests 0.00
+timer do_spread_steps 0.90
+timer init_partition 3.76
+timer receive_from_headnode 20.39
+timer do_tasks 23.28
+counter send_heartbeat 645
+counter send_burn_requests 0
+counter do_spread_steps 645
+counter init_partition 1
+counter receive_from_headnode 645
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 502764
+timer send_heartbeat 0.32
+timer send_burn_requests 0.00
+timer do_spread_steps 0.95
+timer init_partition 4.10
+timer receive_from_headnode 20.05
+timer do_tasks 22.90
+counter send_heartbeat 645
+counter send_burn_requests 0
+counter do_spread_steps 645
+counter init_partition 1
+counter receive_from_headnode 645
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 499754
+timer run 30.60
+timer stitch 1.23
+counter run 1
+counter stitch 1
+timer edges2file 1.52
+timer write2file 0.56
+counter edges2file 1
+counter write2file 1
+timer run_sim 30.83

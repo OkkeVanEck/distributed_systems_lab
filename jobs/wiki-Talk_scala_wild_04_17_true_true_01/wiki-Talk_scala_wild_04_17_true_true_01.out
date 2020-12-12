@@ -1,0 +1,473 @@
+sample 0/1, prog: 0.0
+timer read_partition_file 0.06
+timer read_partition_file 0.10
+timer read_partition_file 0.10
+timer read_partition_file 0.11
+timer read_partition_file 0.11
+timer read_partition_file 0.11
+timer read_partition_file 0.11
+timer read_partition_file 0.11
+timer read_partition_file 0.11
+timer read_partition_file 0.12
+timer read_partition_file 0.12
+timer read_partition_file 0.12
+timer read_partition_file 0.12
+timer read_partition_file 0.13
+timer read_partition_file 0.14
+timer read_partition_file 0.16
+sample 0/1, prog: 0.0601615863781305
+sample 0/1, prog: 0.06055834796826742
+sample 0/1, prog: 0.06060324467451976
+sample 0/1, prog: 0.06268102247549998
+sample 0/1, prog: 0.06688251889316045
+sample 0/1, prog: 0.06852072661664686
+sample 0/1, prog: 0.06903547257437713
+sample 0/1, prog: 0.07451600306550533
+sample 0/1, prog: 0.0749472202674173
+sample 0/1, prog: 0.0769258076708633
+sample 0/1, prog: 0.07809729847121495
+sample 0/1, prog: 0.07902342355135035
+sample 0/1, prog: 0.08083912988095064
+sample 0/1, prog: 0.08998030809581584
+sample 0/1, prog: 0.09016615957751155
+sample 0/1, prog: 0.09225020203517814
+sample 0/1, prog: 0.09405964370809206
+sample 0/1, prog: 0.09426533326929462
+sample 0/1, prog: 0.09451487542730179
+sample 0/1, prog: 0.09505676823067301
+sample 0/1, prog: 0.0975699396713561
+sample 0/1, prog: 0.09791345167965887
+sample 0/1, prog: 0.09824652259348433
+sample 0/1, prog: 0.10197816975966689
+sample 0/1, prog: 0.10202097824702376
+sample 0/1, prog: 0.10282285430287945
+sample 0/1, prog: 0.10353493694623045
+sample 0/1, prog: 0.10401940372997659
+sample 0/1, prog: 0.10505620441157124
+sample 0/1, prog: 0.10962940379262316
+sample 0/1, prog: 0.11071005707102241
+sample 0/1, prog: 0.11084265897088397
+sample 0/1, prog: 0.1124819108038181
+sample 0/1, prog: 0.11481758363838732
+sample 0/1, prog: 0.11523105097968789
+sample 0/1, prog: 0.11767635530626862
+sample 0/1, prog: 0.11810444017983741
+sample 0/1, prog: 0.12036389302472242
+sample 0/1, prog: 0.12518767867322925
+sample 0/1, prog: 0.12575880654113686
+sample 0/1, prog: 0.12734480879223684
+sample 0/1, prog: 0.12812267033079475
+sample 0/1, prog: 0.13187415557648416
+sample 0/1, prog: 0.13224585853987558
+sample 0/1, prog: 0.13554837672304162
+sample 0/1, prog: 0.1363533851072405
+sample 0/1, prog: 0.1368952779106117
+sample 0/1, prog: 0.13823800266039088
+sample 0/1, prog: 0.13947944879374036
+sample 0/1, prog: 0.14226513280028066
+sample 0/1, prog: 0.14801086709113195
+sample 0/1, prog: 0.1496971038492139
+sample 0/1, prog: 0.15659344675146228
+sample 0/1, prog: 0.15772630550224798
+sample 0/1, prog: 0.16283513302998473
+sample 0/1, prog: 0.16982335756363326
+sample 0/1, prog: 0.17117234697009878
+sample 0/1, prog: 0.1759554123501442
+sample 0/1, prog: 0.17618407231919678
+sample 0/1, prog: 0.17768028115779208
+sample 0/1, prog: 0.1829509456499268
+sample 0/1, prog: 0.19093107415891764
+sample 0/1, prog: 0.1936029502356555
+sample 0/1, prog: 0.19862824900757398
+sample 0/1, prog: 0.19920042098492932
+sample 0/1, prog: 0.20110383250813885
+sample 0/1, prog: 0.20748125301486603
+sample 0/1, prog: 0.22044700413676163
+sample 0/1, prog: 0.23166387193371157
+sample 0/1, prog: 0.2355865911288285
+sample 0/1, prog: 0.23829396692678914
+sample 0/1, prog: 0.2446129173044435
+sample 0/1, prog: 0.25364341991784944
+sample 0/1, prog: 0.2551918342288312
+sample 0/1, prog: 0.26207982425549775
+sample 0/1, prog: 0.2636961056805819
+sample 0/1, prog: 0.2686566696667411
+sample 0/1, prog: 0.27300538551653136
+sample 0/1, prog: 0.2744222420370993
+sample 0/1, prog: 0.2769844866218256
+sample 0/1, prog: 0.2776871722801471
+sample 0/1, prog: 0.2794203939633768
+sample 0/1, prog: 0.28258091326165174
+sample 0/1, prog: 0.28497610033474147
+sample 0/1, prog: 0.28723346496073104
+sample 0/1, prog: 0.29077821653577013
+sample 0/1, prog: 0.2937184287405743
+sample 0/1, prog: 0.2963861283795213
+sample 0/1, prog: 0.2985871110953335
+sample 0/1, prog: 0.3016734986228196
+sample 0/1, prog: 0.30626549197393066
+sample 0/1, prog: 0.31880837876949614
+sample 0/1, prog: 0.333824760846731
+sample 0/1, prog: 0.34433685476646403
+sample 0/1, prog: 0.35482597827834705
+sample 0/1, prog: 0.36436600630224464
+sample 0/1, prog: 0.3782067211413369
+sample 0/1, prog: 0.4179455267218931
+sample 0/1, prog: 0.42538898297475136
+sample 0/1, prog: 0.4294557892736548
+sample 0/1, prog: 0.43422632534032746
+sample 0/1, prog: 0.4375173583195685
+sample 0/1, prog: 0.4435898988675589
+sample 0/1, prog: 0.45092267951895787
+sample 0/1, prog: 0.46173756517853226
+sample 0/1, prog: 0.47254409796252483
+sample 0/1, prog: 0.4773992068944635
+sample 0/1, prog: 0.48525508637917464
+sample 0/1, prog: 0.4879311388937034
+sample 0/1, prog: 0.490138386266202
+sample 0/1, prog: 0.4965794974492406
+sample 0/1, prog: 0.5035092518538163
+sample 0/1, prog: 0.5083549638007254
+sample 0/1, prog: 0.5138177444312423
+sample 0/1, prog: 0.5153014239564648
+sample 0/1, prog: 0.5200291515357806
+sample 0/1, prog: 0.5217717702040399
+sample 0/1, prog: 0.522968319631137
+sample 0/1, prog: 0.5299220885530105
+sample 0/1, prog: 0.5320959244231818
+sample 0/1, prog: 0.5386289172376205
+sample 0/1, prog: 0.5401209496384249
+sample 0/1, prog: 0.5510037024121016
+sample 0/1, prog: 0.5577726639617271
+sample 0/1, prog: 0.5603108940291557
+sample 0/1, prog: 0.5657820275352543
+sample 0/1, prog: 0.573720391666336
+sample 0/1, prog: 0.579875416860697
+sample 0/1, prog: 0.5818185045429202
+sample 0/1, prog: 0.5891105649258578
+sample 0/1, prog: 0.5937850429233394
+sample 0/1, prog: 0.6003963439463579
+sample 0/1, prog: 0.603601759950885
+sample 0/1, prog: 0.6101942670038444
+sample 0/1, prog: 0.6134153446500876
+sample 0/1, prog: 0.6148134072005964
+sample 0/1, prog: 0.6171908444130747
+sample 0/1, prog: 0.6231547975785013
+sample 0/1, prog: 0.625916467067744
+sample 0/1, prog: 0.6328535302384537
+sample 0/1, prog: 0.6393520674411175
+sample 0/1, prog: 0.6432309340394298
+sample 0/1, prog: 0.64603958845382
+sample 0/1, prog: 0.6486623913865147
+sample 0/1, prog: 0.6550345913460033
+sample 0/1, prog: 0.6582420955694259
+sample 0/1, prog: 0.6595837762097574
+sample 0/1, prog: 0.6625772379963958
+sample 0/1, prog: 0.667334200640248
+sample 0/1, prog: 0.6695090806198669
+sample 0/1, prog: 0.6772845636771029
+sample 0/1, prog: 0.6803009958715912
+sample 0/1, prog: 0.6843437876531969
+sample 0/1, prog: 0.6874907335286514
+sample 0/1, prog: 0.6964272662917618
+sample 0/1, prog: 0.7003760882230718
+sample 0/1, prog: 0.7037318559880721
+sample 0/1, prog: 0.7075345025967001
+sample 0/1, prog: 0.71156163273659
+sample 0/1, prog: 0.715318338529518
+sample 0/1, prog: 0.7173679253754095
+sample 0/1, prog: 0.7187200471102183
+sample 0/1, prog: 0.7290003487325556
+sample 0/1, prog: 0.734853626296523
+sample 0/1, prog: 0.742652079761609
+sample 0/1, prog: 0.7470383835515174
+sample 0/1, prog: 0.7476836431902137
+sample 0/1, prog: 0.7513338498194735
+sample 0/1, prog: 0.7524667085702592
+sample 0/1, prog: 0.7554027443372724
+sample 0/1, prog: 0.7630247433056923
+sample 0/1, prog: 0.767483090647494
+sample 0/1, prog: 0.7770241627808393
+sample 0/1, prog: 0.7800938445571619
+sample 0/1, prog: 0.783314922203405
+sample 0/1, prog: 0.784173180169438
+sample 0/1, prog: 0.7959893667893844
+sample 0/1, prog: 0.8127682056143853
+sample 0/1, prog: 0.8153367148557981
+sample 0/1, prog: 0.8315621756735028
+sample 0/1, prog: 0.8346308133403776
+sample 0/1, prog: 0.8353188814664309
+sample 0/1, prog: 0.8399505509765556
+sample 0/1, prog: 0.8421264750656223
+sample 0/1, prog: 0.8446145878795599
+sample 0/1, prog: 0.8476143143228846
+sample 0/1, prog: 0.8541253808389211
+sample 0/1, prog: 0.8589575193630097
+sample 0/1, prog: 0.8615542195595111
+sample 0/1, prog: 0.8723315172789673
+sample 0/1, prog: 0.8736460510736578
+sample 0/1, prog: 0.8778642532424819
+sample 0/1, prog: 0.8819644710437127
+sample 0/1, prog: 0.8852179160828355
+sample 0/1, prog: 0.8908863862745549
+sample 0/1, prog: 0.895054471189888
+sample 0/1, prog: 0.8981721820008061
+sample 0/1, prog: 0.901971696281091
+sample 0/1, prog: 0.9036401831785615
+sample 0/1, prog: 0.90965843003527
+sample 0/1, prog: 0.9132084021575477
+sample 0/1, prog: 0.9198447618073117
+sample 0/1, prog: 0.9222023609402832
+sample 0/1, prog: 0.9265040918649257
+sample 0/1, prog: 0.9318739467545946
+sample 0/1, prog: 0.9386867609010247
+sample 0/1, prog: 0.9415538854444878
+sample 0/1, prog: 0.9438697201995502
+sample 0/1, prog: 0.9458556163691303
+sample 0/1, prog: 0.9490965320948803
+sample 0/1, prog: 0.9527342094107673
+sample 0/1, prog: 0.9546856499685723
+sample 0/1, prog: 0.9579192569281882
+sample 0/1, prog: 0.9649471576208505
+sample 0/1, prog: 0.9723843492170223
+sample 0/1, prog: 0.9755135452318654
+sample 0/1, prog: 0.9775568674210705
+sample 0/1, prog: 0.9811830595330325
+sample 0/1, prog: 0.9841525068023731
+sample 0/1, prog: 0.9863482689709466
+sample 0/1, prog: 0.9893250250064213
+sample 0/1, prog: 0.996327867072338
+sample 0/1, prog: 0.9977008709961013
+timer run_sim 25.34
+timer run_sim 25.34
+timer run_sim 25.35
+timer run_sim 25.35
+timer run_sim 25.35
+timer run_sim 25.35
+timer run_sim 25.36
+timer run_sim 25.36
+timer run_sim 25.39
+timer run_sim 25.39
+timer run_sim 25.39
+timer run_sim 25.40
+timer run_sim 25.41
+timer send_heartbeat 0.29
+timer send_burn_requests 5.32
+timer do_spread_steps 0.35
+timer init_partition 0.77
+timer receive_from_headnode 18.17
+timer do_tasks 24.54
+counter send_heartbeat 224
+counter send_burn_requests 224
+counter do_spread_steps 224
+counter init_partition 1
+counter receive_from_headnode 224
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 194488
+timer run_sim 25.43
+timer run_sim 25.44
+timer send_heartbeat 0.31
+timer send_burn_requests 4.20
+timer do_spread_steps 0.22
+timer init_partition 1.92
+timer receive_from_headnode 18.15
+timer do_tasks 23.32
+counter send_heartbeat 224
+counter send_burn_requests 224
+counter do_spread_steps 224
+counter init_partition 1
+counter receive_from_headnode 224
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 152388
+timer send_heartbeat 0.11
+timer send_burn_requests 4.20
+timer do_spread_steps 0.24
+timer init_partition 1.81
+timer receive_from_headnode 18.37
+timer do_tasks 23.44
+counter send_heartbeat 224
+counter send_burn_requests 224
+counter do_spread_steps 224
+counter init_partition 1
+counter receive_from_headnode 224
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 177078
+timer run_sim 25.46
+timer send_heartbeat 0.25
+timer send_burn_requests 3.42
+timer do_spread_steps 0.13
+timer init_partition 2.74
+timer receive_from_headnode 18.22
+timer do_tasks 22.45
+counter send_heartbeat 224
+counter send_burn_requests 224
+counter do_spread_steps 224
+counter init_partition 1
+counter receive_from_headnode 224
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 124924
+timer send_heartbeat 0.15
+timer send_burn_requests 3.81
+timer do_spread_steps 0.49
+timer init_partition 1.96
+timer receive_from_headnode 18.12
+timer do_tasks 23.31
+counter send_heartbeat 224
+counter send_burn_requests 224
+counter do_spread_steps 224
+counter init_partition 1
+counter receive_from_headnode 224
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 304262
+timer send_heartbeat 0.04
+timer send_burn_requests 4.70
+timer do_spread_steps 0.05
+timer init_partition 1.61
+timer receive_from_headnode 18.57
+timer do_tasks 23.61
+counter send_heartbeat 224
+counter send_burn_requests 224
+counter do_spread_steps 224
+counter init_partition 1
+counter receive_from_headnode 224
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 33188
+timer send_heartbeat 0.57
+timer send_burn_requests 3.86
+timer do_spread_steps 0.45
+timer init_partition 1.91
+timer receive_from_headnode 17.59
+timer do_tasks 23.37
+counter send_heartbeat 224
+counter send_burn_requests 224
+counter do_spread_steps 224
+counter init_partition 1
+counter receive_from_headnode 224
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 344856
+timer send_heartbeat 0.22
+timer send_burn_requests 4.68
+timer do_spread_steps 0.06
+timer init_partition 1.70
+timer receive_from_headnode 18.34
+timer do_tasks 23.53
+counter send_heartbeat 224
+counter send_burn_requests 224
+counter do_spread_steps 224
+counter init_partition 1
+counter receive_from_headnode 224
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 42090
+timer send_heartbeat 0.39
+timer send_burn_requests 4.56
+timer do_spread_steps 0.08
+timer init_partition 1.78
+timer receive_from_headnode 18.15
+timer do_tasks 23.46
+counter send_heartbeat 224
+counter send_burn_requests 224
+counter do_spread_steps 224
+counter init_partition 1
+counter receive_from_headnode 224
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 50948
+timer send_heartbeat 0.59
+timer send_burn_requests 4.01
+timer do_spread_steps 0.62
+timer init_partition 1.63
+timer receive_from_headnode 17.62
+timer do_tasks 23.68
+counter send_heartbeat 224
+counter send_burn_requests 224
+counter do_spread_steps 224
+counter init_partition 1
+counter receive_from_headnode 224
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 378664
+timer send_heartbeat 0.44
+timer send_burn_requests 4.61
+timer do_spread_steps 0.14
+timer init_partition 1.68
+timer receive_from_headnode 18.07
+timer do_tasks 23.55
+counter send_heartbeat 224
+counter send_burn_requests 224
+counter do_spread_steps 224
+counter init_partition 1
+counter receive_from_headnode 224
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 76698
+timer send_heartbeat 0.32
+timer send_burn_requests 4.17
+timer do_spread_steps 0.52
+timer init_partition 1.62
+timer receive_from_headnode 18.00
+timer do_tasks 23.67
+counter send_heartbeat 224
+counter send_burn_requests 224
+counter do_spread_steps 224
+counter init_partition 1
+counter receive_from_headnode 224
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 303566
+timer send_heartbeat 0.30
+timer send_burn_requests 4.20
+timer do_spread_steps 0.45
+timer init_partition 1.67
+timer receive_from_headnode 17.96
+timer do_tasks 23.63
+counter send_heartbeat 224
+counter send_burn_requests 224
+counter do_spread_steps 224
+counter init_partition 1
+counter receive_from_headnode 224
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 290888
+timer send_heartbeat 0.30
+timer send_burn_requests 3.65
+timer do_spread_steps 0.69
+timer init_partition 1.90
+timer receive_from_headnode 17.86
+timer do_tasks 23.41
+counter send_heartbeat 224
+counter send_burn_requests 224
+counter do_spread_steps 224
+counter init_partition 1
+counter receive_from_headnode 224
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 418364
+timer send_heartbeat 0.38
+timer send_burn_requests 3.09
+timer do_spread_steps 0.92
+timer init_partition 2.27
+timer receive_from_headnode 17.48
+timer do_tasks 23.03
+counter send_heartbeat 224
+counter send_burn_requests 224
+counter do_spread_steps 224
+counter init_partition 1
+counter receive_from_headnode 224
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 533508
+timer send_heartbeat 0.61
+timer send_burn_requests 2.58
+timer do_spread_steps 0.90
+timer init_partition 2.64
+timer receive_from_headnode 17.15
+timer do_tasks 22.68
+counter send_heartbeat 224
+counter send_burn_requests 224
+counter do_spread_steps 224
+counter init_partition 1
+counter receive_from_headnode 224
+counter do_tasks 1
+counter n_edge_in_send_heartbeat 586102
+timer run 29.13
+timer stitch 1.25
+counter run 1
+counter stitch 1
+timer edges2file 1.71
+timer write2file 0.56
+counter edges2file 1
+counter write2file 1
+timer run_sim 29.35
