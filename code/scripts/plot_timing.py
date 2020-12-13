@@ -56,7 +56,8 @@ class TimingVisiualizer:
         self.ring = ring
         self.conn = conn
 
-        self.data = None
+        self.worker = None
+        self.header = None
 
     def get_vis_jobs(self):
         return [
@@ -68,60 +69,72 @@ class TimingVisiualizer:
             )
         ]
 
-    def load_worker_log(self, job_name):
-        df_worker_node = pd.DataFrame()
+    def load_log(self, job_name):
+        dfs = {"worker": pd.DataFrame(), "header": pd.DataFrame()}
         p = Path(f"{self.path_to_jobs}")
         for log_file in p.glob(f"{job_name}/results/node-*.log"):
-            if log_file.name == "node-0.log":
-                continue
+            node_type = "header" if log_file.name == "node-0.log" else "worker"
+            
+            skiprows = [i for i, line in enumerate(open(log_file)) if line.startswith("timer")][0] \
+                        if node_type == "header" else 0
             node_id = log_file.name.rstrip(".log")
 
-            df = pd.read_csv(log_file, sep=" ", header=None, index_col=None)
+            df = pd.read_csv(log_file, sep=" ", header=None, index_col=None, skiprows=skiprows)
             df.columns=["type", "component", "val"]
 
             df = df[df.type == "timer"][["component", "val"]]
             df.columns = ["component", node_id]
             df.set_index("component", inplace=True)
 
-            df_worker_node = pd.concat([df_worker_node, df], axis=1)
+            dfs[node_type] = pd.concat([dfs[node_type], df], axis=1)
 
-        df_worker_node = df_worker_node.stack().reset_index()
-        df_worker_node.columns = ["component", "node", "time"]
-        return df_worker_node
+        for node_type, df in dfs.items():
+            dfs[node_type] = df.stack().reset_index()
+            dfs[node_type].columns = ["component", "node", "time"]
+
+        return dfs
 
     def get_data(self):
-        data = []
+        data = {"worker": [], "header": []}
         for job in self.get_vis_jobs():
-            df = self.load_worker_log(job)
-            df = df[["component", "time"]].groupby("component").mean().drop("do_tasks").reset_index()
-            df["n_nodes"] = int(parse_job_name(job)["n_nodes"]) - 1
-            data.append(df)
+            dfs = self.load_log(job)
+            n_nodes = int(parse_job_name(job)["n_nodes"]) - 1
 
-        self.data = pd.concat(data).pivot(columns='component', index='n_nodes', values="time")
+            df = dfs["worker"][["component", "time"]].groupby("component").mean().drop("do_tasks").reset_index()
+            df["n_nodes"] = n_nodes
+            data["worker"].append(df)
+
+            df = dfs["header"][["component", "time"]].groupby("component").mean().drop(["run", "run_sim"]).reset_index()
+            df["n_nodes"] = n_nodes
+            data["header"].append(df)
+
+        self.worker = pd.concat(data["worker"]).pivot(columns='component', index='n_nodes', values="time")
+        self.header = pd.concat(data["header"]).pivot(columns='component', index='n_nodes', values="time")
+
 
     def plot(self, savefig=True):
-        ax = self.data.plot(
-            kind='bar', 
-            stacked=True,
-            colormap=cm.rainbow_r,
-            alpha=0.5
-        )
-        ax.set_title(
-            f"{self.dset} {self.sim.title()} Forest Fire\n"
-            f"Scale Factor: {self.scale}, Stitch: {self.stitch}, "
-            f"Connectivity: {self.conn}, Ring: {self.ring}"
-        )
-        ax.set_xlabel("Number of Nodes")
-        ax.set_ylabel("Time (s)")
-        ax.legend(prop={'size': 9})
-        # ax.set_yticks([0, 150, 300, 500, 1000, 1500, 2000, 2500])
-        if savefig:
-            plt.savefig(f"figures/{self.dset}_{self.job}_{self.sim}_"
-                        f"{self.scale}_{self.stitch}_{self.ring}_{self.conn}.svg",
-                        format='svg', dpi=300)
-        else:
-            plt.show()
-
+        for node_type, data in {"worker": self.worker, "header": self.header}.items():
+            ax = data.plot(
+                kind='bar', 
+                stacked=True,
+                colormap=cm.rainbow_r,
+                alpha=0.5
+            )
+            ax.set_title(
+                f"{self.dset} {self.sim.title()} Forest Fire\n"
+                f"Scale Factor: {self.scale}, Stitch: {self.stitch}, "
+                f"Connectivity: {self.conn}, Ring: {self.ring}"
+            )
+            ax.set_xlabel("Number of Nodes")
+            ax.set_ylabel("Time (s)")
+            ax.legend(prop={'size': 9})
+            # ax.set_yticks([0, 150, 300, 500, 1000, 1500, 2000, 2500])
+            if savefig:
+                plt.savefig(f"figures/{self.dset}_{self.job}_{self.sim}_"
+                            f"{self.scale}_{self.stitch}_{self.ring}_{self.conn}_{node_type}.svg",
+                            format='svg', dpi=300)
+            else:
+                plt.show()
 
 if __name__ == "__main__":
     args = parse_args()
