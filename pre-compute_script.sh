@@ -61,9 +61,9 @@ case "$1" in
 
         # Stitching & Connectivity
         # Connectivity changes.
-        ./manage.sh create_job "${ds}_sc_halted_3_5_true_false_01" halted_forest_fire.py 3 kgs 5 120 True False 0.1
-        ./manage.sh create_job "${ds}_sc_halted_3_5_true_false_001" halted_forest_fire.py 3 kgs 5 120 True False 0.01
-        ./manage.sh create_job "${ds}_sc_halted_3_5_false_false_0" halted_forest_fire.py 3 kgs 5 120
+        ./manage.sh create_job "${ds}_sc_halted_3_5_true_false_01" halted_forest_fire.py 3 "${ds}" 5 120 True False 0.1
+        ./manage.sh create_job "${ds}_sc_halted_3_5_true_false_001" halted_forest_fire.py 3 "${ds}" 5 120 True False 0.01
+        ./manage.sh create_job "${ds}_sc_halted_3_5_false_false_0" halted_forest_fire.py 3 "${ds}" 5 120
 
         # Stitching topology changes.
         ./manage.sh create_job "${ds}_sc_halted_3_5_true_true_01" halted_forest_fire.py 3 "${ds}" 5 120 True True 0.1
