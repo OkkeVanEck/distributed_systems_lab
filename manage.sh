@@ -346,8 +346,8 @@ CONN=\"${CONN}\"
         V_FILE="runtime_tmps/${2}/results/scaled_graph.v"
         E_FILE="runtime_tmps/${2}/results/scaled_graph.e"
     else
-        V_FILE="jobs/${2}/results/scaled_graph.v"
-        E_FILE="jobs/${2}/results/scaled_graph.e"
+        V_FILE="/var/scratch/$USER/${2}/results/scaled_graph.v"
+        E_FILE="/var/scratch/$USER/${2}/results/scaled_graph.e"
     fi
 
     # Check if the vertex file is in results.
@@ -369,7 +369,7 @@ CONN=\"${CONN}\"
     else
        # Load modules and run the properties measuring script.
         module load python/3.6.0
-        srun python3 code/scripts/compute_graph_properties.py "${V_FILE}" \
+        srun -t 360 python3 code/scripts/compute_graph_properties.py "${V_FILE}" \
             "${E_FILE}"
         module unload python/3.6.0
     fi
