@@ -1,0 +1,10 @@
+{
+    "vertex_count": 4788776,
+    "edge_count": 6500857,
+    "density": 5.669589995470405e-07,
+    "component_count": 3851,
+    "node_connectivity": 0,
+    "avg_node_degree": 2.715039083055879,
+    "diameter": Infinity,
+    "avg_shortest_path": -Infinity
+}

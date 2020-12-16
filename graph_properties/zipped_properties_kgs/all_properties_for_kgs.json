@@ -1,0 +1,170 @@
+{
+    "original": {
+        "vertex_count": 832247,
+        "edge_count": 17891698,
+        "density": 5.166275950678386e-05,
+        "component_count": 6099,
+        "avg_node_degree": 42.996124948482844
+    },
+    "kgs_scala_halted_04_5_true_true_01": {
+        "vertex_count": 332899,
+        "edge_count": 962404,
+        "density": 1.7368557008849994e-05,
+        "component_count": 1,
+        "avg_node_degree": 5.781957891132145
+    },
+    "kgs_scala_wild_04_9_true_true_01": {
+        "vertex_count": 332899,
+        "edge_count": 1954964,
+        "density": 3.528134097972309e-05,
+        "component_count": 1,
+        "avg_node_degree": 11.745087849467856
+    },
+    "kgs_scala_halted_04_3_true_true_01": {
+        "vertex_count": 332899,
+        "edge_count": 807938,
+        "density": 1.4580900757495029e-05,
+        "component_count": 1,
+        "avg_node_degree": 4.8539527003685805
+    },
+    "kgs_scala_wild_04_5_true_true_01": {
+        "vertex_count": 332899,
+        "edge_count": 1615033,
+        "density": 2.9146587848423356e-05,
+        "component_count": 1,
+        "avg_node_degree": 9.702840801564438
+    },
+    "kgs_sc_halted_3_5_true_false_001": {
+        "vertex_count": 2496744,
+        "edge_count": 5269930,
+        "density": 1.6907795500252544e-06,
+        "component_count": 603,
+        "avg_node_degree": 4.2214420060687035
+    },
+    "kgs_scala_wild_04_17_true_true_01": {
+        "vertex_count": 332899,
+        "edge_count": 2203102,
+        "density": 3.975950087833326e-05,
+        "component_count": 1,
+        "avg_node_degree": 13.235858323395384
+    },
+    "kgs_scala_halted_04_9_true_true_01": {
+        "vertex_count": 332899,
+        "edge_count": 1509344,
+        "density": 2.723921275261292e-05,
+        "component_count": 1,
+        "avg_node_degree": 9.067879446919337
+    },
+    "kgs_sc_halted_3_5_true_true_01": {
+        "vertex_count": 2496744,
+        "edge_count": 5421876,
+        "density": 1.739529189870212e-06,
+        "component_count": 368,
+        "avg_node_degree": 4.343157328104123
+    },
+    "kgs_scala_wild_04_3_true_true_01": {
+        "vertex_count": 332899,
+        "edge_count": 1310133,
+        "density": 2.3644041067655233e-05,
+        "component_count": 1,
+        "avg_node_degree": 7.871053983340293
+    },
+    "kgs_scala_wild_2_9_true_true_01": {
+        "vertex_count": 1664496,
+        "edge_count": 5367224,
+        "density": 3.874489299306686e-06,
+        "component_count": 62,
+        "avg_node_degree": 6.449068066249484
+    },
+    "kgs_sc_wild_3_5_true_true_01": {
+        "vertex_count": 2496744,
+        "edge_count": 5897633,
+        "density": 1.8921688276607263e-06,
+        "component_count": 178,
+        "avg_node_degree": 4.724259275280125
+    },
+    "kgs_sc_wild_3_5_true_false_01": {
+        "vertex_count": 2496744,
+        "edge_count": 6295457,
+        "density": 2.0198048083491315e-06,
+        "component_count": 239,
+        "avg_node_degree": 5.0429335166120355
+    },
+    "kgs_scala_halted_2_3_true_true_01": {
+        "vertex_count": 1664496,
+        "edge_count": 2895207,
+        "density": 2.0899907551422883e-06,
+        "component_count": 285,
+        "avg_node_degree": 3.4787791619805635
+    },
+    "kgs_sc_halted_3_5_true_false_01": {
+        "vertex_count": 2496744,
+        "edge_count": 5412509,
+        "density": 1.7365239256551113e-06,
+        "component_count": 311,
+        "avg_node_degree": 4.335653955711919
+    },
+    "kgs_scala_wild_2_17_true_true_01": {
+        "vertex_count": 1664496,
+        "edge_count": 6592684,
+        "density": 4.759123824850687e-06,
+        "component_count": 87,
+        "avg_node_degree": 7.921537810844844
+    },
+    "kgs_scala_halted_2_5_true_true_01": {
+        "vertex_count": 1664496,
+        "edge_count": 3720941,
+        "density": 2.6860712517032123e-06,
+        "component_count": 204,
+        "avg_node_degree": 4.4709521681037385
+    },
+    "kgs_sc_halted_3_5_false_false_0": {
+        "vertex_count": 2496744,
+        "edge_count": 5369058,
+        "density": 1.7225833112203564e-06,
+        "component_count": 654,
+        "avg_node_degree": 4.3008478242062465
+    },
+    "kgs_scala_halted_04_17_true_true_01": {
+        "vertex_count": 332899,
+        "edge_count": 1728529,
+        "density": 3.119485629522578e-05,
+        "component_count": 2,
+        "avg_node_degree": 10.384705270968071
+    },
+    "kgs_scala_wild_2_5_true_true_01": {
+        "vertex_count": 1664496,
+        "edge_count": 4536076,
+        "density": 3.2745005468081595e-06,
+        "component_count": 102,
+        "avg_node_degree": 5.450389787659447
+    },
+    "kgs_sc_wild_3_5_false_false_0": {
+        "vertex_count": 2496744,
+        "edge_count": 6241633,
+        "density": 2.0025361693917715e-06,
+        "component_count": 710,
+        "avg_node_degree": 4.99981816317572
+    },
+    "kgs_scala_halted_2_9_true_true_01": {
+        "vertex_count": 1664496,
+        "edge_count": 5093709,
+        "density": 3.6770444114652497e-06,
+        "component_count": 346,
+        "avg_node_degree": 6.120422037661851
+    },
+    "kgs_scala_halted_2_17_true_true_01": {
+        "vertex_count": 1664496,
+        "edge_count": 5879984,
+        "density": 4.244640262469859e-06,
+        "component_count": 335,
+        "avg_node_degree": 7.065182493679768
+    },
+    "kgs_scala_wild_2_3_true_true_01": {
+        "vertex_count": 1664496,
+        "edge_count": 3209551,
+        "density": 2.3169092635371794e-06,
+        "component_count": 159,
+        "avg_node_degree": 3.856483884611318
+    }
+}

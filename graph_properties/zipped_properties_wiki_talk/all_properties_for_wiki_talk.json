@@ -1,0 +1,170 @@
+{
+    "original": {
+         "vertex_count": 2394385,
+        "edge_count": 4659565,
+        "density": 1.625502288290001e-06,
+        "component_count": 2555,
+        "avg_node_degree": 3.8920766710449657
+    },
+    "wiki-Talk_scala_wild_04_5_true_true_01": {
+        "vertex_count": 957754,
+        "edge_count": 1625347,
+        "density": 3.5437950255182257e-06,
+        "component_count": 1,
+        "avg_node_degree": 3.394080317075157
+    },
+    "wiki-Talk_sc_halted_3_5_true_false_001": {
+        "vertex_count": 7183164,
+        "edge_count": 10434817,
+        "density": 4.044672192175585e-07,
+        "component_count": 7364,
+        "avg_node_degree": 2.905353963796455
+    },
+    "wiki-Talk_sc_halted_3_5_true_true_01": {
+        "vertex_count": 7183164,
+        "edge_count": 11162712,
+        "density": 4.3268138593771897e-07,
+        "component_count": 4691,
+        "avg_node_degree": 3.1080209222565434
+    },
+    "wiki-Talk_scala_wild_04_3_true_true_01": {
+        "vertex_count": 957754,
+        "edge_count": 1404790,
+        "density": 3.062907683034914e-06,
+        "component_count": 1,
+        "avg_node_degree": 2.933509022149738
+    },
+    "wiki-Talk_scala_halted_2_17_true_true_01": {
+        "vertex_count": 4788776,
+        "edge_count": 8295627,
+        "density": 7.234862087468494e-07,
+        "component_count": 1709,
+        "avg_node_degree": 3.464612669291694
+    },
+    "wiki-Talk_scala_wild_04_17_true_true_01": {
+        "vertex_count": 957754,
+        "edge_count": 1924783,
+        "density": 4.1966647248876985e-06,
+        "component_count": 1,
+        "avg_node_degree": 4.019368230255369
+    },
+    "wiki-Talk_sc_wild_3_5_true_true_01": {
+        "vertex_count": 7183164,
+        "edge_count": 11400246,
+        "density": 4.4188851591897533e-07,
+        "component_count": 4804,
+        "avg_node_degree": 3.1741572376740947
+    },
+    "wiki-Talk_scala_wild_04_9_true_true_01": {
+        "vertex_count": 957754,
+        "edge_count": 1652579,
+        "density": 3.6031698089551853e-06,
+        "component_count": 1,
+        "avg_node_degree": 3.4509466940362556
+    },
+    "wiki-Talk_scala_wild_2_5_true_true_01": {
+        "vertex_count": 4788776,
+        "edge_count": 7377359,
+        "density": 6.434013358453132e-07,
+        "component_count": 2182,
+        "avg_node_degree": 3.0811042320626396
+    },
+    "wiki-Talk_scala_halted_04_17_true_true_01": {
+        "vertex_count": 957754,
+        "edge_count": 1801950,
+        "density": 3.928848083660022e-06,
+        "component_count": 1,
+        "avg_node_degree": 3.7628660386696375
+    },
+    "wiki-Talk_scala_halted_2_9_true_true_01": {
+        "vertex_count": 4788776,
+        "edge_count": 8199833,
+        "density": 7.151317301907745e-07,
+        "component_count": 2102,
+        "avg_node_degree": 3.4246049512443264
+    },
+    "wiki-Talk_sc_halted_3_5_false_false_0": {
+        "vertex_count": 7183165,
+        "edge_count": 11166436,
+        "density": 4.328256125602445e-07,
+        "component_count": 4800,
+        "avg_node_degree": 3.109057358420696
+    },
+    "wiki-Talk_scala_halted_04_9_true_true_01": {
+        "vertex_count": 957754,
+        "edge_count": 1682038,
+        "density": 3.667400190317898e-06,
+        "component_count": 1,
+        "avg_node_degree": 3.512463534477538
+    },
+    "wiki-Talk_sc_wild_3_5_true_false_01": {
+        "vertex_count": 7183164,
+        "edge_count": 11474547,
+        "density": 4.447685203172397e-07,
+        "component_count": 4562,
+        "avg_node_degree": 3.1948447787075445
+    },
+    "wiki-Talk_scala_wild_2_3_true_true_01": {
+        "vertex_count": 4788776,
+        "edge_count": 6500857,
+        "density": 5.669589995470405e-07,
+        "component_count": 3851,
+        "avg_node_degree": 2.715039083055879
+    },
+    "wiki-Talk_sc_wild_3_5_false_false_0": {
+        "vertex_count": 7183164,
+        "edge_count": 10691425,
+        "density": 4.144136825037838e-07,
+        "component_count": 6989,
+        "avg_node_degree": 2.976801030854927
+    },
+    "wiki-Talk_scala_halted_04_5_true_true_01": {
+        "vertex_count": 957754,
+        "edge_count": 1473013,
+        "density": 3.211656429010961e-06,
+        "component_count": 1,
+        "avg_node_degree": 3.0759735798545345
+    },
+    "wiki-Talk_sc_halted_3_5_true_false_01": {
+        "vertex_count": 7183164,
+        "edge_count": 11170252,
+        "density": 4.32973646245964e-07,
+        "component_count": 4335,
+        "avg_node_degree": 3.1101202756890975
+    },
+    "wiki-Talk_scala_wild_2_9_true_true_01": {
+        "vertex_count": 4788776,
+        "edge_count": 8431897,
+        "density": 7.353707191842079e-07,
+        "component_count": 1876,
+        "avg_node_degree": 3.5215249157613555
+    },
+    "wiki-Talk_scala_halted_2_5_true_true_01": {
+        "vertex_count": 4788776,
+        "edge_count": 7257270,
+        "density": 6.329280183586181e-07,
+        "component_count": 2776,
+        "avg_node_degree": 3.030949871115291
+    },
+    "wiki-Talk_scala_halted_04_3_true_true_01": {
+        "vertex_count": 957754,
+        "edge_count": 1274143,
+        "density": 2.778053932605695e-06,
+        "component_count": 1,
+        "avg_node_degree": 2.6606894881149024
+    },
+    "wiki-Talk_scala_halted_2_3_true_true_01": {
+        "vertex_count": 4788776,
+        "edge_count": 6381116,
+        "density": 5.565160321713911e-07,
+        "component_count": 4327,
+        "avg_node_degree": 2.6650300619615535
+    },
+    "wiki-Talk_scala_wild_2_17_true_true_01": {
+        "vertex_count": 4788776,
+        "edge_count": 8659677,
+        "density": 7.55236087845113e-07,
+        "component_count": 1292,
+        "avg_node_degree": 3.6166556965704806
+    }
+}

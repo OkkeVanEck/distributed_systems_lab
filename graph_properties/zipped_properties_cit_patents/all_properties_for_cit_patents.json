@@ -1,0 +1,170 @@
+{
+    "original": {
+        "vertex_count": 3774768,
+        "edge_count": 16518947,
+        "density": 2.318632617474314e-06,
+        "component_count": 3627,
+        "avg_node_degree": 8.752297889565664
+    },
+    "cit-Patents_scala_wild_04_3_true_true_01": {
+        "vertex_count": 1509908,
+        "edge_count": 1909698,
+        "density": 1.6753054612721778e-06,
+        "component_count": 1,
+        "avg_node_degree": 2.5295554431130904
+    },
+    "cit-Patents_scala_halted_2_3_true_true_01": {
+        "vertex_count": 7443834,
+        "edge_count": 8199815,
+        "density": 2.959652679807134e-07,
+        "component_count": 90938,
+        "avg_node_degree": 2.2031160286486777
+    },
+    "cit-Patents_scala_halted_04_17_true_true_01": {
+        "vertex_count": 1509908,
+        "edge_count": 2069056,
+        "density": 1.8151041769316235e-06,
+        "component_count": 1,
+        "avg_node_degree": 2.740638502478297
+    },
+    "cit-Patents_scala_wild_04_5_true_true_01": {
+        "vertex_count": 1509908,
+        "edge_count": 2184745,
+        "density": 1.9165937388985507e-06,
+        "component_count": 1,
+        "avg_node_degree": 2.8938783025190937
+    },
+    "cit-Patents_sc_halted_3_5_true_false_001": {
+        "vertex_count": 11154876,
+        "edge_count": 11795773,
+        "density": 1.8959502929577882e-07,
+        "component_count": 266565,
+        "avg_node_degree": 2.1149088524157507
+    },
+    "cit-Patents_scala_halted_2_5_true_true_01": {
+        "vertex_count": 7451146,
+        "edge_count": 8579382,
+        "density": 3.090579452980674e-07,
+        "component_count": 81040,
+        "avg_node_degree": 2.3028355638179683
+    },
+    "cit-Patents_scala_halted_2_17_true_true_01": {
+        "vertex_count": 7442472,
+        "edge_count": 8930198,
+        "density": 3.2244579917991746e-07,
+        "component_count": 70611,
+        "avg_node_degree": 2.3997935094683593
+    },
+    "cit-Patents_scala_halted_2_9_true_true_01": {
+        "vertex_count": 7446754,
+        "edge_count": 8626590,
+        "density": 3.1112520577856355e-07,
+        "component_count": 80786,
+        "avg_node_degree": 2.3168725595071358
+    },
+    "cit-Patents_scala_wild_04_9_true_true_01": {
+        "vertex_count": 1509908,
+        "edge_count": 2355331,
+        "density": 2.0662423521434595e-06,
+        "component_count": 1,
+        "avg_node_degree": 3.119833791197874
+    },
+    "cit-Patents_sc_halted_3_5_true_true_01": {
+        "vertex_count": 11154714,
+        "edge_count": 12834124,
+        "density": 2.0629057489909415e-07,
+        "component_count": 118605,
+        "avg_node_degree": 2.3011121576043996
+    },
+    "cit-Patents_scala_halted_04_3_true_true_01": {
+        "vertex_count": 1509908,
+        "edge_count": 1797653,
+        "density": 1.5770126419843947e-06,
+        "component_count": 1,
+        "avg_node_degree": 2.3811424272207313
+    },
+    "cit-Patents_sc_wild_3_5_true_true_01": {
+        "vertex_count": 11165830,
+        "edge_count": 13238567,
+        "density": 2.1236795715998823e-07,
+        "component_count": 100912,
+        "avg_node_degree": 2.3712642947277542
+    },
+    "cit-Patents_sc_wild_3_5_true_false_01": {
+        "vertex_count": 11170595,
+        "edge_count": 13276306,
+        "density": 2.1279169577209194e-07,
+        "component_count": 103275,
+        "avg_node_degree": 2.3770096400415555
+    },
+    "cit-Patents_sc_halted_3_5_true_false_01": {
+        "vertex_count": 11155827,
+        "edge_count": 12727850,
+        "density": 2.0454154942485369e-07,
+        "component_count": 122130,
+        "avg_node_degree": 2.281829935154068
+    },
+    "cit-Patents_scala_wild_2_9_true_true_01": {
+        "vertex_count": 7449983,
+        "edge_count": 9359744,
+        "density": 3.3727446410906375e-07,
+        "component_count": 53477,
+        "avg_node_degree": 2.512688686672171
+    },
+    "cit-Patents_scala_halted_04_5_true_true_01": {
+        "vertex_count": 1509908,
+        "edge_count": 1949292,
+        "density": 1.7100397723693307e-06,
+        "component_count": 1,
+        "avg_node_degree": 2.582001022578859
+    },
+    "cit-Patents_scala_wild_2_3_true_true_01": {
+        "vertex_count": 7446238,
+        "edge_count": 8504779,
+        "density": 3.067745023962534e-07,
+        "component_count": 75995,
+        "avg_node_degree": 2.284315650399571
+    },
+    "cit-Patents_scala_wild_04_17_true_true_01": {
+        "vertex_count": 1509908,
+        "edge_count": 2412449,
+        "density": 2.1163498022936633e-06,
+        "component_count": 1,
+        "avg_node_degree": 3.195491380931818
+    },
+    "cit-Patents_scala_wild_2_17_true_true_01": {
+        "vertex_count": 7453776,
+        "edge_count": 9581204,
+        "density": 3.449033928289834e-07,
+        "component_count": 48298,
+        "avg_node_degree": 2.570832286883856
+    },
+    "cit-Patents_scala_wild_2_5_true_true_01": {
+        "vertex_count": 7450121,
+        "edge_count": 8967922,
+        "density": 3.23143350436096e-07,
+        "component_count": 70883,
+        "avg_node_degree": 2.4074567379509677
+    },
+    "cit-Patents_scala_halted_04_9_true_true_01": {
+        "vertex_count": 1509908,
+        "edge_count": 1953494,
+        "density": 1.7137260272369935e-06,
+        "component_count": 1,
+        "avg_node_degree": 2.587566924607327
+    },
+    "cit-Patents_sc_halted_3_5_false_false_0": {
+        "vertex_count": 11151776,
+        "edge_count": 12638691,
+        "density": 2.032563188457931e-07,
+        "component_count": 130227,
+        "avg_node_degree": 2.266668735096544
+    },
+    "cit-Patents_sc_wild_3_5_false_false_0": {
+        "vertex_count": 11174151,
+        "edge_count": 12128118,
+        "density": 1.9426491688888388e-07,
+        "component_count": 272192,
+        "avg_node_degree": 2.170745321053922
+    }
+}
